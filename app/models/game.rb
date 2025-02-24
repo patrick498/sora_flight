@@ -6,5 +6,7 @@ class Game < ApplicationRecord
   belongs_to :airline_guess, class_name: "Airline"
   belongs_to :aircraft_guess, class_name: "Aircraft"
 
+  has_one_attached :photo
+
   validates :user, :flight, :departure_airport_guess, :arrival_airport_guess, :airline_guess, :aircraft_guess, :score, presence: :true
 end
