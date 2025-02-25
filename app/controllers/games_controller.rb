@@ -31,4 +31,8 @@ class GamesController < ApplicationController
     return { question: question, guess: guess, correct_answer: correct_answer}
   end
 
+  def main
+    @game = Game.new
+    authorize @game
+  end
 end
