@@ -79,4 +79,5 @@ gem "pundit"
 
 gem 'cloudinary', '~> 1.16.0'
 
+# Custom Added
 gem 'ostruct'

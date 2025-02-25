@@ -1,14 +1,21 @@
 class GamesController < ApplicationController
-  skip_before_action :authenticate_user!, only:[:play, :create] #remove once we have users
+  skip_before_action :authenticate_user!, only:[:play, :create, :show] #remove once we have users
 
   def index
   @games = current_user.games
+  end
+
+  def show
+    @game = Game.find(params[:id])
+    authorize @game
+    @results = results(@game)
   end
 
   def play
     @flight = Flight.new
     @game = Game.new(user: current_user)
     authorize @game
+
     @flights = Flight.all #CHANGE HERE TO FIND A FLIGHT NEAR BY?
     @airports = Airport.all
     @airline = Airline.all
@@ -16,6 +23,19 @@ class GamesController < ApplicationController
     #@game.score = 0
     #@game.save
    # use find_or_create_by when getting airline, aircraft, aiport
+  end
+
+
+  def results(game)
+    results_array = []
+    arrival_airport_guess = Airport.find(game.arrival_airport_guess_id)
+    arrival_airport_answer = Airport.find(game.flight.arrival_airport_id)
+    results_array << single_result('arrival', arrival_airport_guess, arrival_airport_answer)
+    return results_array
+  end
+
+  def single_result(question, guess, correct_answer)
+    return { question: question, guess: guess, correct_answer: correct_answer}
   end
 
   def create
