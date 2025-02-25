@@ -10,4 +10,9 @@ class GamesController < ApplicationController
 
     # use find_or_create_by when getting airline, aircraft, aiport
   end
+
+  def main
+    @game = Game.new
+    authorize @game
+  end
 end
