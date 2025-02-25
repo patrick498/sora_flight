@@ -18,6 +18,7 @@ class GamesController < ApplicationController
    # use find_or_create_by when getting airline, aircraft, aiport
   end
 
+<<<<<<< HEAD
   def create
     @game = Game.new(game_params)
     @game.user = User.first #need the user login (current_user)
@@ -37,4 +38,10 @@ class GamesController < ApplicationController
     params.require(:game).permit(:arrival_airport_guess_id, :departure_airport_guess_id, :airline_guess_id)
   end
 
+=======
+  def main
+    @game = Game.new
+    authorize @game
+  end
+>>>>>>> master
 end
