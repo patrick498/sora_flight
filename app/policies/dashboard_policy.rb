@@ -1,4 +1,4 @@
-class GamePolicy < ApplicationPolicy
+class DashboardPolicy < ApplicationPolicy
   # NOTE: Up to Pundit v2.3.1, the inheritance was declared as
   # `Scope < Scope` rather than `Scope < ApplicationPolicy::Scope`.
   # In most cases the behavior will be identical, but if updating existing
@@ -10,10 +10,6 @@ class GamePolicy < ApplicationPolicy
     def resolve
       scope.all
     end
-  end
-
-  def play?
-    true
   end
 
   def main?
