@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  skip_before_action :authenticate_user!, only:[:play, :create] #remove once we have users
+  skip_before_action :authenticate_user!, only:[:play, :create, :show] #remove once we have users
 
   def index
   @games = current_user.games
@@ -16,9 +16,15 @@ class GamesController < ApplicationController
     @game = Game.new(user: current_user)
     authorize @game
 
-    # use find_or_create_by when getting airline, aircraft, aiport
-
+    @flights = Flight.all #CHANGE HERE TO FIND A FLIGHT NEAR BY?
+    @airports = Airport.all
+    @airline = Airline.all
+    #@game.flight = @flight
+    #@game.score = 0
+    #@game.save
+   # use find_or_create_by when getting airline, aircraft, aiport
   end
+
 
   def results(game)
     results_array = []
@@ -30,13 +36,6 @@ class GamesController < ApplicationController
 
   def single_result(question, guess, correct_answer)
     return { question: question, guess: guess, correct_answer: correct_answer}
-    @flights = Flight.all #CHANGE HERE TO FIND A FLIGHT NEAR BY?
-    @airports = Airport.all
-    @airline = Airline.all
-    #@game.flight = @flight
-    #@game.score = 0
-    #@game.save
-   # use find_or_create_by when getting airline, aircraft, aiport
   end
 
   def create
