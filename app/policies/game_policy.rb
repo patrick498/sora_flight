@@ -12,6 +12,10 @@ class GamePolicy < ApplicationPolicy
     # end
   end
 
+  def show?
+    true
+  end
+
   def play?
     true
   end
