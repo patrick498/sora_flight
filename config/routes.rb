@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: "dashboard#home" #doing this at some point
+
+  root to: "pages#home" #doing this at some point
+
+  get '/main', to: 'dashboard#main'
 
   resources :games, only: [:index, :show, :update]
 

@@ -8,3 +8,4 @@ class Flight < ApplicationRecord
   # has_many :users, through: :games
 
   validates :flight_number, :arrival_airport, :departure_airport, :airline, :aircraft, :departure_datetime, :arrival_datetime, :latitude, :longitude, :altitude, :heading, :speed, presence: true
+end

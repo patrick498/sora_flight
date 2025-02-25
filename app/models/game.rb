@@ -8,5 +8,5 @@ class Game < ApplicationRecord
 
   has_one_attached :photo
 
-  validates :user, :flight, :departure_airport_guess, :arrival_airport_guess, :airline_guess, :aircraft_guess, :score, presence: :true
+  validates :user, :flight, :arrival_airport_guess, :score, presence: :true
 end
