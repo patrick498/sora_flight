@@ -1,0 +1,30 @@
+.stat-list {
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For IE/Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+  }
+}
+
+.stat-card {
+  justify-content: center;
+  height: 132px;
+  width: 92px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 3px;
+  flex-shrink: 0; /* Prevents cards from shrinking */
+  transition: transform 0.3s ease;
+  background-color: beige;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  img {
+    width: 50px;
+  }
+}
