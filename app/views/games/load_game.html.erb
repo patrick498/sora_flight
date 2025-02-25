@@ -1,0 +1,7 @@
+<div data-controller="location" class="bg-dark w-100 vh-100 d-flex align-items-center justify-content-center">
+  <p class="text-light">Loading... Please wait.</p>
+  <%= form_with  url: games_path, method: :post, html: { id: "hidden-form", style: "display: none;" }, data: { location_target: "submitButton" } do |f| %>
+    <%= hidden_field_tag :latitude, "latitude", data: { location_target: "latitude" } %>
+    <%= hidden_field_tag :longitude, "longitude", data: { location_target: "longitude" } %>
+    <%= submit_tag "Submit", class: "hidden-submit-button" %>
+  <% end %>

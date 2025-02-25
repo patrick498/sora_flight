@@ -5,8 +5,9 @@ Rails.application.routes.draw do
 
   get '/main', to: 'dashboard#main'
 
-  resources :games, only: [:index, :show, :update]
+  resources :games, only: [:index, :show, :update, :create]
 
-  get '/play', to: 'games#play'
+  get '/play', to: 'games#play', as: :game_play
+  get '/load_game', to: 'games#load_game', as: :game_load
 
 end
