@@ -5,6 +5,11 @@ puts "Destroying Users\n"
 User.destroy_all
 puts "Users: #{User.count}"
 
+puts "Destroying Flights\n"
+Flight.destroy_all
+puts "Flights: #{Flight.count}"
+puts "############"
+
 puts "Destroying Airline\n"
 Airline.destroy_all
 puts "Airline: #{Airline.count}"
@@ -17,10 +22,6 @@ puts "Destroying Aircrafts\n"
 Aircraft.destroy_all
 puts "Aircrafts: #{Aircraft.count}"
 
-puts "Destroying Flights\n"
-Flight.destroy_all
-puts "Flights: #{Flight.count}"
-puts "############"
 
 
 # Add User
@@ -178,7 +179,8 @@ airlines = [
   {"iata": "TK", "icao": "THY", "name": "Turkish Airlines"},
   {"iata": "AZ", "icao": "AZA", "name": "Alitalia"},
   {"iata": "IB", "icao": "IBE", "name": "Iberia"},
-  {"iata": "VA", "icao": "VOZ", "name": "Virgin Australia"}
+  {"iata": "VA", "icao": "VOZ", "name": "Virgin Australia"},
+  {"iata": "7C", "icao": "JJA", "name": "Jeju Airline"}
 ]
 airlines.each do |airline|
   Airline.create(
@@ -188,7 +190,7 @@ airlines.each do |airline|
   )
 end
 
-puts "#{User.count} airlines created"
+puts "#{Airline.count} airlines created"
 puts "_" * 10
 
 # Add Airports
@@ -262,7 +264,7 @@ airports.each do |airport|
   )
 end
 
-puts "#{User.count} airports created"
+puts "#{Airport.count} airports created"
 puts "_" * 10
 
 # Add Aircrafts
@@ -286,13 +288,13 @@ airplanes = [
   {"model_short": "B717", "model_long": "Boeing 717"},
   {"model_short": "B727", "model_long": "Boeing 727"},
   {"model_short": "B737-700", "model_long": "Boeing 737-700"},
-  {"model_short": "B737-800", "model_long": "Boeing 737-800"},
+  {"model_short": "B738", "model_long": "Boeing 737-800"},
   {"model_short": "B737-900", "model_long": "Boeing 737-900"},
   {"model_short": "B747-400", "model_long": "Boeing 747-400"},
   {"model_short": "B747-8", "model_long": "Boeing 747-8"},
   {"model_short": "B757-200", "model_long": "Boeing 757-200"},
   {"model_short": "B757-300", "model_long": "Boeing 757-300"},
-  {"model_short": "B767-300", "model_long": "Boeing 767-300"},
+  {"model_short": "B763", "model_long": "Boeing 767-300"},
   {"model_short": "B767-400", "model_long": "Boeing 767-400"},
   {"model_short": "B777-200", "model_long": "Boeing 777-200"},
   {"model_short": "B777-300", "model_long": "Boeing 777-300"},
@@ -329,7 +331,7 @@ airplanes.each do |airplane|
   )
 end
 
-puts "#{User.count} aircrafts created"
+puts "#{Aircraft.count} aircrafts created"
 puts "_" * 10
 
 # Add Flights
@@ -339,10 +341,10 @@ puts "_" * 10
 
 puts "Creating a flight"
 
-departure_airport = Aiport.where(iata: "NRT")
-arrival_airport = Airport.where(iata: "ICN")
-airline = Airline.where(icao: "JJA")
-aircraft = Aircraft.where(model_short: "B738")
+departure_airport = Airport.where(iata: "NRT").first
+arrival_airport = Airport.where(iata: "ICN").first
+airline = Airline.where(icao: "JJA").first
+aircraft = Aircraft.where(model_short: "B738").first
 
 Flight.create!(
   flight_number: "JJA1102",
@@ -350,19 +352,19 @@ Flight.create!(
   departure_airport: departure_airport,
   airline: airline,
   aircraft: aircraft,
-  departure_date: "2025-02-25T11:35:00+00:00",
-  arrival_date: "2025-02-25T14:30:00+00:00",
+  departure_datetime: "2025-02-25T11:35:00+00:00",
+  arrival_datetime: "2025-02-25T14:30:00+00:00",
   latitude: 35.5762,
   longitude: 140.511,
   altitude: 1965,
   heading: 149,
-  speed: 516
+  horizontal_speed: 516
 )
 
-departure_airport = Aiport.where(iata: "PEK")
-arrival_airport = Airport.where(iata: "HND")
-airline = Airline.where(icao: "ANA")
-aircraft = Aircraft.where(model_short: "B763")
+departure_airport = Airport.where(iata: "PEK").first
+arrival_airport = Airport.where(iata: "HND").first
+airline = Airline.where(icao: "ANA").first
+aircraft = Aircraft.where(model_short: "B763").first
 
 Flight.create!(
   flight_number: "ANA964",
@@ -370,13 +372,13 @@ Flight.create!(
   departure_airport: departure_airport,
   airline: airline,
   aircraft: aircraft,
-  departure_date: "2025-02-25T08:25:00+00:00",
-  arrival_date: "2025-02-25T12:40:00+00:00",
+  departure_datetime: "2025-02-25T08:25:00+00:00",
+  arrival_datetime: "2025-02-25T12:40:00+00:00",
   latitude: 35.1318,
   longitude: 139.958,
   altitude: 2964,
   heading: 41,
-  speed: 489
+  horizontal_speed: 489
 )
 
 
