@@ -22,7 +22,8 @@ class GamesController < ApplicationController
       latitude = params[:latitude]
       longitude = params[:longitude]
 
-      closest_flights = ClosestFlights.new(latitude: latitude, longitude: longitude)
+      # closest_flights = ClosestFlights.new(latitude: latitude, longitude: longitude)
+      closest_flights = ClosestFlights.new()
       selected_flight = closest_flights.call
 
       # use find_or_create_by when getting airline, aircraft, aiport
@@ -46,14 +47,13 @@ class GamesController < ApplicationController
         horizontal_speed: selected_flight["live"]["speed_horizontal"].to_i
       )
       flight.save
-      raise
     else
       flight = Flight.first
     end
 
     game = Game.new
     authorize game
-
+    # TODO: check if it is saved OR find_insert
     redirect_to game_play_path(flight: flight)
 
   end
@@ -94,18 +94,18 @@ class GamesController < ApplicationController
     return { question: question, guess: guess, correct_answer: correct_answer}
   end
 
-  def create
-    @game = Game.new(game_params)
-    @game.user = User.first #need the user login (current_user)
-    @game.flight = Flight.first
-    # @game.departure_airport_guess = Airport.first
-    # @game.arrival_airport_guess = Airport.last
-    # @game.airline_guess = Airline.last
-    @game.aircraft_guess = Aircraft.last
-    if @game.save
-      redirect_to show_path(@game) #redirect to the results path which I think will be the show_path
-    end
-  end
+  # def create
+  #   @game = Game.new(game_params)
+  #   @game.user = User.first #need the user login (current_user)
+  #   @game.flight = Flight.first
+  #   # @game.departure_airport_guess = Airport.first
+  #   # @game.arrival_airport_guess = Airport.last
+  #   # @game.airline_guess = Airline.last
+  #   @game.aircraft_guess = Aircraft.last
+  #   if @game.save
+  #     redirect_to show_path(@game) #redirect to the results path which I think will be the show_path
+  #   end
+  # end
 
   private
 

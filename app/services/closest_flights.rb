@@ -9,7 +9,7 @@ class ClosestFlights
   end
 
   def call
-    nearby_flights = get_nearby_flights
+    nearby_flights = get_nearby_flights()
     sorted_flights = nearby_flights.map { |flight| flight.slice("flight", "dst")  } .sort_by{ |flight| flight["dst"] }
     selected_flight = sorted_flights.first
     #TODO: check if game already played
@@ -23,7 +23,7 @@ class ClosestFlights
   def get_nearby_flights
     url = "https://opendata.adsb.fi/api/v2/lat/#{@latitude}/lon/#{@longitude}/dist/25"
     uri = URI(url)
-    response = URI.open(url).read
+    response = URI.open(uri).read
     data = JSON.parse(response)["aircraft"]
   end
 
