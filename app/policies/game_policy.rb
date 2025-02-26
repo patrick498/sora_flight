@@ -20,6 +20,14 @@ class GamePolicy < ApplicationPolicy
     true
   end
 
+  def load_game?
+    true
+  end
+
+  def create?
+    true
+  end
+
   def main?
     true
   end

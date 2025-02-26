@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :games, only: [:index, :show, :update, :create]
 
-  get '/play', to: 'games#play'
+  get '/play', to: 'games#play', as: :game_play
+  get '/load_game', to: 'games#load_game', as: :game_load
 
 end
