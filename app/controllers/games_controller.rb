@@ -94,6 +94,7 @@ class GamesController < ApplicationController
     return { question: question, guess: guess, correct_answer: correct_answer}
   end
 
+  #this is just for testing purposes
   def create
     @game = Game.new(game_params)
     authorize @game
