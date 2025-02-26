@@ -92,7 +92,7 @@ class GamesController < ApplicationController
     @game.departure_airport_guess_id = flight.departure_airport_id
     @game.airline_guess_id = flight.airline_id
     @game.aircraft_guess_id = flight.aircraft_id
-    @game.arrival_airport_guess_id = game_params[:arrival_airport_guess_id].to_i
+    @game.arrival_airport_guess_id = Airport.last.id
     if @game.save
       redirect_to game_path(@game) #redirect to the results path which I think will be the show_path
     end
@@ -107,30 +107,18 @@ class GamesController < ApplicationController
   def results(game)
     results_array = []
     if game.departure_airport_guess_id.present?
-      departure_airport_guess = Airport.find(game.departure_airport_guess_id)
-      departure_airport_answer = Airport.find(game.flight.departure_airport_id)
-      results_array << single_result('Departure', departure_airport_guess, departure_airport_answer)
+      results_array << { question: 'Departure', correct: game.departure_airport_guess_id == game.flight.departure_airport_id }
     end
     if game.arrival_airport_guess_id.present?
-      arrival_airport_guess = Airport.find(game.arrival_airport_guess_id)
-      arrival_airport_answer = Airport.find(game.flight.arrival_airport_id)
-      results_array << single_result('Arrival', arrival_airport_guess, arrival_airport_answer)
+      results_array << { question: 'Arrival', correct: game.arrival_airport_guess_id == game.flight.arrival_airport_id }
     end
     if game.airline_guess_id.present?
-      airline_guess = Airline.find(game.airline_guess_id)
-      airline_answer = Airline.find(game.flight.airline_id)
-      results_array << single_result('Airline', airline_guess, airline_answer)
+      results_array << { question: 'Airline', correct: game.airline_guess_id == game.flight.airline_id }
     end
     if game.aircraft_guess_id.present?
-      aircraft_guess = Aircraft.find(game.aircraft_guess_id)
-      aircraft_answer = Aircraft.find(game.flight.aircraft_id)
-      results_array << single_result('Aircraft', aircraft_guess, aircraft_answer)
+      results_array << { question: 'Aircraft', correct: game.aircraft_guess_id == game.flight.aircraft_id }
     end
     return results_array
-  end
-
-  def single_result(question, guess, correct_answer)
-    return { question: question, guess: guess, correct_answer: correct_answer}
   end
 
 end
