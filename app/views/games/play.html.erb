@@ -4,9 +4,10 @@
 <div class="container">
   <h1>Play!</h1>
   <%= simple_form_for @game do |f| %>
+    <%= f.input :departure_airport_guess_id, collection: @airports %>
     <%= f.input :arrival_airport_guess_id, collection: @airports %>
-    <%#= f.input :departure_airport_guess_id, collection:  @airports %>
-    <%#= f.input :airline_guess_id, collection: @airline %>
+    <%= f.input :airline_guess_id, collection: @airlines %>
+    <%= f.input :aircraft_guess_id, collection: @aircrafts %>
     <%= f.submit 'Catch this flight!', class: 'btn mt-2'%>
   <%end%>
 </div>
