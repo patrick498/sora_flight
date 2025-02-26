@@ -17,7 +17,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    get_nearby_flights = true
+    get_nearby_flights = false
     if get_nearby_flights
       latitude = params[:latitude]
       longitude = params[:longitude]
@@ -59,7 +59,7 @@ class GamesController < ApplicationController
   end
 
   def play
-    @flight = Flight.find(params[:flight])
+    @flight = Flight.first
     @game = Game.new
     @game.flight = @flight
     @game.user = current_user
@@ -81,36 +81,56 @@ class GamesController < ApplicationController
    # use find_or_create_by when getting airline, aircraft, aiport
   end
 
-
-  def results(game)
-    results_array = []
-    arrival_airport_guess = Airport.find(game.arrival_airport_guess_id)
-    arrival_airport_answer = Airport.find(game.flight.arrival_airport_id)
-    results_array << single_result('arrival', arrival_airport_guess, arrival_airport_answer)
-    return results_array
+  def create
+    p 'inside this create method'
+    @game = Game.new(game_params)
+    authorize @game
+    @game.score = 0
+    @game.user = current_user #need the user login (current_user)
+    flight = Flight.last
+    @game.flight = flight
+    @game.departure_airport_guess_id = flight.departure_airport_id
+    @game.airline_guess_id = flight.airline_id
+    @game.aircraft_guess_id = flight.aircraft_id
+    @game.arrival_airport_guess_id = game_params[:arrival_airport_guess_id].to_i
+    if @game.save
+      redirect_to game_path(@game) #redirect to the results path which I think will be the show_path
+    end
   end
-
-  def single_result(question, guess, correct_answer)
-    return { question: question, guess: guess, correct_answer: correct_answer}
-  end
-
-  # def create
-  #   @game = Game.new(game_params)
-  #   @game.user = User.first #need the user login (current_user)
-  #   @game.flight = Flight.first
-  #   # @game.departure_airport_guess = Airport.first
-  #   # @game.arrival_airport_guess = Airport.last
-  #   # @game.airline_guess = Airline.last
-  #   @game.aircraft_guess = Aircraft.last
-  #   if @game.save
-  #     redirect_to show_path(@game) #redirect to the results path which I think will be the show_path
-  #   end
-  # end
 
   private
 
   def game_params
     params.require(:game).permit(:arrival_airport_guess_id, :departure_airport_guess_id, :airline_guess_id)
+  end
+
+  def results(game)
+    results_array = []
+    if game.departure_airport_guess_id.present?
+      departure_airport_guess = Airport.find(game.departure_airport_guess_id)
+      departure_airport_answer = Airport.find(game.flight.departure_airport_id)
+      results_array << single_result('Departure', departure_airport_guess, departure_airport_answer)
+    end
+    if game.arrival_airport_guess_id.present?
+      arrival_airport_guess = Airport.find(game.arrival_airport_guess_id)
+      arrival_airport_answer = Airport.find(game.flight.arrival_airport_id)
+      results_array << single_result('Arrival', arrival_airport_guess, arrival_airport_answer)
+    end
+    if game.airline_guess_id.present?
+      airline_guess = Airline.find(game.airline_guess_id)
+      airline_answer = Airline.find(game.flight.airline_id)
+      results_array << single_result('Airline', airline_guess, airline_answer)
+    end
+    if game.aircraft_guess_id.present?
+      aircraft_guess = Aircraft.find(game.aircraft_guess_id)
+      aircraft_answer = Aircraft.find(game.flight.aircraft_id)
+      results_array << single_result('Aircraft', aircraft_guess, aircraft_answer)
+    end
+    return results_array
+  end
+
+  def single_result(question, guess, correct_answer)
+    return { question: question, guess: guess, correct_answer: correct_answer}
   end
 
 end
