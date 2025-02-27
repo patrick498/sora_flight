@@ -17,7 +17,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    get_nearby_flights = true
+    get_nearby_flights = false
     if get_nearby_flights
       latitude = params[:latitude]
       longitude = params[:longitude]
@@ -54,12 +54,15 @@ class GamesController < ApplicationController
     game = Game.new
     authorize game
     # TODO: check if it is saved OR find_insert
-    redirect_to game_play_path(flight: flight)
+    redirect_to game_play_path(flight: flight, longitude: params[:longitude], latitude: params[:latitude])
 
   end
 
   def play
     @flight = Flight.find(params[:flight])
+    @latitude = params[:latitude]
+    @longitude = params[:longitude]
+
     @game = Game.new
     @game.flight = @flight
     @game.user = current_user
