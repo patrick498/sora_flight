@@ -1,11 +1,15 @@
 .arrival-airport-wrapper {
-display: flex;
-justify-content: space-between;
-flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
+
 .arrival-airport-item {
-  flex: 0 0 45%;
+  flex: 0 0 30%;
+  margin-bottom: 15px; /* Add some space between rows */
+  box-sizing: border-box;
 }
 
 .arrival-airport-selector {
@@ -13,20 +17,41 @@ flex-wrap: wrap;
   transform: scale(0);
 }
 
+
 .arrival-airport-selector + label {
   display: block;
   cursor: pointer;
   width: 100%;
-  font-size: 16px;
+  font-size: 12px;
   text-align: left;
   padding: 10px 10px 30px 10px;
   border: 1px solid #EAEAEA;
   border-radius: 4px;
   background-color: white;
-  margin: 10px;
+  margin: 12px;
+  box-sizing: border-box;
 }
 
+/* Style when radio button is checked */
 .arrival-airport-selector:checked + label {
   background-color: blue;
   color: white !important;
+}
+
+/* Mobile responsiveness - Adjust layout for smaller screens */
+@media screen and (max-width: 768px) {
+  .arrival-airport-item {
+    flex: 0 0 48%; /* Make each item take up almost half the screen on mobile */
+  }
+}
+
+/* Mobile portrait responsiveness - Stack the radio buttons vertically */
+@media screen and (max-width: 480px) {
+  .arrival-airport-item {
+    flex: 0 0 100%; /* Stack items vertically on very small screens */
+  }
+  .arrival-airport-selector + label {
+    font-size: 14px; /* Slightly increase font size for readability on small screens */
+    padding: 12px;
+  }
 }
