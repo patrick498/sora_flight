@@ -30,3 +30,12 @@ end
 #     Merit::Badge.create! attrs
 #   end
 # end
+
+Rails.application.reloader.to_prepare do
+  Merit::Badge.create!(
+    id: 1,
+    name: "First Game",
+    description: "First game played",
+    custom_fields: { difficulty: :bronze }
+  )
+end

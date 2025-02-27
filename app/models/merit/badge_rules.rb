@@ -44,6 +44,9 @@ module Merit
       #
       #   user.name.length > 4
       # end
+      grant_on 'games#create', badge_id: 1, to: :user do |game|
+        game.user.games.count > 5
+      end
     end
   end
 end
