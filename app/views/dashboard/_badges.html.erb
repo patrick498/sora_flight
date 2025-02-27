@@ -1,8 +1,12 @@
-<div class="cards">
+<h1 class="text-center my-2 text-secondary">my badges</h1>
+<div class="cards d-flex">
   <% current_user.badges.each do |badge| %>
-    <div class="stat-card rounded d-flex flex-column align-items-center">
-      <p><%= badge.name %></p>
-      <h2> <%= current_user.games.count %></h2>
+    <div class="text-center">
+      <h1><%= content_tag :i, "", class: "fa fa-#{badge.custom_fields[:icon]}" %></h1>
+      <h3><%= badge.name %></h3>
+      <p><%= badge.description %></p>
+      <p><%#= badge.name %></p>
+      <h2> <%#= current_user.games.count %></h2>
     </div>
   <% end %>
 </div>
