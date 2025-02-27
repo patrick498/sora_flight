@@ -1,0 +1,8 @@
+<div class="cards">
+  <% current_user.badges.each do |badge| %>
+    <div class="stat-card rounded d-flex flex-column align-items-center">
+      <p><%= badge.name %></p>
+      <h2> <%= current_user.games.count %></h2>
+    </div>
+  <% end %>
+</div>

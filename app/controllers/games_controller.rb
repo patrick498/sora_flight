@@ -59,7 +59,7 @@ class GamesController < ApplicationController
   end
 
   def play
-    @flight = Flight.find(params[:flight])
+    @flight = Flight.first
     @game = Game.new
     @game.flight = @flight
     @game.user = current_user
@@ -92,17 +92,21 @@ class GamesController < ApplicationController
    # use find_or_create_by when getting airline, aircraft, aiport
   end
 
-
-  def results(game)
-    results_array = []
-    arrival_airport_guess = Airport.find(game.arrival_airport_guess_id)
-    arrival_airport_answer = Airport.find(game.flight.arrival_airport_id)
-    results_array << single_result('arrival', arrival_airport_guess, arrival_airport_answer)
-    return results_array
-  end
-
-  def single_result(question, guess, correct_answer)
-    return { question: question, guess: guess, correct_answer: correct_answer}
+  #this is just for testing purposes
+  def create
+    @game = Game.new(game_params)
+    authorize @game
+    @game.score = 0
+    @game.user = current_user #need the user login (current_user)
+    flight = Flight.last
+    @game.flight = flight
+    @game.departure_airport_guess_id = flight.departure_airport_id
+    @game.airline_guess_id = flight.airline_id
+    @game.aircraft_guess_id = flight.aircraft_id
+    @game.arrival_airport_guess_id = Airport.last.id
+    if @game.save
+      redirect_to game_path(@game) #redirect to the results path which I think will be the show_path
+    end
   end
 
    def create
@@ -125,6 +129,23 @@ class GamesController < ApplicationController
 
   def game_params
     params.require(:game).permit(:arrival_airport_guess_id)
+  end
+
+  def results(game)
+    results_array = []
+    if game.departure_airport_guess_id.present?
+      results_array << { question: 'Departure', correct: game.departure_airport_guess_id == game.flight.departure_airport_id }
+    end
+    if game.arrival_airport_guess_id.present?
+      results_array << { question: 'Arrival', correct: game.arrival_airport_guess_id == game.flight.arrival_airport_id }
+    end
+    if game.airline_guess_id.present?
+      results_array << { question: 'Airline', correct: game.airline_guess_id == game.flight.airline_id }
+    end
+    if game.aircraft_guess_id.present?
+      results_array << { question: 'Aircraft', correct: game.aircraft_guess_id == game.flight.aircraft_id }
+    end
+    return results_array
   end
 
 end
