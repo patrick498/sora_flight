@@ -11,6 +11,6 @@ export default class extends Controller {
   showQuiz() {
     console.log("Clicked")
     this.buttonTarget.classList.add("d-none"); // Hide the button
-    this.quizTarget.classList.remove("visible"); // Show the content
+    this.quizTarget.classList.remove("d-none"); // Show the content
   }
 }
