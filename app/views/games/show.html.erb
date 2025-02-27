@@ -6,11 +6,14 @@
   <% end %>
   <div class='text-center mt-3'>
     <h4 class='fw-bold'>
-      Total score: <%= @game.score %>
+      Game score: <%= @game.score %>
     </h4>
   </div>
-  <div class='d-flex justify-content-between mt-3'>
-    <%= link_to 'Dashboard', main_path, class: 'btn btn-primary' %>
-    <%= link_to 'Play again', game_play_path, class: 'btn btn-primary' %>
+  <div class='text-center mt-3'>
+    <h4>Total points: <%= @game.user.points %>
+    </div>
+    <div class='d-flex justify-content-between mt-3'>
+      <%= link_to 'Dashboard', main_path, class: 'btn btn-primary' %>
+      <%= link_to 'Play again', game_play_path, class: 'btn btn-primary' %>
+    </div>
   </div>
-</div>
