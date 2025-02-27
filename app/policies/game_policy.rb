@@ -31,4 +31,8 @@ class GamePolicy < ApplicationPolicy
   def main?
     true
   end
+
+  def setup?
+    true
+  end
 end

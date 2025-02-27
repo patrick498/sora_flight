@@ -4,7 +4,7 @@ class DashboardController < ApplicationController
   end
 
   def main
-    @games = Game.new
+    @games = current_user.games
     authorize @games
   end
 end
