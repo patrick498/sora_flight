@@ -1,0 +1,46 @@
+.airplane {
+  position: absolute;
+  left: -100px;
+  top: 50%;
+  width: 80px;
+  height: auto;
+  opacity: 0;
+}
+
+.fly {
+  animation: flyAcross 3s ease-in-out forwards;
+  opacity: 1;
+}
+
+@keyframes flyAcross {
+  from {
+    left: -100px;
+    transform: rotate(-10deg);
+  }
+
+  to {
+    left: calc(100vw - 100px);
+    transform: rotate(10deg);
+  }
+}
+
+.confetti {
+  display: none;
+}
+
+.explode {
+  display: block;
+  animation: confettiBurst 2s ease-out forwards;
+}
+
+@keyframes confettiBurst {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
