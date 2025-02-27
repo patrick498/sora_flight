@@ -62,6 +62,7 @@ class GamesController < ApplicationController
 
   def play
     @game = Game.new
+    @flight = Flight.find(params[:flight])
     @game.flight = @flight
     @game.user = current_user
     authorize @game
