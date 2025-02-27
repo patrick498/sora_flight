@@ -303,8 +303,8 @@ Flight.create!(
   aircraft: aircraft,
   departure_datetime: "2025-02-25T11:35:00+00:00",
   arrival_datetime: "2025-02-25T14:30:00+00:00",
-  latitude: 35.5762,
-  longitude: 140.511,
+  latitude: 35.63156659808797,
+  longitude: 139.76591926136302,
   altitude: 1965,
   heading: 149,
   horizontal_speed: 516
