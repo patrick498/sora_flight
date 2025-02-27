@@ -1,13 +1,14 @@
-<h1><%= @flight.flight_number %></h1>
-<h2><%= @game.flight.flight_number %></h2>
-<h2><%= @game.user.username %></h2>
+<%= @game.user.username %>
 <div class="container">
   <h1>Play!</h1>
   <%= simple_form_for @game do |f| %>
-    <%= f.input :departure_airport_guess_id, collection: @airports %>
-    <%= f.input :arrival_airport_guess_id, collection: @airports %>
-    <%= f.input :airline_guess_id, collection: @airlines %>
-    <%= f.input :aircraft_guess_id, collection: @aircrafts %>
-    <%= f.submit 'Catch this flight!', class: 'btn mt-2'%>
-  <%end%>
+    <%= f.input :arrival_airport_guess_id,
+                as: :radio_buttons,
+                collection_wrapper_tag: 'div',
+                collection_wrapper_class: 'arrival-airport-wrapper',
+                item_wrapper_class: 'arrival-airport-item',
+                input_html: {class: 'arrival-airport-selector'},
+                collection: @arrival_airports %>
+    <%= f.submit 'Catch this flight!', class: 'btn mt-2' %>
+  <% end %>
 </div>

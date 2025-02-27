@@ -1,0 +1,32 @@
+.arrival-airport-wrapper {
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+}
+
+.arrival-airport-item {
+  flex: 0 0 45%;
+}
+
+.arrival-airport-selector {
+  position: absolute;
+  transform: scale(0);
+}
+
+.arrival-airport-selector + label {
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  text-align: left;
+  padding: 10px 10px 30px 10px;
+  border: 1px solid #EAEAEA;
+  border-radius: 4px;
+  background-color: white;
+  margin: 10px;
+}
+
+.arrival-airport-selector:checked + label {
+  background-color: blue;
+  color: white !important;
+}

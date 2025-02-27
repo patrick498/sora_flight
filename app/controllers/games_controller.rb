@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  skip_before_action :authenticate_user!, only:[:play, :create, :show] #remove once we have users
+  skip_before_action :authenticate_user!, only:[:play, :setup, :show] #remove once we have users
 
   def index
   @games = current_user.games
@@ -16,7 +16,7 @@ class GamesController < ApplicationController
     authorize @game
   end
 
-  def create
+  def setup
     get_nearby_flights = false
     if get_nearby_flights
       latitude = params[:latitude]
@@ -64,6 +64,17 @@ class GamesController < ApplicationController
     @game.flight = @flight
     @game.user = current_user
     authorize @game
+
+    #Wrong random options
+    @arrival_airports = Airport.where.not(id: @flight.arrival_airport).sample(3)
+
+    #Correct answer
+    @arrival_airports << @flight.arrival_airport
+
+    #Shuffle the options
+    @arrival_airports.shuffle!
+
+
     # show in the AR a 3D model
     # use ar.js library
     # ??????????????????????????????????
@@ -98,10 +109,26 @@ class GamesController < ApplicationController
     end
   end
 
+   def create
+    @game = Game.new(game_params)
+    @game.user = current_user
+    @game.flight = Flight.first
+    @game.departure_airport_guess = Airport.first
+      #@game.arrival_airport_guess = Airport.last
+    @game.airline_guess = Airline.last
+    @game.aircraft_guess = Aircraft.last
+    @game.score = 0
+      authorize @game
+
+    if @game.save
+     redirect_to game_path(@game)
+      end
+   end
+
   private
 
   def game_params
-    params.require(:game).permit(:arrival_airport_guess_id, :departure_airport_guess_id, :airline_guess_id)
+    params.require(:game).permit(:arrival_airport_guess_id)
   end
 
   def results(game)
