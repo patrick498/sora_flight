@@ -19,21 +19,16 @@ class GamesController < ApplicationController
   end
 
   def setup
-    get_nearby_flights = false
+    get_nearby_flights = true
     if get_nearby_flights
       latitude = params[:latitude]
       longitude = params[:longitude]
 
-      # closest_flights = ClosestFlights.new(latitude: latitude, longitude: longitude)
-      closest_flights = ClosestFlights.new(latitude, longitude)
+      closest_flights = ClosestFlights.new(latitude: latitude, longitude: longitude)
+      # closest_flights = ClosestFlights.new()
       selected_flight = closest_flights.call
 
-      # use find_or_create_by when getting airline, aircraft, aiport
-      departure_airport = Airport.where(iata: selected_flight["departure"]["iata"])
-      departure_airport = Airport.find_or_create_by(iata: selected_flight["departure"]["iata"]) do |airport|
-        airport.name = 'John Doe'
-        airport.age = 30
-      end
+      departure_airport = Airport.where(iata: selected_flight["departure"]["iata"]).first
       arrival_airport = Airport.where(iata: selected_flight["arrival"]["iata"]).first
       airline = Airline.where(iata: selected_flight["airline"]["iata"]).first
       aircraft = Aircraft.where(model_short: selected_flight["aircraft"]["iata"]).first
@@ -53,9 +48,10 @@ class GamesController < ApplicationController
         horizontal_speed: selected_flight["live"]["speed_horizontal"].to_i
       )
       if flight.save
-        redirect_to game_play_path(flight: flight, longitude: flight.longitude, latitude: flight.latitude)
+        final_flight = flight
       else
-        redirect_to game_load_path
+        # TODO: bigger seed, or could "make up" a flight
+        flight = Flight.first
       end
     else
       flight = Flight.first
@@ -63,14 +59,12 @@ class GamesController < ApplicationController
 
     game = Game.new
     authorize game
-    # TODO: check if it is saved OR find_insert
-    redirect_to game_play_path(flight: flight, longitude: flight.longitude, latitude: flight.latitude)
+
+    redirect_to game_play_path(flight: flight)
 
   end
 
   def play
-    # @latitude = params[:latitude]
-    # @longitude = params[:longitude]
     @game = Game.new
     @flight = Flight.find(params[:flight])
     @game.flight = @flight
@@ -87,13 +81,6 @@ class GamesController < ApplicationController
     #Shuffle the options
     @arrival_airports.shuffle!
 
-    # @flights = Flight.all #CHANGE HERE TO FIND A FLIGHT NEAR BY?
-    # @airports = Airport.all
-    # @airline = Airline.all
-    #@game.flight = @flight
-    #@game.score = 0
-    #@game.save
-   # use find_or_create_by when getting airline, aircraft, aiport
   end
 
   def create

@@ -21,7 +21,7 @@ class ClosestFlights
   private
 
   def get_nearby_flights
-    url = "https://opendata.adsb.fi/api/v2/lat/#{@latitude}/lon/#{@longitude}/dist/25"
+    url = "https://opendata.adsb.fi/api/v2/lat/#{@latitude}/lon/#{@longitude}/dist/40"
     uri = URI(url)
     response = URI.open(uri).read
     data = JSON.parse(response)["aircraft"]
