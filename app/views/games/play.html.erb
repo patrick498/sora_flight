@@ -1,20 +1,22 @@
 <div id="ar">
+  <%= @game.user.username %>
   <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true'>
     <a-camera gps-camera rotation-reader></a-camera>
     <a-entity gltf-model="<%= asset_path 'airplane/scene.gltf' %>" position="<%= "0 #{@flight.altitude} 0" %>" scale="10 10 10" gps-entity-place="<%= "latitude: #{@flight.latitude}; longitude: #{@flight.longitude}" %>"></a-entity>
   </a-scene>
 </div>
-<%= @game.user.username %>
-<div class="container">
-  <h1>Play!</h1>
-  <%= simple_form_for @game do |f| %>
-    <%= f.input :arrival_airport_guess_id,
+<div class="form-container">
+      <div class="form-container-grid">
+      <%= simple_form_for @game do |f| %>
+       <div class="form-container-column">
+        <%= f.input :arrival_airport_guess_id,
                 as: :radio_buttons,
                 collection_wrapper_tag: 'div',
                 collection_wrapper_class: 'arrival-airport-wrapper',
                 item_wrapper_class: 'arrival-airport-item',
                 input_html: {class: 'arrival-airport-selector'},
                 collection: @arrival_airports %>
-    <%= f.submit 'Catch this flight!', class: 'btn mt-2' %>
-  <% end %>
+        <%= f.submit 'Catch this flight!', class: 'button-catch' %>
+      <% end %>
+    </div>
 </div>
