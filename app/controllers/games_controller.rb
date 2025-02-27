@@ -95,38 +95,21 @@ class GamesController < ApplicationController
    # use find_or_create_by when getting airline, aircraft, aiport
   end
 
-  #this is just for testing purposes
   def create
-    @game = Game.new(game_params)
-    authorize @game
-    @game.score = 0
-    @game.user = current_user #need the user login (current_user)
-    flight = Flight.last
-    @game.flight = flight
-    @game.departure_airport_guess_id = flight.departure_airport_id
-    @game.airline_guess_id = flight.airline_id
-    @game.aircraft_guess_id = flight.aircraft_id
-    @game.arrival_airport_guess_id = Airport.last.id
-    if @game.save
-      redirect_to game_path(@game) #redirect to the results path which I think will be the show_path
-    end
-  end
-
-   def create
     @game = Game.new(game_params)
     @game.user = current_user
     @game.flight = Flight.first
     @game.departure_airport_guess = Airport.first
-      #@game.arrival_airport_guess = Airport.last
+    # @game.arrival_airport_guess = Airport.last
     @game.airline_guess = Airline.last
     @game.aircraft_guess = Aircraft.last
     @game.score = 0
-      authorize @game
+    authorize @game
 
     if @game.save
-     redirect_to game_path(@game)
-      end
-   end
+      redirect_to game_path(@game)
+    end
+  end
 
   private
 
