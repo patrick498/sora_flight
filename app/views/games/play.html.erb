@@ -1,14 +1,16 @@
 <div data-controller="gamebutton">
   <div id="ar">
-    <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true'>
+    <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true; preserveDrawingBuffer: true' >
       <a-camera gps-camera rotation-reader></a-camera>
       <a-entity gltf-model="<%= asset_path "airplane/scene.gltf" %>" position="<%= "0 #{@flight.altitude} 0 "%>" scale="10 10 10" gps-entity-place="<%= "latitude: #{@flight.latitude}; longitude:#{@flight.longitude}" %>"/>
     </a-scene>
-    <div class="centered">
+    <div class="centered-top">
+      <div class="round-dashed-circle" data-gamebutton-target="dashedSquare"></div>
+    </div>
+    <div class="centered" data-gamebutton-target="button">
       <button data-action="click->gamebutton#showQuiz"
-        data-gamebutton-target="button"
-        class="btn btn-primary rounded-circle start-btn">
-        Start
+        class="btn rounded-circle start-btn">
+        <i class="fa-solid fa-plane-up"></i>
       </button>
     </div>
   </div>

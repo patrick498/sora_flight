@@ -25,11 +25,15 @@ class GamesController < ApplicationController
       longitude = params[:longitude]
 
       # closest_flights = ClosestFlights.new(latitude: latitude, longitude: longitude)
-      closest_flights = ClosestFlights.new()
+      closest_flights = ClosestFlights.new(latitude, longitude)
       selected_flight = closest_flights.call
 
       # use find_or_create_by when getting airline, aircraft, aiport
-      departure_airport = Airport.where(iata: selected_flight["departure"]["iata"]).first
+      departure_airport = Airport.where(iata: selected_flight["departure"]["iata"])
+      departure_airport = Airport.find_or_create_by(iata: selected_flight["departure"]["iata"]) do |airport|
+        airport.name = 'John Doe'
+        airport.age = 30
+      end
       arrival_airport = Airport.where(iata: selected_flight["arrival"]["iata"]).first
       airline = Airline.where(iata: selected_flight["airline"]["iata"]).first
       aircraft = Aircraft.where(model_short: selected_flight["aircraft"]["iata"]).first
@@ -48,7 +52,11 @@ class GamesController < ApplicationController
         heading: selected_flight["live"]["direction"].to_i,
         horizontal_speed: selected_flight["live"]["speed_horizontal"].to_i
       )
-      flight.save
+      if flight.save
+        redirect_to game_play_path(flight: flight, longitude: flight.longitude, latitude: flight.latitude)
+      else
+        redirect_to game_load_path
+      end
     else
       flight = Flight.first
     end
@@ -56,12 +64,11 @@ class GamesController < ApplicationController
     game = Game.new
     authorize game
     # TODO: check if it is saved OR find_insert
-    redirect_to game_play_path(flight: flight, longitude: params[:longitude], latitude: params[:latitude])
+    redirect_to game_play_path(flight: flight, longitude: flight.longitude, latitude: flight.latitude)
 
   end
 
   def play
-    @flight = Flight.first
     # @latitude = params[:latitude]
     # @longitude = params[:longitude]
     @game = Game.new

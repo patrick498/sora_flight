@@ -1,21 +1,55 @@
 #ar {
+  a-scene {
+    z-index: 2;
+  }
+}
 
+.form-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  background: transparent; /* Make the form container semi-transparent */
+  box-sizing: border-box;
+  z-index: 200;
+}
+
+.form-container-grid {
+  display: grid;
+  gap: 20px; /* Gap between columns and rows */
+  margin-bottom: 20px;
+}
+
+/* Add padding and margin to form elements */
+.form-container-column {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.8); /* Make the form container semi-transparent */
+  box-sizing: border-box;
 }
 
 .start-btn {
   width: 2em;
   height: 2em;
-  border-radius: 50%;
-  font-size: 16px;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid white;
+  border: 2px solid #0E508C;
   background-color: transparent;
   font-size: 2em;
-  background-color: rgba(0, 0, 0, 0.4);
-  color: white;
+  // background-color: rgba(255, 255, 255, 0.7);
+  background-color: #0E508C;
+  color: #FFF;
   outline: none;
+
+  &:hover {
+    color: #0E508C;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  i {
+    font-size: 36px;
+  }
 }
 
 .centered {
@@ -30,6 +64,29 @@
   left: 0;
   right: 0;
   z-index: 999;
+}
+
+.centered-top {
+  height: 40%;
+  justify-content: center;
+  align-items: end;
+  position: absolute;
+  top: 0%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0px auto;
+  left: 0;
+  right: 0;
+  z-index: 999;
+
+  .round-dashed-circle {
+    width: 80%;
+    height: 70%;
+    border: 3px dashed rgba($color: #0E508C, $alpha: 0.3);
+    border-radius: 24px;
+    display: inline-block;
+  }
 }
 
 
