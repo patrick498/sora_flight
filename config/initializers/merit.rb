@@ -36,6 +36,41 @@ Rails.application.reloader.to_prepare do
     id: 1,
     name: "First Game",
     description: "First game played",
-    custom_fields: { difficulty: :bronze }
+    custom_fields: { difficulty: :bronze, icon: "fa-solid fa-star text-warning" }
+  )
+
+  Merit::Badge.create!(
+    id: 2,
+    name: "Correct Guess",
+    description: "Awarded for a correct guess.",
+    custom_fields: { difficulty: :silver, icon: "fa-solid fa-check-circle text-success" }
+  )
+
+  Merit::Badge.create!(
+    id: 3,
+    name: "Correct Streak",
+    description: "Awarded for a streak of correct guesses.",
+    custom_fields: { difficulty: :gold, icon: "fa-solid fa-fire text-danger" }
+  )
+
+  Merit::Badge.create!(
+    id: 4,
+    name: "Frequent Player",
+    description: "Awarded for playing many games.",
+    custom_fields: { difficulty: :silver, icon: "fa-solid fa-user-clock text-muted" }
+  )
+
+  Merit::Badge.create!(
+    id: 5,
+    name: "Perfectionist",
+    description: "Awarded for guessing correctly every time.",
+    custom_fields: { difficulty: :gold, icon: "fa-solid fa-medal text-warning" }
+  )
+
+  Merit::Badge.create!(
+    id: 6,
+    name: "Expert",
+    description: "Awarded for reaching 50 correct guesses.",
+    custom_fields: { difficulty: :platinum, icon: "fa-solid fa-trophy text-warning" }
   )
 end

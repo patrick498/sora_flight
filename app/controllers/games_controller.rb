@@ -61,10 +61,14 @@ class GamesController < ApplicationController
   end
 
   def play
+    @flight = Flight.first
+    # @latitude = params[:latitude]
+    # @longitude = params[:longitude]
     @game = Game.new
     @flight = Flight.find(params[:flight])
     @game.flight = @flight
     @game.user = current_user
+
     authorize @game
 
     #Wrong random options
@@ -88,14 +92,14 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.user = current_user
-    @game.flight = Flight.first
-    @game.departure_airport_guess = Airport.first
+    @flight = Flight.first
+    @game.flight = @flight
+    @game.departure_airport_guess_id = @flight.departure_airport_id
     # @game.arrival_airport_guess = Airport.last
-    @game.airline_guess = Airline.last
-    @game.aircraft_guess = Aircraft.last
+    @game.airline_guess_id = @flight.airline_id
+    @game.aircraft_guess_id = @flight.aircraft_id
     @game.score = 0
     authorize @game
-
     if @game.save
       redirect_to game_path(@game)
     end
