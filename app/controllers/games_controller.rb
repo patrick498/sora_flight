@@ -2,13 +2,15 @@ class GamesController < ApplicationController
   skip_before_action :authenticate_user!, only:[:play, :setup, :show] #remove once we have users
 
   def index
-  @games = current_user.games
+    @games = current_user.games
   end
 
   def show
     @game = Game.find(params[:id])
     authorize @game
     @results = results(@game)
+    count_score(@game, @results)
+    @game.user.add_points(@game.score)
   end
 
   def load_game
@@ -59,10 +61,6 @@ class GamesController < ApplicationController
   end
 
   def play
-    @flight = Flight.find(params[:flight])
-    @latitude = params[:latitude]
-    @longitude = params[:longitude]
-
     @game = Game.new
     @game.flight = @flight
     @game.user = current_user
@@ -134,4 +132,11 @@ class GamesController < ApplicationController
     return results_array
   end
 
+  def count_score(game, results_array)
+    results_array.each do |result|
+      if result[:correct]
+        game.score += 10
+      end
+    end
+  end
 end
