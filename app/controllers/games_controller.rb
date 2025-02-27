@@ -61,10 +61,6 @@ class GamesController < ApplicationController
   end
 
   def play
-    @flight = Flight.find(params[:flight])
-    @latitude = params[:latitude]
-    @longitude = params[:longitude]
-
     @game = Game.new
     @game.flight = @flight
     @game.user = current_user
