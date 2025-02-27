@@ -65,6 +65,7 @@ class GamesController < ApplicationController
     # @latitude = params[:latitude]
     # @longitude = params[:longitude]
     @game = Game.new
+    @flight = Flight.find(params[:flight])
     @game.flight = @flight
     @game.user = current_user
 
