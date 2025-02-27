@@ -16,11 +16,7 @@ class GamesController < ApplicationController
     authorize @game
   end
 
-<<<<<<< HEAD
-  def create
-=======
   def setup
->>>>>>> master
     get_nearby_flights = false
     if get_nearby_flights
       latitude = params[:latitude]
@@ -63,14 +59,7 @@ class GamesController < ApplicationController
   end
 
   def play
-<<<<<<< HEAD
-    @flight = Flight.find(params[:flight])
-    @latitude = params[:latitude]
-    @longitude = params[:longitude]
-
-=======
     @flight = Flight.first
->>>>>>> master
     @game = Game.new
     @game.flight = @flight
     @game.user = current_user
