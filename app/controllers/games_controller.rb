@@ -77,15 +77,6 @@ class GamesController < ApplicationController
     #Shuffle the options
     @arrival_airports.shuffle!
 
-
-    # show in the AR a 3D model
-    # use ar.js library
-    # ??????????????????????????????????
-    # get the location
-    # call the api flight location
-    # load the AR calculation to display the flight
-
-    # render html.erb
     # @flights = Flight.all #CHANGE HERE TO FIND A FLIGHT NEAR BY?
     # @airports = Airport.all
     # @airline = Airline.all
