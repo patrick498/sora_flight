@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="reveal"
 export default class extends Controller {
-  static targets = ['item'];
+  static targets = ['item', 'icon'];
   connect() {
     console.log('hello');
     console.log(this);
@@ -16,7 +16,15 @@ export default class extends Controller {
         item.classList.add('visible');
         // 🚀 Dispatch the event to trigger score animation
         item.dispatchEvent(new Event('reveal:show', { bubbles: true }));
-      }, index * 1000);
+        console.log('inside item timeout');
+        const icon = item.querySelector("[data-reveal-target='icon']");
+        if (icon) {
+          setTimeout(() => {
+            console.log('inside icon timeout');
+            icon.classList.remove('d-none');
+          }, 700);
+        }
+      }, index * 1500);
     });
   }
 }
