@@ -48,11 +48,12 @@ module Merit
       #   game.user.games.count > 5
       # end
 
+      # First game
       grant_on 'games#create', badge_id: 1, to: :user do |game|
         game.user.games.count == 1
       end
 
-      # First Correct Guess - Awarded for the first correct arrival airport guess
+      # First Correct Guess
       grant_on 'games#create', badge_id: 2, to: :user do |game|
         game.arrival_airport_guess_id.present? &&
           game.arrival_airport_guess_id == game.flight.arrival_airport_id &&
@@ -67,7 +68,7 @@ module Merit
 
       # Played 10 Games
       grant_on 'games#create', badge_id: 4, to: :user do |game|
-        game.user.games.count == 10
+        game.user.games.count == 51
       end
 
       # 5 Correct Guesses in a Row
