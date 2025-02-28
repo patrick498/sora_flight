@@ -5,5 +5,6 @@ class PagesController < ApplicationController
   end
 
   def home
+    redirect_to main_path
   end
 end

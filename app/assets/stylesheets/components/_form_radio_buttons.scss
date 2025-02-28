@@ -1,35 +1,39 @@
+/* Flexbox layout for radio buttons */
 .arrival-airport-wrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-
 .arrival-airport-item {
-  flex: 0 0 30%;
+  flex: 0 0 30%; /* By default, take up 30% of the space */
   margin-bottom: 15px; /* Add some space between rows */
   box-sizing: border-box;
 }
 
+/* Style the radio buttons */
 .arrival-airport-selector {
   position: absolute;
   transform: scale(0);
 }
 
-
+/* Label styles */
 .arrival-airport-selector + label {
-  display: block;
+  display: flex;
   cursor: pointer;
   width: 100%;
   font-size: 12px;
-  text-align: left;
+  text-align: center;
   padding: 10px 10px 30px 10px;
   border: 1px solid #EAEAEA;
   border-radius: 4px;
   background-color: white;
-  margin: 12px;
+  height: 65px;
   box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Style when radio button is checked */
