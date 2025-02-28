@@ -13,8 +13,10 @@ export default class extends Controller {
   revealItems() {
     this.itemTargets.forEach((item, index) => {
       setTimeout(() => {
-        item.classList.add('visible')
-      }, index * 1500);
+        item.classList.add('visible');
+        // 🚀 Dispatch the event to trigger score animation
+        item.dispatchEvent(new Event('reveal:show', { bubbles: true }));
+      }, index * 1000);
     });
   }
 }
