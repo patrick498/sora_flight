@@ -3,21 +3,21 @@
   <div class="stat-card rounded d-flex flex-column align-items-center">
     <p>Games</p>
     <%= image_tag "flights.png", alt: "text" %>
-    <h2>93</h2>
+    <h2><%= @total_games %></h2>
   </div>
   <div class="stat-card rounded d-flex flex-column align-items-center">
-    <p>Games</p>
-    <%= image_tag "flights.png", alt: "text" %>
-    <h2>93</h2>
+    <p>Badges</p>
+    <%= image_tag "badge.png", alt: "text" %>
+    <h2><%= @badges %></h2>
   </div>
   <div class="stat-card rounded d-flex flex-column align-items-center">
-    <p>Games</p>
-    <%= image_tag "flights.png", alt: "text" %>
-    <h2>93</h2>
+    <p>Correct</p>
+    <%= image_tag "correct.png", alt: "text" %>
+    <h2><%= @correct_rate %>%</h2>
   </div>
   <div class="stat-card rounded d-flex flex-column align-items-center">
-    <p>Games</p>
-    <%= image_tag "flights.png", alt: "text" %>
-    <h2>93</h2>
+    <p>Planes</p>
+    <%= image_tag "eye.png", alt: "text" %>
+    <h2><%= @total_planes %></h2>
   </div>
 </div>

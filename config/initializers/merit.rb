@@ -41,14 +41,14 @@ Rails.application.reloader.to_prepare do
 
   Merit::Badge.create!(
     id: 2,
-    name: "Correct Guess",
+    name: "First Correct",
     description: "Awarded for a correct guess.",
     custom_fields: { difficulty: :silver, icon: "fa-solid fa-check-circle text-success" }
   )
 
   Merit::Badge.create!(
     id: 3,
-    name: "Correct Streak",
+    name: "Three Streak",
     description: "Awarded for a streak of correct guesses.",
     custom_fields: { difficulty: :gold, icon: "fa-solid fa-fire text-danger" }
   )
@@ -62,7 +62,7 @@ Rails.application.reloader.to_prepare do
 
   Merit::Badge.create!(
     id: 5,
-    name: "Perfectionist",
+    name: "Five Streak",
     description: "Awarded for guessing correctly every time.",
     custom_fields: { difficulty: :gold, icon: "fa-solid fa-medal text-warning" }
   )
