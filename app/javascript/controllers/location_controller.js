@@ -25,6 +25,7 @@ export default class extends Controller {
       );
     } else {
       console.error("Geolocation not supported.");
+      alert()
     }
   }
 }
