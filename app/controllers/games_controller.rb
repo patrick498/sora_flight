@@ -114,7 +114,7 @@ class GamesController < ApplicationController
     results_array = []
     if game.arrival_airport_guess_id.present?
       guess = Airport.find(game.arrival_airport_guess_id).name
-      answer = Airport.find(game.arrival_airport_guess_id).name
+      answer = Airport.find(game.flight.arrival_airport_id).name
       correct = game.arrival_airport_guess_id == game.flight.arrival_airport_id
       results_array << { question: 'Arrival', guess: guess, answer: answer, correct: correct }
     end
