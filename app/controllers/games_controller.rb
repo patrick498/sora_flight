@@ -118,11 +118,11 @@ class GamesController < ApplicationController
 
   def results(game)
     results_array = []
-    if game.departure_airport_guess_id.present?
-      results_array << { question: 'Departure', correct: game.departure_airport_guess_id == game.flight.departure_airport_id }
-    end
     if game.arrival_airport_guess_id.present?
       results_array << { question: 'Arrival', correct: game.arrival_airport_guess_id == game.flight.arrival_airport_id }
+    end
+    if game.departure_airport_guess_id.present?
+      results_array << { question: 'Departure', correct: game.departure_airport_guess_id == game.flight.departure_airport_id }
     end
     if game.airline_guess_id.present?
       results_array << { question: 'Airline', correct: game.airline_guess_id == game.flight.airline_id }

@@ -5,9 +5,25 @@
     <img src="<%= asset_path('airplane.png') %>" alt="Flying Airplane" class="airplane">
     -->
     <h2 class='fw-bold'>You earned <%= @game.score %> points!</h2>
-    <% @results.each do |result| %>
-      <%= render 'result', result: result %>
-    <% end %>
+    <!--
+
+      <div data-reveal-target="item" class="hidden">First div</div>
+      <div data-reveal-target="item" class="hidden">Second div</div>
+      <div data-reveal-target="item" class="hidden">Third div</div>
+
+    -->
+    <div data-controller='reveal'>
+      <% @results.each do |result| %>
+        <div data-reveal-target="item" class="hidden d-flex justify-content-between align-items-center bg-light p-3 rounded shadow">
+          <span><%= result[:question] %></span>
+          <% if result[:correct] %>
+            <span class="text-success fw-bold">✅</span>
+          <% else %>
+            <span class="text-danger fw-bold">❌</span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
     <div class='d-flex justify-content-between mt-3'>
       <%= link_to 'Dashboard', main_path, class: 'btn btn-primary' %>
       <%= link_to 'Play again', game_load_path, class: 'btn btn-primary' %>
