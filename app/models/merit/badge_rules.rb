@@ -68,7 +68,7 @@ module Merit
 
       # Played 10 Games
       grant_on 'games#create', badge_id: 4, to: :user do |game|
-        game.user.games.count == 10
+        game.user.games.count == 51
       end
 
       # 5 Correct Guesses in a Row
