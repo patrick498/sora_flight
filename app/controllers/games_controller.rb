@@ -112,19 +112,22 @@ class GamesController < ApplicationController
 
   def results(game)
     results_array = []
-    if game.departure_airport_guess_id.present?
-      results_array << { question: 'Departure', correct: game.departure_airport_guess_id == game.flight.departure_airport_id }
-    end
     if game.arrival_airport_guess_id.present?
-      results_array << { question: 'Arrival', correct: game.arrival_airport_guess_id == game.flight.arrival_airport_id }
+      guess = Airport.find(game.arrival_airport_guess_id).name
+      answer = Airport.find(game.arrival_airport_guess_id).name
+      correct = game.arrival_airport_guess_id == game.flight.arrival_airport_id
+      results_array << { question: 'Arrival', guess: guess, answer: answer, correct: correct }
     end
-    if game.airline_guess_id.present?
-      results_array << { question: 'Airline', correct: game.airline_guess_id == game.flight.airline_id }
-    end
-    if game.aircraft_guess_id.present?
-      results_array << { question: 'Aircraft', correct: game.aircraft_guess_id == game.flight.aircraft_id }
-    end
-    return results_array
+    # if game.departure_airport_guess_id.present?
+    #   results_array << { question: 'Departure', correct: game.departure_airport_guess_id == game.flight.departure_airport_id }
+    # end
+    # if game.airline_guess_id.present?
+    #   results_array << { question: 'Airline', correct: game.airline_guess_id == game.flight.airline_id }
+    # end
+    # if game.aircraft_guess_id.present?
+    #   results_array << { question: 'Aircraft', correct: game.aircraft_guess_id == game.flight.aircraft_id }
+    # end
+    # return results_array
   end
 
   def count_score(game, results_array)
