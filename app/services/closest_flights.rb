@@ -9,13 +9,18 @@ class ClosestFlights
   end
 
   def call
+    active_flight = nil
+    index = 0
     nearby_flights = get_nearby_flights()
     sorted_flights = nearby_flights.map { |flight| flight.slice("flight", "dst")  } .sort_by{ |flight| flight["dst"] }
-    selected_flight = sorted_flights.first
-    #TODO: check if game already played
-    flights = get_flight_details(selected_flight["flight"].strip!)
-    active_flight = flights.select { |flight| (flight["live"]) }
-    active_flight.first
+    while !active_flight && index < sorted_flights.length
+      selected_flight = sorted_flights[index]
+      #TODO: check if game already played
+      flights = get_flight_details(selected_flight["flight"].strip!)
+      active_flight = flights.select { |flight| (flight["live"]) }
+      active_flight.first
+      index += 1
+    end
   end
 
   private
@@ -30,7 +35,7 @@ class ClosestFlights
   def get_flight_details(flight)
     url = "https://api.aviationstack.com/v1/flights"
     params = {
-      access_key: "4e3dc4399d7d8f88546d1f0227b754a9",
+      access_key: ENV["AVIATION_ACCESS_KEY"],
       flight_icao: flight
     }
     uri = URI(url)
