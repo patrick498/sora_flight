@@ -22,9 +22,9 @@ export default class extends Controller {
           setTimeout(() => {
             console.log('inside icon timeout');
             icon.classList.remove('d-none');
-          }, 700);
+          }, 500);
         }
-      }, index * 1500);
+      }, index * 1000);
     });
   }
 }
