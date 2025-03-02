@@ -9,15 +9,22 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <link rel="manifest" href="manifest.json">
+    <%# AR %>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/three.js/build/ar-threex-location-only.js'></script>
     <script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
+    <%# PWA %>
+    <link rel="manifest" href="<%= asset_path 'manifest.json' %>">
     <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then((reg) => console.log("Service Worker Registered", reg))
-          .catch((err) => console.log("Service Worker Failed", err));
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then((registration) => {
+            console.log("Service Worker Registered!", registration);
+          })
+          .catch((error) => {
+            console.log("Service Worker Registration Failed", error);
+          });
       }
     </script>
     <%= render 'shared/ios_pwa_links' %>

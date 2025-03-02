@@ -27,6 +27,8 @@ class GamesController < ApplicationController
       closest_flights = ClosestFlights.new(latitude: latitude, longitude: longitude)
       # closest_flights = ClosestFlights.new()
       selected_flight = closest_flights.call
+      puts "######SELECTED FLIGHT"
+      p selected_flight
 
       if selected_flight
 
@@ -51,21 +53,24 @@ class GamesController < ApplicationController
         )
         if flight.save
           final_flight = flight
+          puts "########SAVED FLIGHT"
+          p final_flight
         else
           final_flight = Flight.first
         end
       else
         # TODO: bigger seed, or could "make up" a flight
-        flight = Flight.first
+        final_flight = Flight.first
       end
     else
-      flight = Flight.first
+      final_flight = Flight.first
     end
 
     game = Game.new
     authorize game
-
-    redirect_to game_play_path(flight: flight)
+    puts "##############LAST FLIGHT"
+    p final_flight
+    redirect_to game_play_path(flight: final_flight)
 
   end
 
@@ -91,7 +96,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.user = current_user
-    @flight = Flight.first
+    @flight = Flight.find(params[:flight])
     @game.flight = @flight
     @game.departure_airport_guess_id = @flight.departure_airport_id
     # @game.arrival_airport_guess = Airport.last
