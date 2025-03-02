@@ -8,6 +8,9 @@ Rails.application.routes.draw do
 
   get '/main', to: 'dashboard#main'
 
+  # temporary route to test map
+  get 'map_test', to: 'pages#map_test'
+
   resources :games, only: [:index, :show, :update, :create ]
 
   get '/play', to: 'games#play', as: :game_play
