@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 module SoraFlight
   class Application < Rails::Application
+    config.public_file_server.enabled = true
     config.action_controller.raise_on_missing_callback_actions = false if Rails.version >= "7.1.0"
     config.generators do |generate|
       generate.assets false

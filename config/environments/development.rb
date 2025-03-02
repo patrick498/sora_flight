@@ -1,10 +1,13 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.assets.digest = true
+  config.public_file_server.enabled = true
   config.action_mailer.default_url_options = { host: "http://localhost:3000" }
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.hosts << /[a-z0-9-.]+\.ngrok-free\.app/
+  # config.hosts.clear
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
