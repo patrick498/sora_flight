@@ -109,6 +109,18 @@ class GamesController < ApplicationController
     end
   end
 
+  def quiz
+    if params[:id]
+      @game = Game.find(params[:id])
+    else
+      @game = Game.first
+    end
+    location = @game.flight
+    @game.user = current_user
+    authorize @game
+    @markers = markers(@game.flight, location)
+  end
+
   private
 
   def game_params
@@ -133,6 +145,26 @@ class GamesController < ApplicationController
     #   results_array << { question: 'Aircraft', correct: game.aircraft_guess_id == game.flight.aircraft_id }
     # end
     # return results_array
+  end
+
+  # returns markers for departure, arrival, and current position
+  def markers(flight, location)
+    departure = {
+      lat: flight.departure_airport.latitude,
+      lng: flight.departure_airport.longitude,
+      marker_html: view_context.image_tag(view_context.image_path("location_icon.svg"), height: 50, width: 50, alt: "departure_icon")
+    }
+    destination = {
+      lat: flight.arrival_airport.latitude,
+      lng: flight.arrival_airport.longitude,
+      marker_html: view_context.image_tag(view_context.image_path("location_icon.svg"), height: 50, width: 50, alt: "arrival_icon")
+    }
+    current_position = {
+      lat: location.latitude,
+      lng: location.longitude,
+      marker_html: view_context.image_tag(view_context.image_path("airplane_icon.svg"), height: 100, width: 100, alt: "airplane_icon")
+    }
+    return [ departure, destination, current_position ]
   end
 
   def count_score(game, results_array)

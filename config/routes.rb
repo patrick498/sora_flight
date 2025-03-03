@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :games, only: [:index, :show, :update, :create ]
 
   get '/play', to: 'games#play', as: :game_play
+  get '/quiz', to: 'games#quiz', as: :game_quiz
   get '/setup', to: 'games#setup', as: :setup
   get '/load_game', to: 'games#load_game', as: :game_load
 
