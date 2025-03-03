@@ -63,18 +63,18 @@ module Merit
       # 3 Correct Guesses in a Row
       grant_on 'games#create', badge_id: 3, to: :user do |game|
         last_3_games = game.user.games.order(created_at: :desc).limit(3)
-        last_3_games.all? { |g| g.arrival_airport_guess_id == g.flight.arrival_airport_id }
+        last_3_games.count == 3 && last_3_games.all? { |g| g.arrival_airport_guess_id == g.flight.arrival_airport_id }
       end
 
       # Played 10 Games
       grant_on 'games#create', badge_id: 4, to: :user do |game|
-        game.user.games.count == 51
+        game.user.games.count == 10
       end
 
       # 5 Correct Guesses in a Row
       grant_on 'games#create', badge_id: 5, to: :user do |game|
         last_5_games = game.user.games.order(created_at: :desc).limit(5)
-        last_5_games.all? { |g| g.arrival_airport_guess_id == g.flight.arrival_airport_id }
+        last_5_games.count == 5 && last_5_games.all? { |g| g.arrival_airport_guess_id == g.flight.arrival_airport_id }
       end
 
       # 50 Correct Guesses

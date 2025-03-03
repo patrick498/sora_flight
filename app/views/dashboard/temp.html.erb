@@ -1,0 +1,14 @@
+<div class="badges-container">
+  <h1 class="text-center my-2 text-gray">Badges</h1>
+  <div class="badge-cards mb-5">
+    <% @all_badges.each do |badge| %>
+      <% earned = @earned_badges.include?(badge.id) %>
+      <div class="badge-card text-center shadow-sm <%= earned ? 'border border-5 border-info' : 'border border-5 border-secondary' %>">
+        <h1><%= content_tag :i, "", class: "fa fa-#{badge.custom_fields[:icon]} #{earned ? badge.custom_fields[:color] : 'text-secondary'}" %></h1>
+        <p class="<%= earned ? '' : 'text-secondary'%>"><%= badge.name %></p>
+        <p><%#= badge.name %></p>
+        <h2> <%#= current_user.games.count %></h2>
+      </div>
+    <% end %>
+  </div>
+</div>

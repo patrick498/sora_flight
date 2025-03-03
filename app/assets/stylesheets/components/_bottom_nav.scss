@@ -1,0 +1,92 @@
+@media (min-width: 100px) and (max-width: 575px) {
+  .nav-container{
+    position: relative;
+    .play{
+      position: absolute;
+      right: 215px;
+      top: -28px;
+      width: 74px;
+      a{
+        font-size: 50px;
+        border-radius: 18%;
+        background-color: steelblue;
+        border-color: steelblue;
+        height: 135px;
+      }
+    }
+  }
+}
+
+@media (min-width: 576px) {
+  .nav-container{
+    position: relative;
+    .play{
+      position: absolute;
+      right: 270px;
+      top: -28px;
+      width: 74px;
+      a{
+        font-size: 50px;
+        border-radius: 18%;
+        background-color: steelblue;
+        border-color: steelblue;
+        height: 135px;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .nav-container{
+    position: relative;
+    .play{
+      position: absolute;
+      right: 360px;
+      top: -28px;
+      width: 74px;
+      a{
+        font-size: 50px;
+        border-radius: 18%;
+        background-color: steelblue;
+        border-color: steelblue;
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .nav-container{
+    position: relative;
+    .play{
+      position: absolute;
+      right: 475px;
+      top: -28px;
+      width: 74px;
+      a{
+        font-size: 50px;
+        border-radius: 18%;
+        background-color: steelblue;
+        border-color: steelblue;
+      }
+    }
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .nav-container{
+    position: relative;
+    .play{
+      position: absolute;
+      right: 655px;
+      top: -28px;
+      width: 74px;
+      a{
+        font-size: 50px;
+        border-radius: 18%;
+        background-color: steelblue;
+        border-color: steelblue;
+      }
+    }
+  }
+}
