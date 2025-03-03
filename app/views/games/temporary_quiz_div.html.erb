@@ -1,0 +1,12 @@
+<div>
+  <% answer = nil %>
+  <% if @game.questions %>
+    <% @game.questions.first.choices.each do |choice| %>
+      <% if choice.correct == true %>
+        <% answer = choice %>
+      <% end %>
+    <% end %>
+    <h2><%= @game.questions.first.content %></h2>
+    <h3><%= link_to "#{answer.content}", game_quiz_path(quiz_id: @game), class: 'btn btn-primary' %></h3>
+  <% end %>
+</div>
