@@ -1,5 +1,5 @@
-<% if @games %>
-  <h1 class="text-center my-2 text-secondary">my stats</h1>
+<% if current_user.games %>
+  <h1 class="text-center my-2 text-gray">Stats</h1>
   <div class="d-flex flex-nowrap overflow-auto mx-2 gap-2 stat-list py-2">
     <div class="stat-card rounded d-flex flex-column align-items-center">
       <p>Games</p>

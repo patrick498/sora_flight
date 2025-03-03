@@ -3,6 +3,8 @@
   white-space: nowrap;
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none; /* For IE/Edge */
+  box-shadow: 0 0 0 rgba(0,0,0,0.2);
+  margin-bottom: 30px;
 
   &::-webkit-scrollbar {
     display: none; /* For Chrome, Safari, and Opera */

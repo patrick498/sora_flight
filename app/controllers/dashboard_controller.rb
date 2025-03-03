@@ -11,7 +11,11 @@ class DashboardController < ApplicationController
     @badges = user.badges.count
     @correct_rate = correct_rate
     @total_planes = planes_number
+
+    @all_badges = Merit::Badge.all
+    @earned_badges = current_user.badges.map(&:id)
     return if @games.blank?
+
     @most_plane = Aircraft.find(most(:aircraft_guess_id)[0]).model_long
   end
 
@@ -21,6 +25,7 @@ class DashboardController < ApplicationController
     games = current_user.games
     guesses = games.pluck(:arrival_airport_guess_id)
     return if guesses.blank?
+
     flights = games.pluck(:flight_id)
     airports = flights.map { |f| Flight.find(f).arrival_airport_id }.tally
     correct = guesses.tally.sum { |num, count1| [count1, airports[num] || 0].min }
