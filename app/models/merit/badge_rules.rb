@@ -77,10 +77,6 @@ module Merit
         last_5_games.count == 5 && last_5_games.all? { |g| g.arrival_airport_guess_id == g.flight.arrival_airport_id }
       end
 
-      # 50 Correct Guesses
-      grant_on 'games#create', badge_id: 6, to: :user do |game|
-        game.user.games.where(arrival_airport_guess_id: game.flight.arrival_airport_id).count == 50
-      end
     end
   end
 end

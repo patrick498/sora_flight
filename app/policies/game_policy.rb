@@ -35,4 +35,8 @@ class GamePolicy < ApplicationPolicy
   def setup?
     true
   end
+
+  def quiz?
+    true
+  end
 end

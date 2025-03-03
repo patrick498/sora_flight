@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_26_041259) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_03_021900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,6 +79,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_041259) do
     t.index ["sash_id"], name: "index_badges_sashes_on_sash_id"
   end
 
+  create_table "choices", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.string "content"
+    t.boolean "correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_choices_on_question_id"
+  end
+
   create_table "flights", force: :cascade do |t|
     t.string "flight_number"
     t.datetime "departure_datetime"
@@ -122,6 +131,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_041259) do
     t.index ["user_id"], name: "index_games_on_user_id"
   end
 
+  create_table "guesses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "choice_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["choice_id"], name: "index_guesses_on_choice_id"
+    t.index ["user_id"], name: "index_guesses_on_user_id"
+  end
+
   create_table "merit_actions", force: :cascade do |t|
     t.integer "user_id"
     t.string "action_method"
@@ -158,6 +176,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_041259) do
     t.index ["sash_id"], name: "index_merit_scores_on_sash_id"
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.string "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_questions_on_game_id"
+  end
+
   create_table "sashes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -181,6 +207,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_041259) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "choices", "questions"
   add_foreign_key "flights", "aircrafts"
   add_foreign_key "flights", "airlines"
   add_foreign_key "flights", "airports", column: "arrival_airport_id"
@@ -191,4 +218,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_041259) do
   add_foreign_key "games", "airports", column: "departure_airport_guess_id"
   add_foreign_key "games", "flights"
   add_foreign_key "games", "users"
+  add_foreign_key "guesses", "choices"
+  add_foreign_key "guesses", "users"
+  add_foreign_key "questions", "games"
 end

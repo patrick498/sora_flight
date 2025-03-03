@@ -4,9 +4,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ['item', 'icon'];
   connect() {
-    console.log('hello');
-    console.log(this);
-
     this.revealItems();
   }
 
@@ -16,15 +13,13 @@ export default class extends Controller {
         item.classList.add('visible');
         // 🚀 Dispatch the event to trigger score animation
         item.dispatchEvent(new Event('reveal:show', { bubbles: true }));
-        console.log('inside item timeout');
         const icon = item.querySelector("[data-reveal-target='icon']");
         if (icon) {
           setTimeout(() => {
-            console.log('inside icon timeout');
             icon.classList.remove('d-none');
-          }, 700);
+          }, 500);
         }
-      }, index * 1500);
+      }, index * 1000);
     });
   }
 }

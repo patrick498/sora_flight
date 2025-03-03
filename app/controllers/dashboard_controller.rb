@@ -11,6 +11,7 @@ class DashboardController < ApplicationController
     @badges = user.badges.count
     @correct_rate = correct_rate
     @total_planes = planes_number
+
     @all_badges = Merit::Badge.all
     @earned_badges = current_user.badges.map(&:id)
     return if @games.blank?

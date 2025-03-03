@@ -25,6 +25,7 @@
                 item_wrapper_class: 'arrival-airport-item',
                 input_html: {class: 'arrival-airport-selector'},
                 collection: @arrival_airports %>
+        <%= f.hidden_field :flight_id, value: @flight.id.to_i %>
         <%= f.submit 'Catch this flight!', class: 'button-catch' %>
       <% end %>
     </div>

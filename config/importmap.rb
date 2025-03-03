@@ -10,3 +10,4 @@ pin "@popperjs/core", to: "popper.js", preload: true
 pin "@ar-js-org/ar.js", to: "@ar-js-org--ar.js.js" # @3.4.7
 pin "aframe" # @1.7.0
 pin "three" # @0.164.1
+pin "mapbox-gl" # @3.10.0
