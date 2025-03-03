@@ -226,6 +226,7 @@ airports =
   {"iata": "MUC", "icao": "EDDM", "name": "Munich Airport", "city": "Munich", "country": "Germany", "latitude": 48.3537, "longitude": 11.7750},
   {"iata": "YVR", "icao": "CYVR", "name": "Vancouver International Airport", "city": "Vancouver", "country": "Canada", "latitude": 49.1952, "longitude": -123.1761},
   {"iata": "YYZ", "icao": "CYYZ", "name": "Toronto Pearson International Airport", "city": "Toronto", "country": "Canada", "latitude": 43.6777, "longitude": -79.6248},
+  {"iata": "SKD", "icao": "UTSS", "name": "Samarkand International Airport", "city": "Samarkand", "country": "Uzbekistan", "latitude": 39.69633, "longitude": 66.99087},
 ]
 airports.each do |airport|
   Airport.create(
