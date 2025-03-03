@@ -9,18 +9,24 @@ class ClosestFlights
   end
 
   def call
-    active_flight = nil
+    active_flight = []
     index = 0
     nearby_flights = get_nearby_flights()
+    puts "#### NEARBT FLIGHTS"
+    puts nearby_flights
     sorted_flights = nearby_flights.map { |flight| flight.slice("flight", "dst")  } .sort_by{ |flight| flight["dst"] }
-    while !active_flight && index < sorted_flights.length
+    while active_flight.empty? && index < sorted_flights.length
       selected_flight = sorted_flights[index]
       #TODO: check if game already played
       flights = get_flight_details(selected_flight["flight"].strip!)
+      puts "#### GET FLIGHT DETAIL"
+      puts flights
       active_flight = flights.select { |flight| (flight["live"]) }
-      active_flight.first
+      puts "#### ACTIVE FLIGHT"
+      p active_flight
       index += 1
     end
+    active_flight.first if active_flight.any?
   end
 
   private
