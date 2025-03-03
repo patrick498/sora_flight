@@ -6,7 +6,7 @@
       <img data-airplane-target='airplane' src="<%= asset_path('airplane.png') %>" alt="Flying Airplane" class="airplane">
       -->
       <div data-controller='reveal'>
-        <h1 data-reveal-target="item" class="hidden justify-content-between align-items-center bg-light p-3 rounded shadow">Result</h2>
+        <h1 class="justify-content-between align-items-center bg-light p-3 rounded shadow">Result</h2>
         <% @results.each do |result| %>
           <div data-reveal-target="item" class="hidden d-flex justify-content-between align-items-center bg-light p-3 rounded shadow">
             <span class='text-start'><%= result[:guess] %></span>

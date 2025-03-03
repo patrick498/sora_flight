@@ -11,6 +11,7 @@ class DashboardController < ApplicationController
     @badges = user.badges.count
     @correct_rate = correct_rate
     @total_planes = planes_number
+    return if @games.blank?
     @most_plane = Aircraft.find(most(:aircraft_guess_id)[0]).model_long
   end
 
@@ -18,6 +19,7 @@ class DashboardController < ApplicationController
 
   def correct_rate
     games = current_user.games
+    return if games.blank?
     guesses = games.pluck(:arrival_airport_guess_id)
     flights = games.pluck(:flight_id)
     airports = flights.map { |f| Flight.find(f).arrival_airport_id }.tally

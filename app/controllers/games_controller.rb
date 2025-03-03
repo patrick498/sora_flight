@@ -113,6 +113,18 @@ class GamesController < ApplicationController
     location = @game.flight
     @game.user = current_user
     authorize @game
+
+    # Get all answered question IDs by the user
+    answered_questions_ids = @game.user.guesses.joins(:choice).pluck('choices.question_id')
+
+    # Find the next unanswered question
+    @question = @game.questions.where.not(id: answered_questions_ids).first
+
+    if @question.nil?
+      redirect_to game_path(@game)
+    end
+
+    @guess = Guess.new(user: current_user)
     @markers = markers(@game.flight, location)
   end
 
@@ -120,6 +132,30 @@ class GamesController < ApplicationController
 
   def game_params
     params.require(:game).permit(:arrival_airport_guess_id)
+  end
+
+  def create_questions(game)
+    question = Question.new()
+    question.game = game
+    question.content = "What does 'Mayday' signify in aviation?"
+    if question.save
+      puts "Question saved successfully!"
+      create_choice(question, 'Emergency distress call', true)
+      create_choice(question, 'Request to land', false)
+      create_choice(question, 'Weather alert', false)
+      create_choice(question, 'Low fuel warning', false)
+    else
+      puts "Error saving question:"
+      puts question.errors.full_messages.join(", ")
+    end
+  end
+
+  def create_choice(question, content, correct)
+    choice = Choice.create()
+    choice.question = question
+    choice.content = content
+    choice.correct = correct
+    choice.save
   end
 
   def results(game)
@@ -130,16 +166,7 @@ class GamesController < ApplicationController
       correct = game.arrival_airport_guess_id == game.flight.arrival_airport_id
       results_array << { question: 'Arrival', guess: guess, answer: answer, correct: correct }
     end
-    # if game.departure_airport_guess_id.present?
-    #   results_array << { question: 'Departure', correct: game.departure_airport_guess_id == game.flight.departure_airport_id }
-    # end
-    # if game.airline_guess_id.present?
-    #   results_array << { question: 'Airline', correct: game.airline_guess_id == game.flight.airline_id }
-    # end
-    # if game.aircraft_guess_id.present?
-    #   results_array << { question: 'Aircraft', correct: game.aircraft_guess_id == game.flight.aircraft_id }
-    # end
-    # return results_array
+    return results_array
   end
 
   # returns markers for departure, arrival, and current position
