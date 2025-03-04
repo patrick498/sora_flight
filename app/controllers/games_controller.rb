@@ -68,6 +68,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
+
     @game.user = current_user
     @flight = Flight.find(game_params[:flight_id])
     @game.flight = @flight
@@ -109,7 +110,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:departure_airport_guess_id, :arrival_airport_guess_id, :flight_id)
+    params.require(:game).permit(:departure_airport_guess_id, :arrival_airport_guess_id, :airline_guess_id,  :flight_id)
   end
 
   def create_questions(game)
