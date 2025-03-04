@@ -45,6 +45,12 @@ class GamesController < ApplicationController
   def play
     @game = Game.new
     @flight = Flight.find(params[:flight])
+    # distance - 2 workarounds
+    # 1 - get distance from closes_flight -> then make a function to calculate model
+    #scale to be bigger
+    # -easier but can make the model look strange
+    # 2 - always change the display laittude and longitude to a nearby radius
+    # -more maths
     @game.flight = @flight
     @game.user = current_user
 
