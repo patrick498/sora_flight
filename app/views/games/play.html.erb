@@ -2,7 +2,7 @@
   <div id="ar">
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true;' >
       <a-camera gps-camera rotation-reader></a-camera>
-      <a-entity gltf-model="<%= "/models/airplanes/airplane_#{['red','blue'].sample}.gltf" %>" position="<%= "0 #{@flight.altitude} 0 "%>" scale="20 20 20" gps-entity-place="<%= "latitude: #{@flight.latitude}; longitude:#{@flight.longitude}" %>"/>
+      <a-entity gltf-model="<%= "/models/airplanes/airplane_#{['red','blue'].sample}.gltf" %>" position="<%= "0 #{@flight.altitude} 0 "%>" scale="15 15 15" gps-entity-place="<%= "latitude: #{@flight.latitude}; longitude:#{@flight.longitude}" %>"/>
     </a-scene>
     <div class="centered-top">
         <div class="round-dashed-circle" data-gamebutton-target="dashedSquare"></div>
