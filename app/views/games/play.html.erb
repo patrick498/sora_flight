@@ -5,31 +5,51 @@
       <a-entity gltf-model="<%= "/models/airplanes/airplane_#{['red','blue'].sample}.gltf" %>" position="<%= "0 #{@flight.altitude} 0 "%>" scale="20 20 20" gps-entity-place="<%= "latitude: #{@flight.latitude}; longitude:#{@flight.longitude}" %>"/>
     </a-scene>
     <div class="centered-top">
-        <div class="round-dashed-circle" data-gamebutton-target="dashedSquare"></div>
-      </div>
-      <div class="centered" data-gamebutton-target="button">
-        <button data-action="click->gamebutton#showQuiz"
-          class="btn rounded-circle start-btn">
-          <i class="fa-solid fa-plane-up"></i>
-        </button>
-      </div>
+      <div class="round-dashed-circle" data-gamebutton-target="dashedSquare"></div>
     </div>
-<div class="form-container d-none" data-gamebutton-target="quiz">
-    <div class="form-container-grid">
-      <%= simple_form_for @game do |f| %>
-        <%= f.input :arrival_airport_guess_id,
-        label: "Time to land! Where is this plane heading?", wrapper_html: {class: "question-form"},
-                as: :radio_buttons,
-                collection_wrapper_tag: 'div',
-                collection_wrapper_class: 'arrival-airport-wrapper',
-                item_wrapper_class: 'arrival-airport-item',
-                input_html: {class: 'arrival-airport-selector'},
-                collection: @arrival_airports %>
-          <%= f.hidden_field :flight_id, value: @flight.id.to_i %>
-          <%= f.submit 'Catch this flight!', class: 'button-catch' %>
-       <div class="d-flex justify-content-center"> <%= f.submit 'Catch!', class: 'btn-catch' %></div>
-    <% end %>
+    <div class="centered" data-gamebutton-target="button">
+      <button data-action="click->gamebutton#showQuiz"
+        class="btn rounded-circle start-btn">
+        <i class="fa-solid fa-plane-up"></i>
+      </button>
+    </div>
   </div>
-  <!--<%= render "shared/flight_ticket" %>-->
-</div>
+
+  <div class="form-container d-none" data-gamebutton-target="quiz">
+     <div class="form-container-grid">
+    <%= simple_form_for @game do |f| %>
+        <%= f.input :departure_airport_guess_id,
+                  label: "Where did this flight depart from?", wrapper_html: {class: "question-form", data: {gamebutton_target: "firstQuestion"}},
+                  as: :radio_buttons,
+                  collection_wrapper_tag: 'div',
+                  collection_wrapper_class: 'arrival-airport-wrapper',
+                  item_wrapper_class: 'arrival-airport-item',
+                  input_html: {class: 'arrival-airport-selector'},
+                  collection: @departure_airports %>
+                  <!-- Second question -->
+          <%= f.input :arrival_airport_guess_id,
+                  label: "Time to land! Where is this plane heading?", wrapper_html: {class: "question-form d-none", data: {gamebutton_target: "secondQuestion"}},
+                  as: :radio_buttons,
+                  collection_wrapper_tag: 'div',
+                  collection_wrapper_class: 'arrival-airport-wrapper',
+                  item_wrapper_class: 'arrival-airport-item',
+                  input_html: {class: 'arrival-airport-selector'},
+                  collection: @arrival_airports %>
+                  <!--Third question -->
+              <%= f.input :airline_guess_id,
+                  label: "which airline is operating this flight?", wrapper_html: {class: "question-form d-none", data: {gamebutton_target: "thirdQuestion"}},
+                  as: :radio_buttons,
+                  collection_wrapper_tag: 'div',
+                  collection_wrapper_class: 'arrival-airport-wrapper',
+                  item_wrapper_class: 'arrival-airport-item',
+                  input_html: {class: 'arrival-airport-selector'},
+                  collection: @airlines %>
+          <%= f.hidden_field :flight_id, value: @flight.id.to_i %>
+      </div>
+        <%= f.submit 'Check in!', class: 'button-catch' %>
+      <% end %>
+      <button data-action="click->gamebutton#next">NEXT</button>
+<div class="container">
+
+<!--<%= render "shared/flight_ticket" %>-->
 </div>

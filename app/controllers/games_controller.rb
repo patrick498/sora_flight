@@ -51,26 +51,30 @@ class GamesController < ApplicationController
     authorize @game
 
     #Wrong random options
-    #@departure_airport = Airport.where.not(id: @flight.departure_airport).sample(3)
+    @departure_airports = Airport.where.not(id: @flight.departure_airport).sample(3)
     @arrival_airports = Airport.where.not(id: @flight.arrival_airport).sample(3)
+    @airlines = Airline.where.not(id: @flight.airline).sample(3)
 
     #Correct answer
-    #@departure_airport << @flight.departure_airport
+    @departure_airports << @flight.departure_airport
     @arrival_airports << @flight.arrival_airport
+    @airlines << @flight.airline
 
     #Shuffle the options
-    #@departure_airport.shuffle!
+    @departure_airports.shuffle!
     @arrival_airports.shuffle!
+    @airlines.shuffle!
   end
 
   def create
     @game = Game.new(game_params)
+
     @game.user = current_user
     @flight = Flight.find(game_params[:flight_id])
     @game.flight = @flight
-    @game.departure_airport_guess_id = @flight.departure_airport_id
+    # @game.departure_airport_guess_id = @flight.departure_airport_id
     # @game.arrival_airport_guess = Airport.last
-    @game.airline_guess_id = @flight.airline_id
+    # @game.airline_guess_id = @flight.airline_id
     @game.aircraft_guess_id = @flight.aircraft_id
     @game.score = 0
     authorize @game
@@ -106,7 +110,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:arrival_airport_guess_id, :flight_id)
+    params.require(:game).permit(:departure_airport_guess_id, :arrival_airport_guess_id, :airline_guess_id,  :flight_id)
   end
 
   def create_questions(game)
