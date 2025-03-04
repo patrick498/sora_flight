@@ -24,10 +24,10 @@ export default class extends Controller {
 
     selected_choice = Choice.find(selected_choice_id);
     // if the guess is incorrect
-    if selected_choice.correct == false
-    //   higlight the choice card in red
+    if (selected_choice.correct == false) {
+      //   higlight the choice card in red
       selectedCard.classList.add('bg-success')
-    end
+    }
     //   highlight the correct choice in green
 
     // Find the form element correctly and submit it

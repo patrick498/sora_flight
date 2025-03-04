@@ -4,6 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ['item', 'icon'];
   connect() {
+    console.log("Loaded Reveal");
     this.revealItems();
   }
 
@@ -11,6 +12,7 @@ export default class extends Controller {
     this.itemTargets.forEach((item, index) => {
       setTimeout(() => {
         item.classList.add('visible');
+        item.classList.remove('hidden');
         // 🚀 Dispatch the event to trigger score animation
         item.dispatchEvent(new Event('reveal:show', { bubbles: true }));
         const icon = item.querySelector("[data-reveal-target='icon']");
@@ -22,4 +24,5 @@ export default class extends Controller {
       }, index * 1000);
     });
   }
+
 }
