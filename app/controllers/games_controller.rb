@@ -25,7 +25,6 @@ class GamesController < ApplicationController
       longitude = params[:longitude]
 
       closest_flights = ClosestFlights.new(latitude: latitude, longitude: longitude)
-      # closest_flights = ClosestFlights.new()
       selected_flight = closest_flights.call
       puts "######SELECTED FLIGHT"
       p selected_flight
@@ -38,13 +37,18 @@ class GamesController < ApplicationController
     authorize game
     puts "##############FINAL FLIGHT"
     p final_flight
-    redirect_to game_play_path(flight: final_flight)
+    redirect_to game_play_path(flight: final_flight, latitude: params[:latitude], longitude: params[:longitude])
 
   end
 
   def play
     @game = Game.new
     @flight = Flight.find(params[:flight])
+    max_radius = 5
+    get_position = NewFlightPosition.new(params[:latitude], params[:longitude], @flight.latitude, @flight.longitude, max_radius)
+    new_position = get_position.call
+    @flight.latitude = new_position[:lat]
+    @flight.longitude = new_position[:lon]
     @game.flight = @flight
     @game.user = current_user
 

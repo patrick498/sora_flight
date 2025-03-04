@@ -249,6 +249,7 @@ puts "creating aircrafts..."
 
 airplanes = [
   {"model_short": "A223", "model_long": "Airbus A220"},
+  {"model_short": "A20N", "model_long": "Airbus A320neo"},
   {"model_short": "A21N", "model_long": "Airbus A321neo"},
   {"model_short": "A318", "model_long": "Airbus A318"},
   {"model_short": "A319", "model_long": "Airbus A319"},
