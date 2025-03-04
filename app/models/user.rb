@@ -11,6 +11,7 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
 
   has_many :games, dependent: :destroy
+  has_many :guesses, dependent: :destroy
   has_many :flights, through: :games
 
   def create_sash

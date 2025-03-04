@@ -1,16 +1,42 @@
-<div class='container mt-3'>
-  <%= render 'shared/user_card' %>
-  <div class='text-center mt-3'>
-    <!--
-    <img src="<%= asset_path('airplane.png') %>" alt="Flying Airplane" class="airplane">
-    -->
-    <h2 class='fw-bold'>You earned <%= @game.score %> points!</h2>
-    <% @results.each do |result| %>
-      <%= render 'result', result: result %>
-    <% end %>
-    <div class='d-flex justify-content-between mt-3'>
-      <%= link_to 'Dashboard', main_path, class: 'btn btn-primary' %>
-      <%= link_to 'Play again', game_load_path, class: 'btn btn-primary' %>
+<div class='container pb-5 min-vh-100 d-flex flex-column justify-content-between'>
+  <div class='container-fluid'>
+    <%= render 'shared/user_card' %>
+    <div data-results-animations-score-value="<%= @game.score %>" class='text-center mt-2'>
+      <!--
+      <img data-airplane-target='airplane' src="<%= asset_path('airplane.png') %>" alt="Flying Airplane" class="airplane">
+      -->
+      <div data-controller='reveal'>
+        <h1 class="justify-content-between align-items-center bg-light p-3 rounded shadow">Result</h2>
+        <% @results.each do |result| %>
+          <div data-reveal-target="item" class="hidden d-flex justify-content-between align-items-center bg-light p-3 rounded shadow">
+            <span class='text-start'><%= result[:guess] %></span>
+            <% if result[:correct] %>
+              <span data-reveal-target='icon' class="text-success fw-bold d-none">✅</span>
+            <% else %>
+              <span data-reveal-target='icon' class="text-danger fw-bold d-none">❌</span>
+            <% end %>
+          </div>
+          <% unless result[:correct] %>
+            <div data-reveal-target="item" class="hidden d-flex justify-content-between align-items-center bg-light p-3 rounded shadow">
+              <span class='text-start'><%= result[:answer] %></span>
+              <span class="text-success fw-bold">✅</span>
+            </div>
+          <% end %>
+        <% end %>
+        <div data-reveal-target="item" data-action="reveal:show->score#animateScore" class="hidden d-flex justify-content-between align-items-center bg-light p-3 rounded shadow mt-2">
+          <div class='d-flex w-100 justify-content-between'>
+            <p>Points</p>
+            <span data-controller='score'
+          data-score-target-value="<%= @game.score %>"
+          data-score-duration-value='1000'>0</span>
+          </div>
+        </div>
+      </div>
+      <div data-reveal-target='item' class='d-flex hidden justify-content-between mt-2'>
+        <%= link_to 'Dashboard', main_path, class: 'btn btn-primary', data:
+        {action: "click->page#removeFullscreen"} %>
+        <%= link_to 'Play again', game_load_path, class: 'btn btn-primary' %>
+      </div>
     </div>
   </div>
 </div>

@@ -27,45 +27,18 @@ class GamesController < ApplicationController
       closest_flights = ClosestFlights.new(latitude: latitude, longitude: longitude)
       # closest_flights = ClosestFlights.new()
       selected_flight = closest_flights.call
-
-      if selected_flight
-
-        departure_airport = Airport.where(iata: selected_flight["departure"]["iata"]).first
-        arrival_airport = Airport.where(iata: selected_flight["arrival"]["iata"]).first
-        airline = Airline.where(iata: selected_flight["airline"]["iata"]).first
-        aircraft = Aircraft.where(model_short: selected_flight["aircraft"]["iata"]).first
-
-        flight = Flight.new(
-          flight_number: selected_flight["flight"]["iata"],
-          departure_airport: departure_airport,
-          arrival_airport: arrival_airport,
-          airline: airline,
-          aircraft: aircraft,
-          departure_datetime: selected_flight["departure"]["scheduled"],
-          arrival_datetime: selected_flight["arrival"]["scheduled"],
-          latitude: selected_flight["live"]["latitude"],
-          longitude: selected_flight["live"]["longitude"],
-          altitude: selected_flight["live"]["longitude"].to_i,
-          heading: selected_flight["live"]["direction"].to_i,
-          horizontal_speed: selected_flight["live"]["speed_horizontal"].to_i
-        )
-        if flight.save
-          final_flight = flight
-        else
-          final_flight = Flight.first
-        end
-      else
-        # TODO: bigger seed, or could "make up" a flight
-        flight = Flight.first
-      end
+      puts "######SELECTED FLIGHT"
+      p selected_flight
+      final_flight = selected_flight
     else
-      flight = Flight.first
+      final_flight = Flight.first
     end
 
     game = Game.new
     authorize game
-
-    redirect_to game_play_path(flight: flight)
+    puts "##############FINAL FLIGHT"
+    p final_flight
+    redirect_to game_play_path(flight: final_flight)
 
   end
 
@@ -93,7 +66,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.user = current_user
-    @flight = Flight.first
+    @flight = Flight.find(game_params[:flight_id])
     @game.flight = @flight
     @game.departure_airport_guess_id = @flight.departure_airport_id
     # @game.arrival_airport_guess = Airport.last
@@ -106,27 +79,89 @@ class GamesController < ApplicationController
     end
   end
 
+  def quiz
+    if params[:id]
+      @game = Game.find(params[:id])
+    else
+      @game = Game.first
+    end
+    location = @game.flight
+    @game.user = current_user
+    authorize @game
+
+    # Get all answered question IDs by the user
+    answered_questions_ids = @game.user.guesses.joins(:choice).pluck('choices.question_id')
+
+    # Find the next unanswered question
+    @question = @game.questions.where.not(id: answered_questions_ids).first
+
+    if @question.nil?
+      redirect_to game_path(@game)
+    end
+
+    @guess = Guess.new(user: current_user)
+    @markers = markers(@game.flight, location)
+  end
+
   private
 
   def game_params
-    params.require(:game).permit(:arrival_airport_guess_id)
+    params.require(:game).permit(:arrival_airport_guess_id, :flight_id)
+  end
+
+  def create_questions(game)
+    question = Question.new()
+    question.game = game
+    question.content = "What does 'Mayday' signify in aviation?"
+    if question.save
+      puts "Question saved successfully!"
+      create_choice(question, 'Emergency distress call', true)
+      create_choice(question, 'Request to land', false)
+      create_choice(question, 'Weather alert', false)
+      create_choice(question, 'Low fuel warning', false)
+    else
+      puts "Error saving question:"
+      puts question.errors.full_messages.join(", ")
+    end
+  end
+
+  def create_choice(question, content, correct)
+    choice = Choice.create()
+    choice.question = question
+    choice.content = content
+    choice.correct = correct
+    choice.save
   end
 
   def results(game)
     results_array = []
-    if game.departure_airport_guess_id.present?
-      results_array << { question: 'Departure', correct: game.departure_airport_guess_id == game.flight.departure_airport_id }
-    end
     if game.arrival_airport_guess_id.present?
-      results_array << { question: 'Arrival', correct: game.arrival_airport_guess_id == game.flight.arrival_airport_id }
-    end
-    if game.airline_guess_id.present?
-      results_array << { question: 'Airline', correct: game.airline_guess_id == game.flight.airline_id }
-    end
-    if game.aircraft_guess_id.present?
-      results_array << { question: 'Aircraft', correct: game.aircraft_guess_id == game.flight.aircraft_id }
+      guess = Airport.find(game.arrival_airport_guess_id).name
+      answer = Airport.find(game.flight.arrival_airport_id).name
+      correct = game.arrival_airport_guess_id == game.flight.arrival_airport_id
+      results_array << { question: 'Arrival', guess: guess, answer: answer, correct: correct }
     end
     return results_array
+  end
+
+  # returns markers for departure, arrival, and current position
+  def markers(flight, location)
+    departure = {
+      lat: flight.departure_airport.latitude,
+      lng: flight.departure_airport.longitude,
+      marker_html: view_context.image_tag(view_context.image_path("location_icon.svg"), height: 50, width: 50, alt: "departure_icon")
+    }
+    destination = {
+      lat: flight.arrival_airport.latitude,
+      lng: flight.arrival_airport.longitude,
+      marker_html: view_context.image_tag(view_context.image_path("location_icon.svg"), height: 50, width: 50, alt: "arrival_icon")
+    }
+    current_position = {
+      lat: location.latitude,
+      lng: location.longitude,
+      marker_html: view_context.image_tag(view_context.image_path("airplane_icon.svg"), height: 100, width: 100, alt: "airplane_icon")
+    }
+    return [ departure, destination, current_position ]
   end
 
   def count_score(game, results_array)

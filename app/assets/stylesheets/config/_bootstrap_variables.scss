@@ -14,9 +14,10 @@ $font-size-base:         1rem;
 $body-color: $gray;
 $primary:    $blue;
 $success:    $green;
-$info:       $yellow;
 $danger:     $red;
 $warning:    $orange;
+$info: $light-green;
+$secondary: rgb(200, 200, 200);
 
 // Buttons & inputs' radius
 $border-radius-sm:            .0625rem;

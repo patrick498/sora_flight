@@ -1,21 +1,5 @@
-<div class="container">
-  <nav class="navbar fixed-bottom navbar-light bg-primary">
-    <div class="container d-flex justify-content-between px-5">
-      <%= link_to "/main", class: "btn btn-primary text-light" do %>
-        <h1><i class="fa-solid fa-house"></i></h1>
-      <% end %>
-      <% if current_page?("/main") %>
-        <%= link_to game_load_path, class: "btn btn-primary text-light font-weight-bold" do %>
-          <h1>Play!</h1>
-        <% end %>
-      <% end %>
-      <%= link_to "/main", class: "btn btn-primary text-light" do %>
-        <h1><i class="fa-solid fa-trophy"></i></h1>
-      <% end %>
-    </div>
-  </nav>
-</div>
-<div class="container">
+<div class="container pb-5">
+  <%= render "shared/bottom_navbar" %>
   <div class="w-100 bg-light p-2">
     <%= render "shared/user_card" %>
     <%= render "stat_cards" %>
