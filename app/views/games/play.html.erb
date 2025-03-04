@@ -19,14 +19,16 @@
     <div class="form-container-grid">
       <%= simple_form_for @game do |f| %>
         <%= f.input :arrival_airport_guess_id,
+        label: "Time to land! Where is this plane heading?", wrapper_html: {class: "question-form"},
                 as: :radio_buttons,
                 collection_wrapper_tag: 'div',
                 collection_wrapper_class: 'arrival-airport-wrapper',
                 item_wrapper_class: 'arrival-airport-item',
                 input_html: {class: 'arrival-airport-selector'},
                 collection: @arrival_airports %>
-        <%= f.submit 'Catch this flight!', class: 'button-catch' %>
+          </div>
+       <div class="d-flex justify-content-center"> <%= f.submit 'Catch!', class: 'btn-catch' %></div>
       <% end %>
-    </div>
       </div>
+      <!--<%= render "shared/flight_ticket" %>-->
     </div>
