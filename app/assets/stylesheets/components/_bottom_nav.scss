@@ -1,91 +1,28 @@
-@media (min-width: 100px) and (max-width: 575px) {
-  .nav-container{
-    position: relative;
-    .play{
-      position: absolute;
-      right: 215px;
-      top: -28px;
-      width: 74px;
-      a{
-        font-size: 50px;
-        border-radius: 18%;
-        background-color: steelblue;
-        border-color: steelblue;
-        height: 135px;
-      }
-    }
-  }
-}
+.nav-container{
+  position: relative;
+  .play{
+    position: absolute;
+    right: 50%;
+    top: -28px;
+    width: 74px;
+    a{
+      font-size: 50px;
+      border-radius: 18%;
+      background-color: steelblue;
+      border-color: steelblue;
+      height: 135px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: #fff;
+      box-shadow: 0 9px #999;
+      &:hover {background-color: #458347}
 
-@media (min-width: 576px) {
-  .nav-container{
-    position: relative;
-    .play{
-      position: absolute;
-      right: 270px;
-      top: -28px;
-      width: 74px;
-      a{
-        font-size: 50px;
-        border-radius: 18%;
-        background-color: steelblue;
-        border-color: steelblue;
-        height: 135px;
-      }
-    }
-  }
-}
-
-@media (min-width: 768px) {
-  .nav-container{
-    position: relative;
-    .play{
-      position: absolute;
-      right: 360px;
-      top: -28px;
-      width: 74px;
-      a{
-        font-size: 50px;
-        border-radius: 18%;
-        background-color: steelblue;
-        border-color: steelblue;
-      }
-    }
-  }
-}
-
-@media (min-width: 992px) {
-  .nav-container{
-    position: relative;
-    .play{
-      position: absolute;
-      right: 475px;
-      top: -28px;
-      width: 74px;
-      a{
-        font-size: 50px;
-        border-radius: 18%;
-        background-color: steelblue;
-        border-color: steelblue;
-      }
-    }
-  }
-}
-
-// Extra large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) {
-  .nav-container{
-    position: relative;
-    .play{
-      position: absolute;
-      right: 655px;
-      top: -28px;
-      width: 74px;
-      a{
-        font-size: 50px;
-        border-radius: 18%;
-        background-color: steelblue;
-        border-color: steelblue;
+      &:active {
+        background-color: #4e7b50;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
       }
     }
   }
