@@ -57,14 +57,16 @@ class GamesController < ApplicationController
     authorize @game
 
     #Wrong random options
+    #@departure_airport = Airport.where.not(id: @flight.departure_airport).sample(3)
     @arrival_airports = Airport.where.not(id: @flight.arrival_airport).sample(3)
 
     #Correct answer
+    #@departure_airport << @flight.departure_airport
     @arrival_airports << @flight.arrival_airport
 
     #Shuffle the options
+    #@departure_airport.shuffle!
     @arrival_airports.shuffle!
-
   end
 
   def create

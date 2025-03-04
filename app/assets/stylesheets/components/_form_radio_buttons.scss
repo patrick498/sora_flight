@@ -1,4 +1,12 @@
-/* Flexbox layout for radio buttons */
+.question-form legend {
+  color: white;
+  text-align: center;
+  background-color: grey;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+}
+
 .arrival-airport-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -7,55 +15,96 @@
   gap: 10px;
 }
 
+
 .arrival-airport-item {
-  flex: 0 0 30%; /* By default, take up 30% of the space */
-  margin-bottom: 15px; /* Add some space between rows */
+  flex: 0 0 30%;
+  margin-bottom: 15px;
   box-sizing: border-box;
 }
 
-/* Style the radio buttons */
+
 .arrival-airport-selector {
   position: absolute;
   transform: scale(0);
 }
 
-/* Label styles */
+
 .arrival-airport-selector + label {
   display: flex;
   cursor: pointer;
   width: 100%;
   font-size: 12px;
+  font-weight: bold;
   text-align: center;
   padding: 10px 10px 30px 10px;
-  border: 1px solid #EAEAEA;
-  border-radius: 4px;
+  border: 5px solid #EAEAEA;
+  border-radius: 10px;
   background-color: white;
   height: 65px;
   box-sizing: border-box;
   justify-content: center;
   align-items: center;
+  animation: borderColorChange 3s infinite;
 }
 
-/* Style when radio button is checked */
+
+@keyframes borderColorChange {
+
+  25% {
+    border-color: #b0e0e6;
+  }
+  50% {
+    border-color: #6495ed;
+  }
+  75% {
+    border-color: #1560bd;
+  }
+  100% {
+    border-color: #2243b6;
+  }
+}
+
+
 .arrival-airport-selector:checked + label {
-  background-color: blue;
+  background-color: #b0e0e6;
   color: white !important;
 }
 
-/* Mobile responsiveness - Adjust layout for smaller screens */
+
 @media screen and (max-width: 768px) {
   .arrival-airport-item {
-    flex: 0 0 48%; /* Make each item take up almost half the screen on mobile */
+    flex: 0 0 48%;
   }
 }
 
-/* Mobile portrait responsiveness - Stack the radio buttons vertically */
 @media screen and (max-width: 480px) {
   .arrival-airport-item {
-    flex: 0 0 100%; /* Stack items vertically on very small screens */
+    flex: 0 0 100%;
   }
   .arrival-airport-selector + label {
-    font-size: 14px; /* Slightly increase font size for readability on small screens */
+    font-size: 14px;
     padding: 12px;
+  }
+}
+
+/* Add a class for the hidden state */
+.hidden {
+  display: none !important;
+}
+
+/* Center the selected radio button */
+.centered-radio-button {
+  display: block;
+  margin: 0 auto;
+  width: 60%;
+  animation: moveCenter 0.5s ease-out;
+}
+
+@keyframes moveCenter {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
   }
 }

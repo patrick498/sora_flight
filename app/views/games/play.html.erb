@@ -14,10 +14,12 @@
         </button>
       </div>
     </div>
-    <div class="form-container d-none" data-gamebutton-target="quiz">
-      <div class="form-container-grid">
-        <%= simple_form_for @game do |f| %>
-          <%= f.input :arrival_airport_guess_id,
+ </div>
+<div class="form-container d-none" data-gamebutton-target="quiz">
+    <div class="form-container-grid">
+      <%= simple_form_for @game do |f| %>
+        <%= f.input :arrival_airport_guess_id,
+        label: "Time to land! Where is this plane heading?", wrapper_html: {class: "question-form"},
                 as: :radio_buttons,
                 collection_wrapper_tag: 'div',
                 collection_wrapper_class: 'arrival-airport-wrapper',
@@ -26,7 +28,8 @@
                 collection: @arrival_airports %>
           <%= f.hidden_field :flight_id, value: @flight.id.to_i %>
           <%= f.submit 'Catch this flight!', class: 'button-catch' %>
-        <% end %>
-      </div>
-      </div>
+       <div class="d-flex justify-content-center"> <%= f.submit 'Catch!', class: 'btn-catch' %></div>
+      <% end %>
+ </div>
+      <!--<%= render "shared/flight_ticket" %>-->
     </div>
