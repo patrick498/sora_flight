@@ -11,6 +11,7 @@
         <div class="card-body">
           <h3 class="card-title text-center fw-bold mb-3"><%= @question.content %></h3>
           <turbo-frame id='quiz-form'>
+            <%= render 'quiz_form', question: @question, guess: @guess %>
           </turbo-frame>
         </div>
       </div>

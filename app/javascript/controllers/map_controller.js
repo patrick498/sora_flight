@@ -8,7 +8,6 @@ export default class extends Controller {
     markers: Array
   }
   connect() {
-    console.log('inside connect');
     console.log("Raw markers data:", this.element.dataset.mapMarkersValue);
     console.log("Parsed markers:", this.markersValue);
 
