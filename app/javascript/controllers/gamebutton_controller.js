@@ -17,8 +17,8 @@ export default class extends Controller {
     this.dashedSquareTarget.classList.add("d-none");
   }
 
-  showHints() {
-    console.log("test");
+  showHints(event) {
+    event.currentTarget.classList.add("d-none");
     this.hintsTarget.classList.remove("d-none");
   }
 

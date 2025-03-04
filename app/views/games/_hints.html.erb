@@ -1,34 +1,34 @@
 <div class="hints container gap-2 d-none" data-gamebutton-target="hintsButton">
-  <button data-action="click->gamebutton#showHints" class="btn btn-light mb-3">
+  <button data-action="click->gamebutton#showHints" class="hints-button btn btn-light mb-3">
     Hints <i class="fa-solid fa-lightbulb"></i>
   </button>
   <div class="d-none" data-gamebutton-target="hints">
     <div class="row mb-3 justify-content-between">
-      <div class="col-3 border bg-light">
+      <div class="hint col-3 border bg-light">
         <p>Altitude</p>
         <%= (@flight.altitude * 3.28).to_i %> feet
       </div>
-      <div class="col-2 border bg-light">
+      <div class="hint col-2 border bg-light">
         <% s = @flight.arrival_datetime - @flight.departure_datetime %>
         <% h = (s / 3600).to_i%>
         <% m = ((s % 3600)/60).to_i%>
         <p>ETA</p>
         <p><%= "#{h}h, #{m}m" %></p>
       </div>
-      <div class="col-2 border bg-light">
+      <div class="hint col-2 border bg-light">
         <p>where is my distance, Yuki?</p>
       </div>
-      <div class="col-3 border bg-light">
+      <div class="hint col-3 border bg-light">
         <p>Direction</p>
         <p><%= @flight.heading %>°</p>
       </div>
     </div>
     <div class="row justify-content-between">
-      <div class="col-3 border bg-light">
+      <div class="hint col-3 border bg-light">
         <p>Horizontal speed</p>
         <p><%= @flight.horizontal_speed %> Km/h</p>
       </div>
-      <div class="col-3 border bg-light">
+      <div class="hint col-3 border bg-light">
         <p>Vertical speed</p>
         <p>TBA</p>
       </div>
