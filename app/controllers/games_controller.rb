@@ -27,45 +27,18 @@ class GamesController < ApplicationController
       closest_flights = ClosestFlights.new(latitude: latitude, longitude: longitude)
       # closest_flights = ClosestFlights.new()
       selected_flight = closest_flights.call
-
-      if selected_flight
-
-        departure_airport = Airport.where(iata: selected_flight["departure"]["iata"]).first
-        arrival_airport = Airport.where(iata: selected_flight["arrival"]["iata"]).first
-        airline = Airline.where(iata: selected_flight["airline"]["iata"]).first
-        aircraft = Aircraft.where(model_short: selected_flight["aircraft"]["iata"]).first
-
-        flight = Flight.new(
-          flight_number: selected_flight["flight"]["iata"],
-          departure_airport: departure_airport,
-          arrival_airport: arrival_airport,
-          airline: airline,
-          aircraft: aircraft,
-          departure_datetime: selected_flight["departure"]["scheduled"],
-          arrival_datetime: selected_flight["arrival"]["scheduled"],
-          latitude: selected_flight["live"]["latitude"],
-          longitude: selected_flight["live"]["longitude"],
-          altitude: selected_flight["live"]["longitude"].to_i,
-          heading: selected_flight["live"]["direction"].to_i,
-          horizontal_speed: selected_flight["live"]["speed_horizontal"].to_i
-        )
-        if flight.save
-          final_flight = flight
-        else
-          final_flight = Flight.first
-        end
-      else
-        # TODO: bigger seed, or could "make up" a flight
-        flight = Flight.first
-      end
+      puts "######SELECTED FLIGHT"
+      p selected_flight
+      final_flight = selected_flight
     else
-      flight = Flight.first
+      final_flight = Flight.first
     end
 
     game = Game.new
     authorize game
-
-    redirect_to game_play_path(flight: flight)
+    puts "##############FINAL FLIGHT"
+    p final_flight
+    redirect_to game_play_path(flight: final_flight)
 
   end
 
@@ -91,7 +64,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.user = current_user
-    @flight = Flight.first
+    @flight = Flight.find(game_params[:flight_id])
     @game.flight = @flight
     @game.departure_airport_guess_id = @flight.departure_airport_id
     # @game.arrival_airport_guess = Airport.last
@@ -131,7 +104,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:arrival_airport_guess_id)
+    params.require(:game).permit(:arrival_airport_guess_id, :flight_id)
   end
 
   def create_questions(game)

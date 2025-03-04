@@ -17,4 +17,7 @@ Rails.application.routes.draw do
   get '/setup', to: 'games#setup', as: :setup
   get '/load_game', to: 'games#load_game', as: :game_load
 
+  #test
+  get '/index', to: 'pages#home'
+
 end
