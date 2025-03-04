@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="gamebutton"
 export default class extends Controller {
-  static targets = ["button", "quiz", "dashedSquare"]
+  static targets = ["button", "quiz", "dashedSquare", "hints", "hintsButton"]
 
   connect() {
     console.log("connected")
@@ -12,8 +12,14 @@ export default class extends Controller {
     this.captureScreenshot()
     document.querySelector("a-scene").pause()
     this.buttonTarget.classList.add("d-none"); // Hide the button
-    this.quizTarget.classList.remove("d-none"); // Show the content
+    this.quizTarget.classList.remove("d-none");// Show the content
+    this.hintsButtonTarget.classList.remove("d-none"); // Show the content
     this.dashedSquareTarget.classList.add("d-none");
+  }
+
+  showHints() {
+    console.log("test");
+    this.hintsTarget.classList.remove("d-none");
   }
 
   captureScreenshot() {
