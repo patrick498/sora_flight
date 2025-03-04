@@ -19,7 +19,7 @@ class GamesController < ApplicationController
   end
 
   def setup
-    get_nearby_flights = true
+    get_nearby_flights = false
     if get_nearby_flights
       latitude = params[:latitude]
       longitude = params[:longitude]
