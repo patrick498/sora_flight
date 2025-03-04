@@ -2,10 +2,11 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="gamebutton"
 export default class extends Controller {
-  static targets = ["button", "quiz", "dashedSquare"]
+  static targets = ["button", "quiz", "dashedSquare", "firstQuestion", "secondQuestion","thirdQuestion"]
 
   connect() {
     console.log("connected")
+    this.questionNumber = 1
   }
 
   showQuiz() {
@@ -14,6 +15,20 @@ export default class extends Controller {
     this.buttonTarget.classList.add("d-none"); // Hide the button
     this.quizTarget.classList.remove("d-none"); // Show the content
     this.dashedSquareTarget.classList.add("d-none");
+  }
+
+  next(){
+    console.log("Next");
+    //Check the current question num
+    //increment the q number
+    this.questionNumber += 1;
+    //hide all question html elements
+    const questions = [this.firstQuestionTarget,this.secondQuestionTarget,this.thirdQuestionTarget];
+    questions.forEach((question) => {
+      question.classList.add("d-none")
+    })
+    //Show the curent quesiomn
+    questions[this.questionNumber - 1].classList.remove("d-none")
   }
 
   captureScreenshot() {
