@@ -7,7 +7,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
 
-  config.hosts << /[a-z0-9-.]+\.ngrok-free\.app/
+  config.hosts << /[a-z0-9\-.]+\.ngrok-free\.app/
   # config.hosts.clear
 
   # In the development environment your application's code is reloaded any time
