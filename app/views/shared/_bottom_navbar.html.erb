@@ -1,10 +1,10 @@
-<div class="container-fluid">
+<div class="bottom-navbar container-fluid">
   <nav class="bottom-nav navbar fixed-bottom navbar-light bg-primary">
     <div class="nav-container container d-flex justify-content-between px-5">
       <%= link_to "/main", class: "btn btn-primary text-light" do %>
         <h3><i class="fa-solid fa-house"></i></h3>
       <% end %>
-      <div class="play h-100">
+      <div class="play">
         <% if current_page?("/main") %>
           <%= link_to game_load_path, class: "play-btn btn btn-primary text-light fw-bold" do %>
             Play!
