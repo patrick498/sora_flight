@@ -1,0 +1,15 @@
+<%= simple_form_for @guess, url: guesses_path, html: { data: { controller: "choice" } } do |f| %>
+  <div class="d-flex flex-column gap-3" data-choice-target='form'>
+    <% question.choices.each do |choice| %>
+      <div class="choice-card card p-3 shadow-sm text-center"
+        data-choice-id="<%= choice.id %>"
+        data-action="click->choice#select">
+        <div class="card-body">
+          <%= choice.content %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <!-- Hidden Simple Form field to store selected choice -->
+  <%= f.hidden_field :choice_id, data: { choice_target: "hiddenInput" } %>
+<% end %>

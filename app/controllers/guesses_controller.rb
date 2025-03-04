@@ -5,6 +5,7 @@ class GuessesController < ApplicationController
 
   def create
     @guess = Guess.new(guess_params)
+    raise
     @guess.user = current_user
     authorize @guess
     if @guess.save
