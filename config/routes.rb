@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   resources :games, only: [:index, :show, :update, :create ]
 
+  resources :guesses, only: :create
+
   get '/play', to: 'games#play', as: :game_play
   get '/quiz', to: 'games#quiz', as: :game_quiz
   get '/setup', to: 'games#setup', as: :setup

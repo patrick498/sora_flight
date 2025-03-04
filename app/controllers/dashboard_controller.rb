@@ -23,6 +23,7 @@ class DashboardController < ApplicationController
 
   def correct_rate
     games = current_user.games
+    return if games.blank?
     guesses = games.pluck(:arrival_airport_guess_id)
     return if guesses.blank?
 
