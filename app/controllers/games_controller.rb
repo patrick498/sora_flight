@@ -6,6 +6,12 @@ class GamesController < ApplicationController
   end
 
   def show
+    # Retrieve stored badges before the game (from session)
+    badges_before = session[:badges_before]
+    badges_all = current_user.badges.map(&:id) || []
+    @new_badge_ids = badges_all - badges_before
+    @new_badges = @new_badge_ids.map { |id| Merit::Badge.find(id) }
+
     @game = Game.find(params[:id])
     authorize @game
     @results = results(@game)
@@ -76,6 +82,9 @@ class GamesController < ApplicationController
   end
 
   def create
+    # store existing badges before the game starts
+    session[:badges_before] = current_user.badges.map(&:id)
+
     @game = Game.new(game_params)
 
     @game.user = current_user
@@ -92,6 +101,7 @@ class GamesController < ApplicationController
     end
   end
 
+  # unused method for now
   def quiz
     if params[:id]
       @game = Game.find(params[:id])

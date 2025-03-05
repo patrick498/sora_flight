@@ -1,0 +1,26 @@
+<div data-controller='reveal' class="badges-container">
+  <h1 data-reveal-target='title' class="text-center my-2 text-gray fw-bold ">New Achievements</h1>
+  <div class="badge-cards mb-5">
+    <% new_badges.each do |badge| %>
+      <% earned = true %>
+      <button data-reveal-target='item' type="button" class="badge-card text-center shadow-sm" style="<%= earned ? 'border: solid 8px rgb(106, 198, 212)' : 'border: solid 8px lightGray' %>"
+            data-bs-toggle="modal" data-bs-target="#badgeModal-<%= badge.id %>">
+        <h1><%= content_tag :i, "", class: "fa fa-#{badge.custom_fields[:icon]} #{earned ? badge.custom_fields[:color] : 'text-secondary'}" %></h1>
+        <p class="<%= earned ? '' : 'text-secondary'%>"><%= badge.name %></p>
+      </button>
+      <div class="modal fade" id="badgeModal-<%= badge.id %>" tabindex="-1" aria-labelledby="badgeModalLabel-<%= badge.id %>" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="badgeModalLabel-<%= badge.id %>"><%= badge.name %></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p><%= badge.description %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,8 +1,9 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="score"
 export default class extends Controller {
   static values = { target: Number, duration: Number }
+
   connect() {
     console.log("Score controller connected.");
 
@@ -46,6 +47,10 @@ export default class extends Controller {
       if (frame >= totalFrames) {
         current = end;
         clearInterval(timer);
+
+        // ✅ Dispatch event when score animation completes
+        console.log("Score animation completed. Dispatching 'score:done' event.");
+        this.element.dispatchEvent(new Event("score:done", { bubbles: true }));
       }
 
       this.element.textContent = Math.round(current);

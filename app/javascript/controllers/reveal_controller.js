@@ -1,8 +1,8 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
-// Connects to data-controller="reveal"
 export default class extends Controller {
-  static targets = ['item', 'icon'];
+  static targets = ["item", "icon", "badges"];
+
   connect() {
     this.revealIcons().then(() => {
       this.revealItems(); // Only run after icons are revealed
@@ -12,7 +12,7 @@ export default class extends Controller {
   revealIcons() {
     return new Promise((resolve) => {
       if (this.iconTargets.length === 0) {
-        resolve(); // If no icons exist, proceed immediately
+        resolve();
         return;
       }
 
@@ -20,11 +20,10 @@ export default class extends Controller {
         setTimeout(() => {
           icon.classList.remove("d-none");
 
-          // If this is the last icon, resolve the Promise after a small delay
           if (index === this.iconTargets.length - 1) {
-            setTimeout(resolve, 500); // Small buffer to ensure visibility
+            setTimeout(resolve, 500);
           }
-        }, index * 500); // Staggered delay for each icon
+        }, index * 500);
       });
     });
   }
@@ -36,9 +35,20 @@ export default class extends Controller {
         item.classList.remove("hidden");
         item.classList.remove("d-none");
 
-        // 🚀 Dispatch the event to trigger score animation
+        // Dispatch event to trigger score animation
         item.dispatchEvent(new Event("reveal:show", { bubbles: true }));
       }, index * 1000);
     });
+
+    // Listen for when the score animation is done
+    document.addEventListener("score:done", () => {
+      this.showBadges();
+    });
+  }
+
+  showBadges() {
+    if (this.hasBadgesTarget) {
+      this.badgesTarget.classList.remove("d-none");
+    }
   }
 }
