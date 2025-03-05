@@ -3,8 +3,8 @@
   text-align: center;
   background-color: grey;
   border-radius: 10px;
-  margin-bottom: 10px;
-  padding-top: 10px;
+  margin-bottom: 5px;
+  font-size: 20px;
 }
 
 .arrival-airport-wrapper {
@@ -13,6 +13,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
+  margin: -20px;
 }
 
 
@@ -40,30 +41,11 @@
   border: 5px solid #EAEAEA;
   border-radius: 10px;
   background-color: white;
-  height: 65px;
+  height: 85px;
   box-sizing: border-box;
   justify-content: center;
   align-items: center;
-  animation: borderColorChange 3s infinite;
 }
-
-
-@keyframes borderColorChange {
-
-  25% {
-    border-color: #b0e0e6;
-  }
-  50% {
-    border-color: #6495ed;
-  }
-  75% {
-    border-color: #1560bd;
-  }
-  100% {
-    border-color: #2243b6;
-  }
-}
-
 
 .arrival-airport-selector:checked + label {
   background-color: transparent;
@@ -84,27 +66,5 @@
   .arrival-airport-selector + label {
     font-size: 14px;
     padding: 12px;
-  }
-}
-
-/* Add a class for the hidden state */
-.hidden {
-  display: none !important;
-}
-
-/* Center the selected radio button */
-.centered-radio-button {
-  display: block;
-  margin: 0 auto;
-  width: 60%;
-  animation: moveCenter 0.5s ease-out;
-}
-
-@keyframes moveCenter {
-  from {
-    transform: scale(0.5);
-  }
-  to {
-    transform: scale(1);
   }
 }

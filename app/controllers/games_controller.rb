@@ -19,7 +19,7 @@ class GamesController < ApplicationController
   end
 
   def setup
-    get_nearby_flights = true
+    get_nearby_flights = false
     puts "########GET NEARBY FLIGHTS:"
     p get_nearby_flights
     if get_nearby_flights
