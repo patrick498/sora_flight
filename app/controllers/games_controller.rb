@@ -58,7 +58,7 @@ class GamesController < ApplicationController
     @new_plane_latitude = new_plane_position[:lat]
     @new_plane_longitude = new_plane_position[:lon]
     # Get new position for airports
-    get_new_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude+10, @flight.departure_airport.longitude, 7)
+    get_new_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude, @flight.departure_airport.longitude, 7)
     new_departure_position = get_new_departure_position.call
     @new_departure_latitude = new_departure_position[:lat]
     @new_departure_longitude = new_departure_position[:lon]
@@ -69,7 +69,7 @@ class GamesController < ApplicationController
     @new_arrival_longitude = new_arrival_position[:lon]
     @arrival_bearing = new_arrival_position[:bearing]
     # Get new positions for arrows
-    get_arrow_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude+10, @flight.departure_airport.longitude, 0.13)
+    get_arrow_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude, @flight.departure_airport.longitude, 0.13)
     arrow_departure_position = get_arrow_departure_position.call
     @arrow_departure_latitude = arrow_departure_position[:lat]
     @arrow_departure_longitude = arrow_departure_position[:lon]
@@ -78,7 +78,7 @@ class GamesController < ApplicationController
     @arrow_arrival_latitude = arrow_arrival_position[:lat]
     @arrow_arrival_longitude = arrow_arrival_position[:lon]
     # Get new positions for texts
-    get_text_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude+10, @flight.departure_airport.longitude, 0.08)
+    get_text_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude, @flight.departure_airport.longitude, 0.08)
     text_departure_position = get_text_departure_position.call
     @text_departure_latitude = text_departure_position[:lat]
     @text_departure_longitude = text_departure_position[:lon]

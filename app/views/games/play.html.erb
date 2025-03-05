@@ -21,11 +21,11 @@
       <%# airports distances %>
       <a-entity position="0 5 0" gps-entity-place="<%= "latitude: #{@arrow_arrival_latitude}; longitude:#{@arrow_arrival_longitude}" %>" geometry="primitive: triangle" rotation="-90 <%= "#{-@arrival_bearing}" %> 0" scale="20 60 20" material="color: #E67E22; side: double"></a-entity>
       <a-entity gps-entity-place="<%= "latitude: #{@text_arrival_latitude}; longitude:#{@text_arrival_longitude}" %>">
-        <a-text position="0 -38 0" id="distance-text" value="<%= "#{@distance_arrival}m" %>" baseline="bottom" align="center" color="white" scale="25 25 25" rotation="0 <%= "#{-@arrival_bearing}" %> 0"></a-text>
+        <a-text position="0 -38 0" id="distance-text" value="<%= "#{@distance_arrival}km" %>" baseline="bottom" align="center" color="white" scale="25 25 25" rotation="0 <%= "#{-@arrival_bearing}" %> 0"></a-text>
       </a-entity>
       <a-entity position="0 5 0" gps-entity-place="<%= "latitude: #{@arrow_departure_latitude}; longitude:#{@arrow_departure_longitude}" %>" geometry="primitive: triangle" rotation="-90 <%= "#{-@departure_bearing}" %> 0" scale="20 60 20" material="color: #E67E22; side: double"></a-entity>
       <a-entity gps-entity-place="<%= "latitude: #{@text_departure_latitude}; longitude:#{@text_departure_longitude}" %>" >
-        <a-text position="0 -38 0" id="distance-text" value="<%= "#{@distance_departure}m" %>" baseline="bottom" align="center" color="white" scale="25 25 25" rotation="0 <%= "#{-@departure_bearing}" %> 0"></a-text>
+        <a-text position="0 -38 0" id="distance-text" value="<%= "#{@distance_departure}km" %>" baseline="bottom" align="center" color="white" scale="25 25 25" rotation="0 <%= "#{-@departure_bearing}" %> 0"></a-text>
       </a-entity>
       <%# compass %>
       <a-plane src="#groundTexture" width="4" height="4" position="0 1 0" rotation="-90 0 0" material="shader: flat; transparent: true;" ></a-plane>
