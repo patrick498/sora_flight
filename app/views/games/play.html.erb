@@ -3,14 +3,14 @@
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true;' >
       <a-camera gps-camera rotation-reader></a-camera>
       <a-assets>
-        <img id="skyTexture" src="<%= image_path 'night_sky2.jpg' %>">
+        <img id="skyTexture" src="<%= image_path 'night_sky.jpg' %>">
         <img id="groundTexture" src="<%= image_path 'compass.svg' %>">
         <img id="arrivalTexture" src="<%= image_path 'arrival_airport_pin.svg' %>">
         <img id="departureTexture" src="<%= image_path 'departure_airport_pin.svg' %>">
       </a-assets>
       <a-entity light="type: ambient; color: #DDD"></a-entity>
       <%# model %>
-      <a-entity gltf-model="<%= "/models/airplanes/airplane_red.gltf" %>" rotation="0 <%= (@flight.heading + 180) % 360 %> 0" position="<%= "0 #{@flight.altitude} 0"%>" scale="15 15 15" gps-entity-place="<%= "latitude: #{@new_plane_latitude}; longitude:#{@new_plane_longitude}" %>"/></a-entity>
+      <a-entity gltf-model="<%= "/models/airplanes/airplane_#{["red","blue"].sample}.gltf" %>" rotation="0 <%= (@flight.heading + 180) % 360 %> 0" position="<%= "0 #{@flight.altitude} 0"%>" scale="15 15 15" gps-entity-place="<%= "latitude: #{@new_plane_latitude}; longitude:#{@new_plane_longitude}" %>"/></a-entity>
       <%# airports %>
       <a-entity position="0 150 0" gps-entity-place="<%= "latitude: #{@new_departure_latitude}; longitude:#{@new_departure_longitude}" %>">
         <a-plane src="#departureTexture" width="800" height="800" material="transparent: true; side: double;" rotation="0 <%= "#{@departure_bearing}" %> 0"></a-plane>
