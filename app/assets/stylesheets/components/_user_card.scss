@@ -1,36 +1,46 @@
 .card-user {
   overflow: hidden;
   height: 120px;
-  background: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
   margin-top: 8px;
+  border-radius: 60px;
+  background-color: rgba(0, 0, 0, 0);
+  background: #b5fefc;
+  box-shadow: 0 0 0 rgba(0,0,0,0.2);
 
-  img {
-    height: 100%;
-    width: 120px;
-    object-fit: cover;
+  .prof-pic {
+    border-radius: 50%;
+    img {
+      height: 100%;
+      width: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: solid 8px rgb(106, 198, 212);
+    }
   }
 
   h2 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     margin: 0;
+    color: rgb(43, 40, 40);
   }
 
   h3 {
-    font-size: 12px;
+    font-size: 20px;
     font-weight: bold;
     margin: 0;
+    color: goldenrod;
   }
 
   p {
-    font-size: 12px;
+    font-size: 16px;
     line-height: 1.4;
     opacity: .7;
     margin-bottom: 0;
     margin-top: 8px;
+    color: rgb(43, 40, 40);;
   }
 
   .card-user-infos {

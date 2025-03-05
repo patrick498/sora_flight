@@ -7,7 +7,8 @@ export default class extends Controller {
     secondAnswer: Number,
     thirdAnswer: Number,
   }
-  static targets = ["button", "quiz", "dashedSquare", "firstQuestion", "secondQuestion","thirdQuestion"]
+  static targets = ["button", "quiz", "dashedSquare", "firstQuestion", "secondQuestion","thirdQuestion", "hints", "hintsButton"]
+
 
   connect() {
     console.log("connected")
@@ -18,8 +19,15 @@ export default class extends Controller {
     this.captureScreenshot()
     document.querySelector("a-scene").pause()
     this.buttonTarget.classList.add("d-none"); // Hide the button
-    this.quizTarget.classList.remove("d-none"); // Show the content
+    this.quizTarget.classList.remove("d-none");// Show the content
+    this.hintsButtonTarget.classList.remove("d-none"); // Show the content
     this.dashedSquareTarget.classList.add("d-none");
+  }
+
+
+  showHints(event) {
+    event.currentTarget.classList.add("d-none");
+    this.hintsTarget.classList.remove("d-none");
   }
 
     next(){
@@ -70,6 +78,7 @@ export default class extends Controller {
         this.next();
       }, 1000);
     }
+
 
   captureScreenshot() {
     const scene = document.querySelector('a-scene')

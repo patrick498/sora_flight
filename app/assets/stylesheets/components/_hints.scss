@@ -1,0 +1,16 @@
+.hints{
+  position: absolute;
+  padding: 30px;
+  z-index: 3;
+  .hints-button{
+    z-index: 1000;
+  }
+  .hint{
+    height: 112px;
+    text-align: center;
+    width: 94px;
+  }
+  p{
+    display: block;
+  }
+}
