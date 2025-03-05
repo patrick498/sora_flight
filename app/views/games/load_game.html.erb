@@ -1,9 +1,5 @@
 <div data-controller="location" class="bg-dark w-100 vh-100 d-flex align-items-center justify-content-center">
-  <div>
-    <p class="text-light">Preparing your flight.</p>
-  </div>
-  <div class="mt-1">
-    <p class="text-light">Please fasten your seatbelt.</p>
+  <div class="loader">
   </div>
   <%= form_with  url: setup_path, method: :get, html: { id: "hidden-form", style: "display: none;" }, data: { location_target: "submitButton" } do |f| %>
     <%= hidden_field_tag :latitude, "latitude", data: { location_target: "latitude" } %>
