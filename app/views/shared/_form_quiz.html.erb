@@ -7,7 +7,7 @@
             collection_wrapper_tag: 'div',
             collection_wrapper_class: 'arrival-airport-wrapper',
             item_wrapper_class: 'arrival-airport-item',
-            input_html: {class: 'arrival-airport-selector', data: {action: "change->gamebutton#checkAnswer"}},
+            input_html: {class: 'arrival-airport-selector', data: {action: "change->gamebutton#checkAnswer", gamebutton_target: "answer"}},
             collection: @departure_airports.map { |airport| [airport.name.gsub(/\b(Airport|International)\b/, '').strip.upcase, airport.id] } %>
 
                   <!-- Second question -->
@@ -18,7 +18,7 @@
             collection_wrapper_tag: 'div',
             collection_wrapper_class: 'arrival-airport-wrapper',
             item_wrapper_class: 'arrival-airport-item',
-            input_html: {class: 'arrival-airport-selector', data: {action: "change->gamebutton#checkAnswer"}},
+            input_html: {class: 'arrival-airport-selector', data: {action: "change->gamebutton#checkAnswer", gamebutton_target: "answer"}},
             collection: @arrival_airports.map { |airport| [airport.name.gsub(/\b(Airport|International)\b/, '').strip, airport.id] } %>
 
                   <!--Third question -->
@@ -28,7 +28,7 @@
                   collection_wrapper_tag: 'div',
                   collection_wrapper_class: 'arrival-airport-wrapper',
                   item_wrapper_class: 'arrival-airport-item',
-                  input_html: {class: 'arrival-airport-selector', data: {action: "change->gamebutton#checkAnswer"}},
+                  input_html: {class: 'arrival-airport-selector', data: {action: "change->gamebutton#checkAnswer", gamebutton_target: "answer"}},
                   collection: @airlines %>
           <%= f.hidden_field :flight_id, value: @flight.id.to_i %>
       </div>

@@ -1,19 +1,18 @@
 .question-form legend {
   color: white;
   text-align: center;
-  background-color: grey;
+  background-color: #857968;
   border-radius: 10px;
   margin-bottom: 5px;
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .arrival-airport-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
-  margin: -20px;
+  margin: -10px;
 }
 
 
@@ -21,6 +20,8 @@
   flex: 0 0 30%;
   margin-bottom: 15px;
   box-sizing: border-box;
+  color: #d4fa08;
+  background-color: #1b2a63;
 }
 
 
@@ -34,17 +35,16 @@
   display: flex;
   cursor: pointer;
   width: 100%;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
   text-align: center;
-  padding: 10px 10px 30px 10px;
-  border: 5px solid #EAEAEA;
+  border: 5px solid #1b2a63;
   border-radius: 10px;
-  background-color: white;
   height: 85px;
   box-sizing: border-box;
   justify-content: center;
   align-items: center;
+  padding: 0px;
 }
 
 .arrival-airport-selector:checked + label {
@@ -52,19 +52,8 @@
   color: white;
 }
 
-
 @media screen and (max-width: 768px) {
   .arrival-airport-item {
     flex: 0 0 48%;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .arrival-airport-item {
-    flex: 0 0 100%;
-  }
-  .arrival-airport-selector + label {
-    font-size: 14px;
-    padding: 12px;
   }
 }
