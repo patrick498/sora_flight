@@ -5,8 +5,8 @@
       <a-entity gltf-model="<%= "/models/airplanes/airplane_#{['red','blue'].sample}.gltf" %>" position="<%= "0 #{@flight.altitude} 0 "%>" scale="15 15 15" gps-entity-place="<%= "latitude: #{@flight.latitude}; longitude:#{@flight.longitude}" %>"/>
     </a-scene>
 
-    <div class="centered-top">
-      <div class="round-dashed-circle" data-gamebutton-target="dashedSquare"></div>
+    <div class="centered-top" data-gamebutton-target="dashedSquare">
+      <div class="round-dashed-circle"></div>
     </div>
     <div class="centered" data-gamebutton-target="button">
       <button data-action="click->gamebutton#showQuiz"
@@ -17,8 +17,8 @@
   </div>
 <%= render "hints" %>
   <div class="form-container d-none" data-gamebutton-target="quiz">
-    <%= render "shared/form_quiz" %>
-<div class="container">
+        <%= render "shared/form_quiz" %>
+        <div class="container">
+        </div>
       </div>
     </div>
-  </div>
