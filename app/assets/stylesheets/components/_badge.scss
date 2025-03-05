@@ -1,19 +1,23 @@
 .badges-container {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   padding-top: 10px;
+  place-items: center;
+  h1{
+    color: orange;
+  }
   .badge-cards {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 12px;
     // overflow: auto;
     margin-bottom: 30px;
-    place-items: center;
     padding: 30px;
     .badge-card {
       width: 164px;
-      height: 141px;
+      height: 164px;
       padding: 30px;
       margin: 0;
+      border-radius: 50%;
     }
   }
   @media (min-width: 100px) and (max-width: 575px) {

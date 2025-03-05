@@ -2,10 +2,39 @@
   <div id="ar">
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true;' >
       <a-camera gps-camera rotation-reader></a-camera>
-      <a-entity gltf-model="<%= "/models/airplanes/airplane_#{['red','blue'].sample}.gltf" %>" position="<%= "0 #{@flight.altitude} 0 "%>" scale="15 15 15" gps-entity-place="<%= "latitude: #{@flight.latitude}; longitude:#{@flight.longitude}" %>"/>
+      <a-assets>
+        <img id="skyTexture" src="<%= image_path 'night_sky.jpg' %>">
+        <img id="groundTexture" src="<%= image_path 'compass.svg' %>">
+        <img id="arrivalTexture" src="<%= image_path 'arrival_airport_pin.svg' %>">
+        <img id="departureTexture" src="<%= image_path 'departure_airport_pin.svg' %>">
+      </a-assets>
+      <a-entity light="type: ambient; color: #DDD"></a-entity>
+      <%# model %>
+      <a-entity gltf-model="<%= "/models/airplanes/airplane_#{["red","blue"].sample}.gltf" %>" rotation="0 <%= (@flight.heading + 180) % 360 %> 0" position="<%= "0 #{@flight.altitude} 0"%>" scale="15 15 15" gps-entity-place="<%= "latitude: #{@new_plane_latitude}; longitude:#{@new_plane_longitude}" %>"/></a-entity>
+      <%# airports %>
+      <a-entity position="0 150 0" gps-entity-place="<%= "latitude: #{@new_departure_latitude}; longitude:#{@new_departure_longitude}" %>">
+        <a-plane src="#departureTexture" width="800" height="800" material="transparent: true; side: double;" rotation="0 <%= "#{@departure_bearing}" %> 0"></a-plane>
+      </a-entity>
+      <a-entity position="0 150 0" gps-entity-place="<%= "latitude: #{@new_arrival_latitude}; longitude:#{@new_arrival_longitude}" %>">
+        <a-plane src="#arrivalTexture" width="800" height="800" material="transparent: true; side: double;" rotation="0 <%= "#{@arrival_bearing}" %> 0"></a-plane>
+      </a-entity>
+      <%# airports distances %>
+      <a-entity position="0 5 0" gps-entity-place="<%= "latitude: #{@arrow_arrival_latitude}; longitude:#{@arrow_arrival_longitude}" %>" geometry="primitive: triangle" rotation="-90 <%= "#{-@arrival_bearing}" %> 0" scale="20 60 20" material="color: #E67E22; side: double"></a-entity>
+      <a-entity gps-entity-place="<%= "latitude: #{@text_arrival_latitude}; longitude:#{@text_arrival_longitude}" %>">
+        <a-text position="0 -38 0" id="distance-text" value="<%= "#{@distance_arrival}m" %>" baseline="bottom" align="center" color="white" scale="25 25 25" rotation="0 <%= "#{-@arrival_bearing}" %> 0"></a-text>
+      </a-entity>
+      <a-entity position="0 5 0" gps-entity-place="<%= "latitude: #{@arrow_departure_latitude}; longitude:#{@arrow_departure_longitude}" %>" geometry="primitive: triangle" rotation="-90 <%= "#{-@departure_bearing}" %> 0" scale="20 60 20" material="color: #E67E22; side: double"></a-entity>
+      <a-entity gps-entity-place="<%= "latitude: #{@text_departure_latitude}; longitude:#{@text_departure_longitude}" %>" >
+        <a-text position="0 -38 0" id="distance-text" value="<%= "#{@distance_departure}m" %>" baseline="bottom" align="center" color="white" scale="25 25 25" rotation="0 <%= "#{-@departure_bearing}" %> 0"></a-text>
+      </a-entity>
+      <%# compass %>
+      <a-plane src="#groundTexture" width="4" height="4" position="0 1 0" rotation="-90 0 0" material="shader: flat; transparent: true;" ></a-plane>
+      <%# sky %>
+      <a-sky src="#skyTexture" radius="10000"></a-sky>
     </a-scene>
-    <div class="centered-top">
-      <div class="round-dashed-circle" data-gamebutton-target="dashedSquare"></div>
+
+    <div class="centered-top" data-gamebutton-target="dashedSquare">
+      <div class="round-dashed-circle"></div>
     </div>
     <div class="centered" data-gamebutton-target="button">
       <button data-action="click->gamebutton#showQuiz"
@@ -14,10 +43,10 @@
       </button>
     </div>
   </div>
-
+<%= render "hints" %>
   <div class="form-container d-none" data-gamebutton-target="quiz">
    <%= render "shared/form_quiz" %>
 <div class="container">
+
       </div>
     </div>
-  </div>

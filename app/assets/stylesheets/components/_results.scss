@@ -9,7 +9,36 @@
   transform: translateY(0);
 }
 
-.button-container {
-  
+.results-title {
+  h1 {
+    color: orange;
+    font-weight: 700;
+  }
 }
 
+.bottom-btn {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #66c7d4;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #999;
+  width: 9em;
+  height: 3em;
+
+  &:hover {
+    background-color: #bf5f0b
+  }
+
+  &:active {
+    background-color: #bf5f0b;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+}

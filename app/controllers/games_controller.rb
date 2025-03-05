@@ -6,6 +6,12 @@ class GamesController < ApplicationController
   end
 
   def show
+    # Retrieve stored badges before the game (from session)
+    badges_before = session[:badges_before]
+    badges_all = current_user.badges.map(&:id) || []
+    @new_badge_ids = badges_all - badges_before
+    @new_badges = @new_badge_ids.map { |id| Merit::Badge.find(id) }
+
     @game = Game.find(params[:id])
     authorize @game
     @results = results(@game)
@@ -45,11 +51,47 @@ class GamesController < ApplicationController
   def play
     @game = Game.new
     @flight = Flight.find(params[:flight])
-    max_radius = 5
-    get_position = NewFlightPosition.new(params[:latitude], params[:longitude], @flight.latitude, @flight.longitude, max_radius)
-    new_position = get_position.call
-    @flight.latitude = new_position[:lat]
-    @flight.longitude = new_position[:lon]
+    max_radius = 10
+    # Get new airplane position
+    get_new_plane_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.latitude, @flight.longitude, max_radius)
+    new_plane_position = get_new_plane_position.call
+    @new_plane_latitude = new_plane_position[:lat]
+    @new_plane_longitude = new_plane_position[:lon]
+    # Get new position for airports
+    get_new_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude+10, @flight.departure_airport.longitude, 7)
+    new_departure_position = get_new_departure_position.call
+    @new_departure_latitude = new_departure_position[:lat]
+    @new_departure_longitude = new_departure_position[:lon]
+    @departure_bearing = new_departure_position[:bearing]
+    get_new_arrival_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.arrival_airport.latitude, @flight.arrival_airport.longitude, 7)
+    new_arrival_position = get_new_arrival_position.call
+    @new_arrival_latitude = new_arrival_position[:lat]
+    @new_arrival_longitude = new_arrival_position[:lon]
+    @arrival_bearing = new_arrival_position[:bearing]
+    # Get new positions for arrows
+    get_arrow_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude+10, @flight.departure_airport.longitude, 0.13)
+    arrow_departure_position = get_arrow_departure_position.call
+    @arrow_departure_latitude = arrow_departure_position[:lat]
+    @arrow_departure_longitude = arrow_departure_position[:lon]
+    get_arrow_arrival_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.arrival_airport.latitude, @flight.arrival_airport.longitude, 0.13)
+    arrow_arrival_position = get_arrow_arrival_position.call
+    @arrow_arrival_latitude = arrow_arrival_position[:lat]
+    @arrow_arrival_longitude = arrow_arrival_position[:lon]
+    # Get new positions for texts
+    get_text_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude+10, @flight.departure_airport.longitude, 0.08)
+    text_departure_position = get_text_departure_position.call
+    @text_departure_latitude = text_departure_position[:lat]
+    @text_departure_longitude = text_departure_position[:lon]
+    get_text_arrival_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.arrival_airport.latitude, @flight.arrival_airport.longitude, 0.08)
+    text_arrival_position = get_text_arrival_position.call
+    @text_arrival_latitude = text_arrival_position[:lat]
+    @text_arrival_longitude = text_arrival_position[:lon]
+    # Get distances
+    get_distance_departure = DistanceTwoPoints.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude, @flight.departure_airport.longitude)
+    @distance_departure = get_distance_departure.call.to_i
+    get_distance_arrival = DistanceTwoPoints.new(params[:latitude], params[:longitude], @flight.arrival_airport.latitude, @flight.arrival_airport.longitude)
+    @distance_arrival = get_distance_arrival.call.to_i
+
     @game.flight = @flight
     @game.user = current_user
 
@@ -76,6 +118,9 @@ class GamesController < ApplicationController
   end
 
   def create
+    # store existing badges before the game starts
+    session[:badges_before] = current_user.badges.map(&:id)
+
     @game = Game.new(game_params)
 
     @game.user = current_user
@@ -92,6 +137,7 @@ class GamesController < ApplicationController
     end
   end
 
+  # unused method for now
   def quiz
     if params[:id]
       @game = Game.find(params[:id])

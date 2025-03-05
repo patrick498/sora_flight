@@ -1,2 +1,18 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="home container" style="background-image: linear-gradient(rgba(150, 150, 150, 0.5), rgba(150, 150, 150, 0.5)), url(<%=  image_path('flying2.GIF') %>); background-repeat: no-repeat; background-size: cover; background-position: center;">
+  <%= image_tag "sora_logo_tr.png", alt: "sora logo" %>
+  <% if current_user %>
+    <div class="buttons">
+      <div class="start">
+        <%= link_to "Start!", game_load_path, class:"start-btn"  %>
+      </div>
+      <div class="start">
+        <%= link_to "My page", "/main", class:"mypage-btn"  %>
+      </div>
+    <% else %>
+      <div class="user">
+        <%= link_to "Sign in", new_user_session_path, class:"btn btn-primary rounded" %>
+        <%= link_to "Sign up", new_user_registration_path, class:"btn btn-primary rounded" %>
+      </div>
+    </div>
+  <% end %>
+</div>

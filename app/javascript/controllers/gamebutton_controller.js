@@ -7,7 +7,8 @@ export default class extends Controller {
     secondAnswer: Number,
     thirdAnswer: Number,
   }
-  static targets = ["button", "quiz", "dashedSquare", "firstQuestion", "secondQuestion", "thirdQuestion", "answer"]
+
+  static targets = ["button", "quiz", "dashedSquare", "firstQuestion", "secondQuestion","thirdQuestion", "hints", "hintsButton", "answer"]
 
   connect() {
     console.log("connected")
@@ -20,7 +21,8 @@ export default class extends Controller {
     this.captureScreenshot()
     document.querySelector("a-scene").pause()
     this.buttonTarget.classList.add("d-none"); // Hide the button
-    this.quizTarget.classList.remove("d-none"); // Show the content
+    this.quizTarget.classList.remove("d-none");// Show the content
+    this.hintsButtonTarget.classList.remove("d-none"); // Show the content
     this.dashedSquareTarget.classList.add("d-none");
   }
 
@@ -72,12 +74,10 @@ export default class extends Controller {
         }
       })
     }
-
     // third question, submit form
     if (e.currentTarget.name === 'game[airline_guess_id]') {
       e.currentTarget.form.submit()
     }
-
     setTimeout(() => {
       this.answerTargets.forEach((answerTarget) => {
         const answerValue = answerTarget.value;
@@ -89,6 +89,11 @@ export default class extends Controller {
       })
       this.next();
     }, 2000);
+  }
+  
+  showHints(event) {
+    event.currentTarget.classList.add("d-none");
+    this.hintsTarget.classList.remove("d-none");
   }
 
   captureScreenshot() {
