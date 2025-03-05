@@ -19,7 +19,7 @@ class GamesController < ApplicationController
   end
 
   def setup
-    get_nearby_flights = true
+    get_nearby_flights = false
     puts "########GET NEARBY FLIGHTS:"
     p get_nearby_flights
     if get_nearby_flights
@@ -46,7 +46,7 @@ class GamesController < ApplicationController
   def play
     @game = Game.new
     @flight = Flight.find(params[:flight])
-    max_radius = 5
+    max_radius = 3
     get_position = NewFlightPosition.new(params[:latitude], params[:longitude], @flight.latitude, @flight.longitude, max_radius)
     new_position = get_position.call
     @flight.latitude = new_position[:lat]
