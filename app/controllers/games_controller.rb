@@ -69,6 +69,10 @@ class GamesController < ApplicationController
     @departure_airports.shuffle!
     @arrival_airports.shuffle!
     @airlines.shuffle!
+
+    @firstAnswer = @flight.departure_airport.id
+    @secondAnswer = @flight.arrival_airport.id
+    @thirdAnswer = @flight.airline.id
   end
 
   def create

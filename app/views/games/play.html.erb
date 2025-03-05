@@ -1,4 +1,4 @@
-<div data-controller="gamebutton">
+<div data-controller="gamebutton" data-gamebutton-first-answer-value="<%= @firstAnswer %> " data-gamebutton-second-answer-value="<%= @secondAnswer %>" data-gamebutton-third-answer-value="<%= @thirdAnswer %>">
   <div id="ar">
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true;' >
       <a-camera gps-camera rotation-reader></a-camera>
@@ -17,35 +17,10 @@
 
   <div class="form-container d-none" data-gamebutton-target="quiz">
      <div class="form-container-grid">
-    <%= simple_form_for @game do |f| %>
-        <%= f.input :departure_airport_guess_id,
-                  label: "Where did this flight depart from?", wrapper_html: {class: "question-form", data: {gamebutton_target: "firstQuestion"}},
-                  as: :radio_buttons,
-                  collection_wrapper_tag: 'div',
-                  collection_wrapper_class: 'arrival-airport-wrapper',
-                  item_wrapper_class: 'arrival-airport-item',
-                  input_html: {class: 'arrival-airport-selector'},
-                  collection: @departure_airports %>
-                  <!-- Second question -->
-        <%= f.input :arrival_airport_guess_id,
-                  label: "Time to land! Where is this plane heading?", wrapper_html: {class: "question-form d-none", data: {gamebutton_target: "secondQuestion"}},
-                  as: :radio_buttons,
-                  collection_wrapper_tag: 'div',
-                  collection_wrapper_class: 'arrival-airport-wrapper',
-                  item_wrapper_class: 'arrival-airport-item',
-                  input_html: {class: 'arrival-airport-selector'},
-                  collection: @arrival_airports %>
-        <!--Third question -->
-        <%= f.input :airline_guess_id,
-                  label: "which airline is operating this flight?", wrapper_html: {class: "question-form d-none", data: {gamebutton_target: "thirdQuestion"}},
-                  as: :radio_buttons,
-                  collection_wrapper_tag: 'div',
-                  collection_wrapper_class: 'arrival-airport-wrapper',
-                  item_wrapper_class: 'arrival-airport-item',
-                  input_html: {class: 'arrival-airport-selector'},
-                  collection: @airlines %>
-        <%= f.hidden_field :flight_id, value: @flight.id.to_i %>
-      </div>
-      <%= f.submit 'Check in!', class: 'button-catch' %>
-    <% end %>
-    <button data-action="click->gamebutton#next">NEXT</button>
+    <%= render "shared/form_quiz" %>
+<div class="container">
+
+<!--<%= render "shared/flight_ticket" %>-->
+</div>
+     </div>
+</div>
