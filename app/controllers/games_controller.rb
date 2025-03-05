@@ -9,7 +9,6 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     authorize @game
     @results = results(@game)
-    count_score(@game, @results)
     @game.user.add_points(@game.score)
   end
 
@@ -106,6 +105,10 @@ class GamesController < ApplicationController
     @departure_airports.shuffle!
     @arrival_airports.shuffle!
     @airlines.shuffle!
+
+    @firstAnswer = @flight.departure_airport.id
+    @secondAnswer = @flight.arrival_airport.id
+    @thirdAnswer = @flight.airline.id
   end
 
   def create
@@ -180,26 +183,35 @@ class GamesController < ApplicationController
   end
 
   def results(game)
-    results_array = []
+    results = {}
+    questions_results = []
     if game.departure_airport_guess_id.present?
       guess = Airport.find(game.departure_airport_guess_id).name
       answer = Airport.find(game.flight.departure_airport_id).name
       correct = game.departure_airport_guess_id == game.flight.departure_airport_id
-      results_array << { question: 'Departure', guess: guess, answer: answer, correct: correct }
+      questions_results << { question: 'Departure', guess: guess, answer: answer, correct: correct }
     end
     if game.arrival_airport_guess_id.present?
       guess = Airport.find(game.arrival_airport_guess_id).name
       answer = Airport.find(game.flight.arrival_airport_id).name
       correct = game.arrival_airport_guess_id == game.flight.arrival_airport_id
-      results_array << { question: 'Arrival', guess: guess, answer: answer, correct: correct }
+      questions_results << { question: 'Arrival', guess: guess, answer: answer, correct: correct }
     end
     if game.airline_guess_id.present?
       guess = Airline.find(game.airline_guess_id).name
       answer = Airline.find(game.flight.airline_id).name
       correct = game.airline_guess_id == game.flight.airline_id
-      results_array << { question: 'Airline', guess: guess, answer: answer, correct: correct }
+      questions_results << { question: 'Airline', guess: guess, answer: answer, correct: correct }
     end
-    return results_array
+    correct_answers = 0
+    questions_results.each do |question_result|
+      if question_result[:correct]
+        correct_answers += 1
+      end
+    end
+    game.score += correct_answers * 10
+    results = { correct_answers: correct_answers, total_questions: questions_results.size, questions_results: questions_results }
+    return results
   end
 
   # returns markers for departure, arrival, and current position
@@ -222,11 +234,7 @@ class GamesController < ApplicationController
     return [ departure, destination, current_position ]
   end
 
-  def count_score(game, results_array)
-    results_array.each do |result|
-      if result[:correct]
-        game.score += 10
-      end
-    end
-  end
+  # def count_score(game, results_array)
+  # end
+
 end

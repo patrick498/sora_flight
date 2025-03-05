@@ -7,6 +7,7 @@ class DashboardController < ApplicationController
     user = current_user
     @games = user.games
     authorize @games
+    @flight_ids = @games.pluck(:flight_id).first(5)
     @total_games = user.games.count
     @badges = user.badges.count
     @correct_rate = correct_rate
@@ -23,7 +24,6 @@ class DashboardController < ApplicationController
 
   def correct_rate
     games = current_user.games
-    return if games.blank?
     guesses = games.pluck(:arrival_airport_guess_id)
     return if guesses.blank?
 

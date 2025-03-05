@@ -1,18 +1,18 @@
-<div class="container-fluid">
-  <nav class="bottom-nav navbar fixed-bottom navbar-light bg-primary">
-    <div class="nav-container container d-flex justify-content-between px-5">
-      <%= link_to "/main", class: "btn btn-primary text-light" do %>
+<div class="bottom-navbar container-fluid">
+  <nav class="bottom-nav navbar fixed-bottom navbar-light">
+    <div class="nav-container container">
+      <%= link_to "/", class: "btn text-light" do %>
         <h3><i class="fa-solid fa-house"></i></h3>
       <% end %>
-      <div class="play h-100">
+      <div class="play">
         <% if current_page?("/main") %>
-          <%= link_to game_load_path, class: "play-btn btn btn-primary text-light fw-bold" do %>
-            Play!
+          <%= link_to game_load_path, class: "play-btn btn text-light fw-bold" do %>
+            Start!
           <% end %>
         <% end %>
       </div>
       <div class="nav-item dropup">
-        <%= link_to "#", class: "btn btn-primary text-light", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" } do %>
+        <%= link_to "#", class: "btn text-light", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" } do %>
           <h3><i class="fa-solid fa-user"></i></h3>
         <% end %>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

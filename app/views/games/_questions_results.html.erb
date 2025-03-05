@@ -1,0 +1,20 @@
+<div data-results-animations-score-value="<%= @game.score %>" class='text-center mt-2'>
+  <div data-controller='reveal'>
+    <div class="justify-content-between align-items-center bg-light p-3 rounded shadow fs-2 fw-bolder mb-2">Results</div>
+    <% @results.each do |result| %>
+      <div data-reveal-target="item" class="hidden d-flex justify-content-between align-items-center bg-light rounded shadow p-3 mt-2">
+        <span class='text-start fs-4'><%= result[:guess] %></span>
+        <% if result[:correct] %>
+          <span data-reveal-target='icon' class="text-success fw-bold d-none">✅</span>
+        <% else %>
+          <span data-reveal-target='icon' class="text-danger fw-bold d-none">❌</span>
+        <% end %>
+      </div>
+      <% unless result[:correct] %>
+        <div data-reveal-target="item" class="hidden d-flex justify-content-between align-items-center bg-light bg-secondary-subtle rounded shadow p-3 mb-1 fs-6 text-success">
+          <span class='text-start fs-6'><%= result[:answer] %></span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

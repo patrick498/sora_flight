@@ -1,29 +1,44 @@
-.nav-container{
-  position: relative;
-  .play{
-    position: absolute;
-    right: 50%;
-    top: -28px;
-    width: 74px;
-    a{
-      font-size: 50px;
-      border-radius: 18%;
-      background-color: steelblue;
-      border-color: steelblue;
-      height: 135px;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      outline: none;
-      color: #fff;
-      box-shadow: 0 9px #999;
-      &:hover {background-color: #458347}
+.bottom-navbar{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  .bottom-nav{
+    background-color: rgb(106, 198, 212);
+    .nav-container{
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 25%;
 
-      &:active {
-        background-color: #4e7b50;
-        box-shadow: 0 5px #666;
-        transform: translateY(4px);
+      .play{
+        position: absolute;
+        right: 55%;
+        top: -125px;
+        width: 90px;
+        a{
+          font-size: 50px;
+          border-radius: 50px;
+          background-color: #e67e22;
+          border: solid 8px steelblue;
+          height: 100px;
+          cursor: pointer;
+          text-align: center;
+          text-decoration: none;
+          outline: none;
+          color: #fff;
+          box-shadow: 0 9px #999;
+          width: 220px;
+          &:hover {background-color: rgb(255, 98, 0)}
+
+          &:active {
+            background-color: #ec721b;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+          }
+        }
       }
     }
+
   }
 }
