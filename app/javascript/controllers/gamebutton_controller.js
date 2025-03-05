@@ -2,10 +2,17 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="gamebutton"
 export default class extends Controller {
-  static targets = ["button", "quiz", "dashedSquare", "hints", "hintsButton"]
+  static values = {
+    firstAnswer: Number,
+    secondAnswer: Number,
+    thirdAnswer: Number,
+  }
+  static targets = ["button", "quiz", "dashedSquare", "firstQuestion", "secondQuestion","thirdQuestion", "hints", "hintsButton"]
+
 
   connect() {
     console.log("connected")
+    this.questionNumber = 1
   }
 
   showQuiz() {
@@ -17,10 +24,61 @@ export default class extends Controller {
     this.dashedSquareTarget.classList.add("d-none");
   }
 
+
   showHints(event) {
     event.currentTarget.classList.add("d-none");
     this.hintsTarget.classList.remove("d-none");
   }
+
+    next(){
+      console.log("Next");
+      //increment the a number
+      this.questionNumber += 1;
+      //hide all question html elements
+      const questions = [this.firstQuestionTarget,this.secondQuestionTarget,this.thirdQuestionTarget];
+      questions.forEach((question) => {
+        question.classList.add("d-none")
+      })
+      //Show the curent quesstion
+      questions[this.questionNumber - 1].classList.remove("d-none")
+    }
+
+    checkAnswer(e) {
+      const selectedValue = e.currentTarget.value;
+      const selectedAnswer = e.currentTarget.closest('.arrival-airport-item');
+
+      let isCorrect;
+      let correctAnswer;
+
+      if (selectedValue == this.firstAnswerValue) {
+        isCorrect = true;
+        correctAnswer = this.firstAnswerValue;
+      } else if (selectedValue == this.secondAnswerValue) {
+        isCorrect = true;
+        correctAnswer = this.secondAnswerValue;
+      } else if (selectedValue == this.thirdAnswerValue) {
+        isCorrect = true;
+        correctAnswer = this.thirdAnswerValue;
+      } else {
+        isCorrect = false;
+      }
+
+      if (isCorrect) {
+        selectedAnswer.classList.add('correct');
+      } else {
+        selectedAnswer.classList.add('incorrect');
+      }
+
+      // third question, submit form
+      if (e.currentTarget.name === 'game[airline_guess_id]') {
+        e.currentTarget.form.submit()
+      }
+
+      setTimeout(() => {
+        this.next();
+      }, 1000);
+    }
+
 
   captureScreenshot() {
     const scene = document.querySelector('a-scene')

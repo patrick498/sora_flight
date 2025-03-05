@@ -9,7 +9,6 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     authorize @game
     @results = results(@game)
-    count_score(@game, @results)
     @game.user.add_points(@game.score)
   end
 
@@ -20,12 +19,13 @@ class GamesController < ApplicationController
 
   def setup
     get_nearby_flights = false
+    puts "########GET NEARBY FLIGHTS:"
+    p get_nearby_flights
     if get_nearby_flights
       latitude = params[:latitude]
       longitude = params[:longitude]
 
       closest_flights = ClosestFlights.new(latitude: latitude, longitude: longitude)
-      # closest_flights = ClosestFlights.new()
       selected_flight = closest_flights.call
       puts "######SELECTED FLIGHT"
       p selected_flight
@@ -38,39 +38,52 @@ class GamesController < ApplicationController
     authorize game
     puts "##############FINAL FLIGHT"
     p final_flight
-    redirect_to game_play_path(flight: final_flight)
+    redirect_to game_play_path(flight: final_flight, latitude: params[:latitude], longitude: params[:longitude])
 
   end
 
   def play
     @game = Game.new
     @flight = Flight.find(params[:flight])
+    max_radius = 5
+    get_position = NewFlightPosition.new(params[:latitude], params[:longitude], @flight.latitude, @flight.longitude, max_radius)
+    new_position = get_position.call
+    @flight.latitude = new_position[:lat]
+    @flight.longitude = new_position[:lon]
     @game.flight = @flight
     @game.user = current_user
 
     authorize @game
 
     #Wrong random options
-    #@departure_airport = Airport.where.not(id: @flight.departure_airport).sample(3)
+    @departure_airports = Airport.where.not(id: @flight.departure_airport).sample(3)
     @arrival_airports = Airport.where.not(id: @flight.arrival_airport).sample(3)
+    @airlines = Airline.where.not(id: @flight.airline).sample(3)
 
     #Correct answer
-    #@departure_airport << @flight.departure_airport
+    @departure_airports << @flight.departure_airport
     @arrival_airports << @flight.arrival_airport
+    @airlines << @flight.airline
 
     #Shuffle the options
-    #@departure_airport.shuffle!
+    @departure_airports.shuffle!
     @arrival_airports.shuffle!
+    @airlines.shuffle!
+
+    @firstAnswer = @flight.departure_airport.id
+    @secondAnswer = @flight.arrival_airport.id
+    @thirdAnswer = @flight.airline.id
   end
 
   def create
     @game = Game.new(game_params)
+
     @game.user = current_user
     @flight = Flight.find(game_params[:flight_id])
     @game.flight = @flight
-    @game.departure_airport_guess_id = @flight.departure_airport_id
+    # @game.departure_airport_guess_id = @flight.departure_airport_id
     # @game.arrival_airport_guess = Airport.last
-    @game.airline_guess_id = @flight.airline_id
+    # @game.airline_guess_id = @flight.airline_id
     @game.aircraft_guess_id = @flight.aircraft_id
     @game.score = 0
     authorize @game
@@ -106,7 +119,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:arrival_airport_guess_id, :flight_id)
+    params.require(:game).permit(:departure_airport_guess_id, :arrival_airport_guess_id, :airline_guess_id,  :flight_id)
   end
 
   def create_questions(game)
@@ -134,14 +147,35 @@ class GamesController < ApplicationController
   end
 
   def results(game)
-    results_array = []
+    results = {}
+    questions_results = []
+    if game.departure_airport_guess_id.present?
+      guess = Airport.find(game.departure_airport_guess_id).name
+      answer = Airport.find(game.flight.departure_airport_id).name
+      correct = game.departure_airport_guess_id == game.flight.departure_airport_id
+      questions_results << { question: 'Departure', guess: guess, answer: answer, correct: correct }
+    end
     if game.arrival_airport_guess_id.present?
       guess = Airport.find(game.arrival_airport_guess_id).name
       answer = Airport.find(game.flight.arrival_airport_id).name
       correct = game.arrival_airport_guess_id == game.flight.arrival_airport_id
-      results_array << { question: 'Arrival', guess: guess, answer: answer, correct: correct }
+      questions_results << { question: 'Arrival', guess: guess, answer: answer, correct: correct }
     end
-    return results_array
+    if game.airline_guess_id.present?
+      guess = Airline.find(game.airline_guess_id).name
+      answer = Airline.find(game.flight.airline_id).name
+      correct = game.airline_guess_id == game.flight.airline_id
+      questions_results << { question: 'Airline', guess: guess, answer: answer, correct: correct }
+    end
+    correct_answers = 0
+    questions_results.each do |question_result|
+      if question_result[:correct]
+        correct_answers += 1
+      end
+    end
+    game.score += correct_answers * 10
+    results = { correct_answers: correct_answers, total_questions: questions_results.size, questions_results: questions_results }
+    return results
   end
 
   # returns markers for departure, arrival, and current position
@@ -164,11 +198,7 @@ class GamesController < ApplicationController
     return [ departure, destination, current_position ]
   end
 
-  def count_score(game, results_array)
-    results_array.each do |result|
-      if result[:correct]
-        game.score += 10
-      end
-    end
-  end
+  # def count_score(game, results_array)
+  # end
+
 end

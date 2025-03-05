@@ -33,7 +33,7 @@
   display: flex;
   cursor: pointer;
   width: 100%;
-  font-size: 12px;
+  font-size: 30px;
   font-weight: bold;
   text-align: center;
   padding: 10px 10px 30px 10px;
@@ -66,8 +66,8 @@
 
 
 .arrival-airport-selector:checked + label {
-  background-color: #b0e0e6;
-  color: white !important;
+  background-color: transparent;
+  color: white;
 }
 
 

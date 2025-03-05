@@ -1,6 +1,8 @@
-<%= simple_form_for @guess, url: guesses_path, html: { data: { controller: "choice" } } do |f| %>
+<%= simple_form_for guess, url: guesses_path, html: { data: { controller: "choice", choices: question.choices.to_json } } do |f| %>
   <div class="d-flex flex-column gap-3" data-choice-target='form'>
     <% question.choices.each do |choice| %>
+      <% if choice.correct %>
+      <% end %>
       <div class="choice-card card p-3 shadow-sm text-center"
         data-choice-id="<%= choice.id %>"
         data-action="click->choice#select">

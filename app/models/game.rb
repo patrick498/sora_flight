@@ -6,7 +6,7 @@ class Game < ApplicationRecord
   belongs_to :airline_guess, class_name: "Airline"
   belongs_to :aircraft_guess, class_name: "Aircraft"
 
-  has_many :questions
+  has_many :questions, dependent: :destroy
 
   has_one_attached :photo
 
