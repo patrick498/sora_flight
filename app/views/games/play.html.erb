@@ -27,7 +27,7 @@
                   input_html: {class: 'arrival-airport-selector'},
                   collection: @departure_airports %>
                   <!-- Second question -->
-          <%= f.input :arrival_airport_guess_id,
+        <%= f.input :arrival_airport_guess_id,
                   label: "Time to land! Where is this plane heading?", wrapper_html: {class: "question-form d-none", data: {gamebutton_target: "secondQuestion"}},
                   as: :radio_buttons,
                   collection_wrapper_tag: 'div',
@@ -35,8 +35,8 @@
                   item_wrapper_class: 'arrival-airport-item',
                   input_html: {class: 'arrival-airport-selector'},
                   collection: @arrival_airports %>
-                  <!--Third question -->
-              <%= f.input :airline_guess_id,
+        <!--Third question -->
+        <%= f.input :airline_guess_id,
                   label: "which airline is operating this flight?", wrapper_html: {class: "question-form d-none", data: {gamebutton_target: "thirdQuestion"}},
                   as: :radio_buttons,
                   collection_wrapper_tag: 'div',
@@ -44,12 +44,8 @@
                   item_wrapper_class: 'arrival-airport-item',
                   input_html: {class: 'arrival-airport-selector'},
                   collection: @airlines %>
-          <%= f.hidden_field :flight_id, value: @flight.id.to_i %>
+        <%= f.hidden_field :flight_id, value: @flight.id.to_i %>
       </div>
-        <%= f.submit 'Check in!', class: 'button-catch' %>
-      <% end %>
-      <button data-action="click->gamebutton#next">NEXT</button>
-<div class="container">
-
-<!--<%= render "shared/flight_ticket" %>-->
-</div>
+      <%= f.submit 'Check in!', class: 'button-catch' %>
+    <% end %>
+    <button data-action="click->gamebutton#next">NEXT</button>

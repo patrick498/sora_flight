@@ -4,16 +4,30 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static values = { target: Number, duration: Number }
   connect() {
-    if (!this.element.closest("[data-reveal-target]")?.classList.contains("hidden")) {
-      this.animateScore();
-    }
+    console.log("Score controller connected.");
 
-    this.element.closest("[data-reveal-target]")?.addEventListener("reveal:show", () => {
-      this.animateScore();
-    });
+    // Ensure the element is listening for reveal:show
+    const revealTarget = this.element.closest("[data-reveal-target]");
+
+    if (revealTarget) {
+      revealTarget.addEventListener("reveal:show", () => {
+        console.log("reveal:show event received, triggering animateScore.");
+        this.animateScore();
+      });
+
+      // If the element is already visible when connected, trigger animation
+      if (!revealTarget.classList.contains("hidden")) {
+        console.log("Element already visible, triggering animateScore.");
+        this.animateScore();
+      }
+    } else {
+      console.warn("No reveal target found for score controller.");
+    }
   }
 
   animateScore() {
+    console.log('inside animate score');
+
     let start = 0;
     let end = this.targetValue;
     let duration = this.durationValue || 2000; // Default duration: 2s
