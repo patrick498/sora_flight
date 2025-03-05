@@ -7,23 +7,28 @@
     background-color: rgb(106, 198, 212);
     .nav-container{
       position: relative;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 25%;
+
       .play{
         position: absolute;
-        right: 50%;
-        top: -28px;
+        right: 55%;
+        top: -125px;
         width: 90px;
         a{
           font-size: 50px;
-          border-radius: 18%;
-          background-color: orange;
+          border-radius: 50px;
+          background-color: #e67e22;
           border: solid 8px steelblue;
-          height: 135px;
+          height: 100px;
           cursor: pointer;
           text-align: center;
           text-decoration: none;
           outline: none;
           color: #fff;
           box-shadow: 0 9px #999;
+          width: 220px;
           &:hover {background-color: rgb(255, 98, 0)}
 
           &:active {
