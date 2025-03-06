@@ -1,4 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
+import Swal from 'sweetalert2';
+window.Swal = Swal;
 
 // Connects to data-controller="gamebutton"
 export default class extends Controller {
@@ -14,6 +16,7 @@ export default class extends Controller {
     console.log("connected")
     this.questionNumber = 1
     console.log(this.element.children);
+    this.rightAnswers = [this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue];
 
   }
 
@@ -46,51 +49,72 @@ export default class extends Controller {
     let isCorrect;
     let correctAnswer;
 
-    if (selectedValue == this.firstAnswerValue) {
+    isCorrect = false;
+    if (Number(selectedValue) === this.rightAnswers[this.questionNumber - 1]) {
       isCorrect = true;
-      correctAnswer = this.firstAnswerValue;
-    } else if (selectedValue == this.secondAnswerValue) {
-      isCorrect = true;
-      correctAnswer = this.secondAnswerValue;
-    } else if (selectedValue == this.thirdAnswerValue) {
-      isCorrect = true;
-      correctAnswer = this.thirdAnswerValue;
-    } else {
-      isCorrect = false;
+      correctAnswer = this.rightAnswers[this.questionNumber + 1];
     }
+    console.log(this.questionNumber, Number(selectedValue));
+
 
     if (isCorrect) {
       selectedAnswer.classList.add('correct');
+      Swal.fire({
+        icon: "success",
+        customClass: {
+          icon: 'big-colorful-correct',  // Custom class for the icon
+        },
+        background: 'transparent',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
     } else {
       selectedAnswer.classList.add('incorrect');
+      Swal.fire({
+        icon: "error",
+        customClass: {
+          icon: 'wrong-icon',  // Custom class for the icon
+        },
+        background: 'transparent',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
       this.answerTargets.forEach((answerTarget) => {
-
         const answerValue = answerTarget.value;
-        console.log([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue], Number(answerValue));
-        console.log([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue].includes(Number(answerValue)));
+        /* console.log([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue], Number(answerValue));
+        console.log([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue].includes(Number(answerValue))); */
 
-        if ([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue].includes(Number(answerValue))) {
+        if (Number(answerValue) === this.rightAnswers[this.questionNumber + 1]) {
           answerTarget.parentElement.classList.add("correct");
         }
       })
     }
     // third question, submit form
     if (e.currentTarget.name === 'game[airline_guess_id]') {
-      e.currentTarget.form.submit()
-    }
-    setTimeout(() => {
-      this.answerTargets.forEach((answerTarget) => {
-        const answerValue = answerTarget.value;
-        console.log(answerValue);
+      const form = e.currentTarget.form
+      setTimeout(() => {
+        form.submit()
+/*         this.next()
+ */      }, 3500);
+    } else {
+      setTimeout(() => {
+        this.answerTargets.forEach((answerTarget) => {
+          const answerValue = answerTarget.value;
+          console.log(answerValue);
 
-        if ([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue].includes(Number(answerValue))) {
-          answerTarget.parentElement.classList.remove("correct");
-        }
-      })
-      this.next();
-    }, 2000);
+          if (Number(answerValue) === this.rightAnswers[this.questionNumber + 1]) {
+            answerTarget.parentElement.classList.remove("correct");
+          }
+        })
+        this.next();
+      }, 3000);
+    }
+
+
   }
-  
+
   showHints(event) {
     event.currentTarget.classList.add("d-none");
     this.hintsTarget.classList.remove("d-none");
