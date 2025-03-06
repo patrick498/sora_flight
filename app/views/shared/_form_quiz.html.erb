@@ -2,17 +2,17 @@
     <%= simple_form_for @game do |f| %>
       <%= f.input :departure_airport_guess_id,
             label: "Departure Airport?",
-            wrapper_html: {class: "question-form", data: {gamebutton_target: "firstQuestion"}},
+            wrapper_html: {class: "question-form", data: {gamebutton_target: "firstQuestion",}},
             as: :radio_buttons,
             collection_wrapper_tag: 'div',
             collection_wrapper_class: 'arrival-airport-wrapper',
             item_wrapper_class: 'arrival-airport-item',
             input_html: {class: 'arrival-airport-selector', data: {action: "change->gamebutton#checkAnswer", gamebutton_target: "answer"}},
-            collection: @departure_airports.map { |airport| [airport.name.gsub(/\b(Airport|International)\b/, '').strip.upcase, airport.id] } %>
+            collection: @departure_airports.map { |airport| [airport.name.gsub(/\b(Airport|International)\b/, '').strip, airport.id] } %>
 
                   <!-- Second question -->
           <%= f.input :arrival_airport_guess_id,
-            label: "Where is this plane heading?",
+            label: "Arrival Airport?",
             wrapper_html: {class: "question-form d-none", data: {gamebutton_target: "secondQuestion"}},
             as: :radio_buttons,
             collection_wrapper_tag: 'div',
@@ -23,7 +23,7 @@
 
                   <!--Third question -->
             <%= f.input :airline_guess_id,
-                  label: "Which airline is operating this flight?", wrapper_html: {class: "question-form d-none", data: {gamebutton_target: "thirdQuestion"}},
+                  label: "Airline?", wrapper_html: {class: "question-form d-none", data: {gamebutton_target: "thirdQuestion"}},
                   as: :radio_buttons,
                   collection_wrapper_tag: 'div',
                   collection_wrapper_class: 'arrival-airport-wrapper',

@@ -1,10 +1,18 @@
 .question-form legend {
-  color: white;
-  text-align: center;
-  background-color: #857968;
-  border-radius: 10px;
-  margin-bottom: 5px;
-  font-size: 30px;
+  display: flex;
+	cursor: pointer;
+	width: 100%;
+	font-weight: bold;
+	height: 22px;
+	cursor: pointer;
+	background: transparent;
+	border: 0px solid #222;
+	border-radius: 10px;
+	color: white;
+	font-size: 30px;
+	justify-content: center;
+	align-items: center;
+  margin-bottom: 10px;
 }
 
 .arrival-airport-wrapper {
@@ -20,10 +28,20 @@
   flex: 0 0 30%;
   margin-bottom: 15px;
   box-sizing: border-box;
-  color: #d4fa08;
-  background-color: #1b2a63;
+  color: white;
+  box-shadow: 0 0 0 1px #0E508C inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #444, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+  background-color: #444;;
+  background: #0E508C;
+  border: 0px solid #222;
+  border-radius: 2.75em;
+  transform-style: preserve-3d;
 }
 
+.arrival-airport-item:active,
+.arrival-airport-item.active {
+  box-shadow: 0 0 0 1px #444 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  background-color: #94bcef;
+}
 
 .arrival-airport-selector {
   position: absolute;
@@ -32,20 +50,30 @@
 
 
 .arrival-airport-selector + label {
-  display: flex;
-  cursor: pointer;
-  width: 100%;
-  font-size: 25px;
-  font-weight: bold;
+	display: flex;
+	cursor: pointer;
+	width: 100%;
+	font-weight: bold;
+	height: 85px;
+  border: 0px solid #222;
+  color: white;
+	font-size: 25px;
+	justify-content: center;
+	align-items: center;
+  transform-style: preserve-3d;
+  transition: transform 150ms cubic-bezier(0, 0, 0.58, 1);
   text-align: center;
-  border: 5px solid #1b2a63;
-  border-radius: 10px;
-  height: 85px;
-  box-sizing: border-box;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
 }
+
+.arrival-airport:hover :checked {
+	color: White;
+	transition: 500ms;
+}
+
+.arrival-airport:focus {
+	outline: none;
+}
+
 
 .arrival-airport-selector:checked + label {
   background-color: transparent;
