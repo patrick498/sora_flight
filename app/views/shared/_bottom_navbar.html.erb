@@ -1,6 +1,26 @@
 <div class="bottom-navbar container-fluid">
   <nav class="bottom-nav navbar fixed-bottom navbar-light">
     <div class="nav-container container">
+      <%= link_to "/", class: "btn text-light" do %>
+        <h3><i class="fa-solid fa-house"></i></h3>
+      <% end %>
+      <div class="play">
+        <% if current_page?("/main") %>
+          <%= link_to game_load_path, class: "play-btn btn text-light fw-bold" do %>
+            Start!
+          <% end %>
+        <% end %>
+      </div>
+      <div class="nav-item dropup">
+        <%= link_to "#", class: "btn text-light", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" } do %>
+          <h3><i class="fa-solid fa-user"></i></h3>
+        <% end %>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <%= link_to "Action", "#", class: "dropdown-item" %>
+          <%= link_to "Another action", "#", class: "dropdown-item" %>
+          <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
+        </div>
+      </div>
     </div>
   </nav>
 </div>
