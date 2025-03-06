@@ -220,9 +220,23 @@ class GamesController < ApplicationController
       end
     end
     game.score += correct_answers * 10
-    results = { correct_answers: correct_answers, total_questions: questions_results.size, questions_results: questions_results }
+    cabin_class = cabin_class(game.score)
+    results = { correct_answers: correct_answers, total_questions: questions_results.size, questions_results: questions_results, cabin_class: cabin_class }
     return results
   end
+
+  def cabin_class(score)
+    if score < 10
+    cabin_class = 'CARGO'
+    elsif score >= 10 && score < 20
+      cabin_class = 'ECONOMY'
+    elsif score >= 20 && score < 30
+      cabin_class = 'BUSINESS'
+    elsif score >= 30
+      cabin_class = 'FIRST'
+    end
+  end
+
 
   # returns markers for departure, arrival, and current position
   def markers(flight, location)
