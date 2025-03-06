@@ -18,7 +18,7 @@
             collection_wrapper_class: 'arrival-airport-wrapper',
             item_wrapper_class: 'arrival-airport-item',
             input_html: {class: 'arrival-airport-selector', data: {action: "change->gamebutton#checkAnswer", gamebutton_target: "answer"}},
-            collection: @flights[@flight_count.to_i-1][:arrival_airports].map { |airport| [airport["name"].gsub(/\b(Airport|International)\b/, '').strip, airport["id"]] } %>
+            collection: @flights[@flight_count.to_i-1][:arrival_airports].map { |airport| [airport["name"].gsub(/\b(Airport|International)\b/, '').strip.upcase, airport["id"]] } %>
     <!--Third question -->
     <%= f.input :airline_guess_id,
                   label: "Airline?", wrapper_html: {class: "question-form d-none", data: {gamebutton_target: "thirdQuestion"}},
@@ -27,7 +27,7 @@
                   collection_wrapper_class: 'arrival-airport-wrapper',
                   item_wrapper_class: 'arrival-airport-item',
                   input_html: {class: 'arrival-airport-selector', data: {action: "change->gamebutton#checkAnswer", gamebutton_target: "answer"}},
-                  collection: @flights[@flight_count.to_i-1][:airlines].map { |airline| [airline["name"]]} %>
+                  collection: @flights[@flight_count.to_i-1][:airlines].map { |airline| [airline["name"], airline["id"]]} %>
     <%= f.hidden_field :flight_id, value: @flights[@flight_count.to_i-1][:flight]["id"] %>
     <%= f.hidden_field :flight_number, value: @flight_number %>
   </div>

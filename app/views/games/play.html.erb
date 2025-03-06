@@ -1,4 +1,4 @@
-<div data-controller="gamebutton" data-gamebutton-flights-value="<%= @flights.to_json %>" data-gamebutton-flight-id-value="<%= @flights[@flight_count.to_i-1][:flight]["id"] %>" >
+<div data-controller="gamebutton" data-gamebutton-flights-value="<%= @flights.to_json %>" data-gamebutton-flight-id-value="<%= @flights[@flight_count.to_i-1][:flight]["id"] %>" data-gamebutton-flight-count-value="<%= @flight_count %>" >
   <div id="ar">
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true;' >
       <a-camera gps-camera rotation-reader>

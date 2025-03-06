@@ -9,7 +9,8 @@ export default class extends Controller {
     secondAnswer: Number,
     thirdAnswer: Number,
     flightId: Number,
-    flights: Array
+    flights: Array,
+    flightCount: Number
   }
 
   static targets = ["button", "quiz", "dashedSquare", "firstQuestion", "secondQuestion", "thirdQuestion", "answer"]
@@ -17,8 +18,8 @@ export default class extends Controller {
   connect() {
     console.log("connected");
     this.questionNumber = 1
-    console.log(this.element.children);
-    this.rightAnswers = [this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue];
+    this.rightAnswers = [this.flightsValue[this.flightCountValue - 1].first_answer, this.flightsValue[this.flightCountValue - 1].second_answer, this.flightsValue[this.flightCountValue - 1].third_answer];
+    console.log(this.rightAnswers)
   }
 
   startGame(event) {
@@ -99,7 +100,7 @@ export default class extends Controller {
     isCorrect = false;
     if (Number(selectedValue) === this.rightAnswers[this.questionNumber - 1]) {
       isCorrect = true;
-      correctAnswer = this.rightAnswers[this.questionNumber + 1];
+      correctAnswer = this.rightAnswers[this.questionNumber - 1];
     }
     console.log(this.questionNumber, Number(selectedValue));
 
