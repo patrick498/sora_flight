@@ -101,12 +101,4 @@ Rails.application.reloader.to_prepare do
     description: "Awarded for spotting 10 airlines.",
     custom_fields: { difficulty: :platinum, icon: "badges/airline_spotter.png", color: "text-primary" }
   )
-
-  # FOR DEBUGGING
-  Merit::Badge.create!(
-    id: 999,
-    name: "Second Game",
-    description: "Second game played",
-    custom_fields: { difficulty: :bronze, icon: "badges/first_game.png", color: "text-warning" }
-  )
 end
