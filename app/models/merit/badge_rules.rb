@@ -57,13 +57,25 @@ module Merit
       grant_on 'games#create', badge_id: 2, to: :user do |game|
         game.arrival_airport_guess_id.present? &&
           game.arrival_airport_guess_id == game.flight.arrival_airport_id &&
-          game.user.games.where(arrival_airport_guess_id: game.flight.arrival_airport_id).count == 1
+          game.departure_airport_guess_id.present? &&
+          game.departure_airport_guess_id == game.flight.departure_airport_id &&
+          game.airline_guess_id.present? &&
+          game.airline_guess_id == game.flight.airline_id &&
+          game.user.games.where(
+            arrival_airport_guess_id: game.flight.arrival_airport_id,
+            departure_airport_guess_id: game.flight.departure_airport_id,
+            airline_guess_id: game.flight.airline_id
+          ).count == 1
       end
 
       # 3 Correct Guesses in a Row
       grant_on 'games#create', badge_id: 3, to: :user do |game|
         last_3_games = game.user.games.order(created_at: :desc).limit(3)
-        last_3_games.count == 3 && last_3_games.all? { |g| g.arrival_airport_guess_id == g.flight.arrival_airport_id }
+        last_3_games.count == 3 && last_3_games.all? do |g|
+          g.arrival_airport_guess_id == g.flight.arrival_airport_id &&
+            g.departure_airport_guess_id == g.flight.departure_airport_id &&
+            g.airline_guess_id == g.flight.airline_id
+        end
       end
 
       # Played 10 Games
@@ -74,9 +86,12 @@ module Merit
       # 5 Correct Guesses in a Row
       grant_on 'games#create', badge_id: 5, to: :user do |game|
         last_5_games = game.user.games.order(created_at: :desc).limit(5)
-        last_5_games.count == 5 && last_5_games.all? { |g| g.arrival_airport_guess_id == g.flight.arrival_airport_id }
+        last_5_games.count == 5 && last_5_games.all? do |g|
+          g.arrival_airport_guess_id == g.flight.arrival_airport_id &&
+            g.departure_airport_guess_id == g.flight.departure_airport_id &&
+            g.airline_guess_id == g.flight.airline_id
+        end
       end
-
     end
   end
 end
