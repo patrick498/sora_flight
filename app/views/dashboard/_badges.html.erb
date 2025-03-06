@@ -5,8 +5,8 @@
       <% earned = @earned_badges.include?(badge.id) %>
       <button type="button" class="badge-card text-center shadow-sm" style="<%= earned ? 'border: solid 8px rgb(106, 198, 212)' : 'border: solid 8px lightGray' %>"
             data-bs-toggle="modal" data-bs-target="#badgeModal-<%= badge.id %>">
-        <h1><%= content_tag :i, "", class: "fa fa-#{badge.custom_fields[:icon]} #{earned ? badge.custom_fields[:color] : 'text-secondary'}" %></h1>
-        <p class="<%= earned ? '' : 'text-secondary'%>"><%= badge.name %></p>
+        <%= image_tag badge.custom_fields[:icon], alt: "text", style: earned ? 'filter: none;' : 'filter: grayscale(100%);' %>
+        <p style="<%= earned ? 'color: gray;' : 'color: lightGray;'%>"><%= badge.name %></p>
       </button>
       <div class="modal fade" id="badgeModal-<%= badge.id %>" tabindex="-1" aria-labelledby="badgeModalLabel-<%= badge.id %>" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

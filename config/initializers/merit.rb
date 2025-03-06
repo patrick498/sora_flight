@@ -36,69 +36,69 @@ Rails.application.reloader.to_prepare do
     id: 1,
     name: "First Game",
     description: "First game played",
-    custom_fields: { difficulty: :bronze, icon: "fa-solid fa-star", color: "text-warning" }
+    custom_fields: { difficulty: :bronze, icon: "badges/first_game.png", color: "text-warning" }
   )
 
   Merit::Badge.create!(
     id: 2,
     name: "First Correct",
     description: "Awarded for a correct guess.",
-    custom_fields: { difficulty: :silver, icon: "fa-solid fa-check-circle", color: "text-warning" }
+    custom_fields: { difficulty: :silver, icon: "badges/first_correct.png", color: "text-warning" }
   )
 
   Merit::Badge.create!(
     id: 3,
     name: "Three Streak",
     description: "Awarded for a streak of correct guesses.",
-    custom_fields: { difficulty: :gold, icon: "fa-solid fa-fire", color: "text-danger" }
+    custom_fields: { difficulty: :gold, icon: "badges/three_streak.png", color: "text-danger" }
   )
 
   Merit::Badge.create!(
     id: 4,
-    name: "Frequent Player",
-    description: "Awarded for playing many games.",
-    custom_fields: { difficulty: :silver, icon: "fa-solid fa-user-clock", color: "text-muted" }
+    name: "Frequent Flyer",
+    description: "Awarded for playing over 10 games.",
+    custom_fields: { difficulty: :silver, icon: "badges/frequent_flyer.png", color: "text-muted" }
   )
 
   Merit::Badge.create!(
     id: 5,
     name: "Five Streak",
     description: "Awarded for guessing correctly every time.",
-    custom_fields: { difficulty: :gold, icon: "fa-solid fa-medal", color: "text-warning" }
+    custom_fields: { difficulty: :gold, icon: "badges/five_streak.png", color: "text-warning" }
   )
 
   Merit::Badge.create!(
     id: 6,
     name: "Expert",
     description: "Awarded for reaching 50 correct guesses.",
-    custom_fields: { difficulty: :platinum, icon: "fa-solid fa-trophy", color: "text-warning" }
+    custom_fields: { difficulty: :platinum, icon: "badges/expert.png", color: "text-warning" }
   )
 
   Merit::Badge.create!(
     id: 7,
     name: "Co-Pilot",
     description: "Awarded for spotting 10 planes.",
-    custom_fields: { difficulty: :platinum, icon: "fa-solid fa-plane", color: "text-warning" }
+    custom_fields: { difficulty: :platinum, icon: "badges/bronze.png", color: "text-warning" }
   )
 
   Merit::Badge.create!(
     id: 8,
     name: "Pilot",
     description: "Awarded for spotting 20 planes.",
-    custom_fields: { difficulty: :platinum, icon: "fa-solid fa-plane-departure", color: "text-gray" }
+    custom_fields: { difficulty: :platinum, icon: "badges/silver.png", color: "text-gray" }
   )
 
   Merit::Badge.create!(
     id: 9,
     name: "Captain",
     description: "Awarded for spotting 30 planes.",
-    custom_fields: { difficulty: :platinum, icon: "fa-solid fa-jet-fighter", color: "text-warning" }
+    custom_fields: { difficulty: :platinum, icon: "badges/gold.png", color: "text-warning" }
   )
 
   Merit::Badge.create!(
     id: 10,
-    name: "Frequent Flyer",
+    name: "Airline Spotter",
     description: "Awarded for spotting 10 airlines.",
-    custom_fields: { difficulty: :platinum, icon: "fa-solid fa-business-time", color: "text-primary" }
+    custom_fields: { difficulty: :platinum, icon: "badges/airline_spotter.png", color: "text-primary" }
   )
 end
