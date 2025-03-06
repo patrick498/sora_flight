@@ -19,6 +19,11 @@ class GamesController < ApplicationController
   end
 
   def load_game
+    if params[:flight_count].nil?
+      @flight_count = 1
+    else
+      @flight_count = params[:flight_count]
+    end
     @game = Game.new
     authorize @game
   end
@@ -35,86 +40,106 @@ class GamesController < ApplicationController
       selected_flight = closest_flights.call
       puts "######SELECTED FLIGHT"
       p selected_flight
-      final_flight = selected_flight
+      flights = selected_flight
     else
-      final_flight = Flight.first
+      # get flights from db
+      flights = Flight.first(3)
     end
 
     game = Game.new
     authorize game
     puts "##############FINAL FLIGHT"
-    p final_flight
-    redirect_to game_play_path(flight: final_flight, latitude: params[:latitude], longitude: params[:longitude])
+    p flights
+    redirect_to game_play_path(flights: flights, latitude: params[:latitude], longitude: params[:longitude], flight_count: params[:flight_count])
 
   end
 
   def play
     @game = Game.new
-    @flight = Flight.find(params[:flight])
-    max_radius = 10
-    # Get new airplane position
-    get_new_plane_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.latitude, @flight.longitude, max_radius)
-    new_plane_position = get_new_plane_position.call
-    @new_plane_latitude = new_plane_position[:lat]
-    @new_plane_longitude = new_plane_position[:lon]
-    # Get new position for airports
-    get_new_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude, @flight.departure_airport.longitude, 7)
-    new_departure_position = get_new_departure_position.call
-    @new_departure_latitude = new_departure_position[:lat]
-    @new_departure_longitude = new_departure_position[:lon]
-    @departure_bearing = new_departure_position[:bearing]
-    get_new_arrival_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.arrival_airport.latitude, @flight.arrival_airport.longitude, 7)
-    new_arrival_position = get_new_arrival_position.call
-    @new_arrival_latitude = new_arrival_position[:lat]
-    @new_arrival_longitude = new_arrival_position[:lon]
-    @arrival_bearing = new_arrival_position[:bearing]
-    # Get new positions for arrows
-    get_arrow_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude, @flight.departure_airport.longitude, 0.13)
-    arrow_departure_position = get_arrow_departure_position.call
-    @arrow_departure_latitude = arrow_departure_position[:lat]
-    @arrow_departure_longitude = arrow_departure_position[:lon]
-    get_arrow_arrival_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.arrival_airport.latitude, @flight.arrival_airport.longitude, 0.13)
-    arrow_arrival_position = get_arrow_arrival_position.call
-    @arrow_arrival_latitude = arrow_arrival_position[:lat]
-    @arrow_arrival_longitude = arrow_arrival_position[:lon]
-    # Get new positions for texts
-    get_text_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude, @flight.departure_airport.longitude, 0.08)
-    text_departure_position = get_text_departure_position.call
-    @text_departure_latitude = text_departure_position[:lat]
-    @text_departure_longitude = text_departure_position[:lon]
-    get_text_arrival_position = NewElementPosition.new(params[:latitude], params[:longitude], @flight.arrival_airport.latitude, @flight.arrival_airport.longitude, 0.08)
-    text_arrival_position = get_text_arrival_position.call
-    @text_arrival_latitude = text_arrival_position[:lat]
-    @text_arrival_longitude = text_arrival_position[:lon]
-    # Get distances
-    get_distance_departure = DistanceTwoPoints.new(params[:latitude], params[:longitude], @flight.departure_airport.latitude, @flight.departure_airport.longitude)
-    @distance_departure = get_distance_departure.call.to_i
-    get_distance_arrival = DistanceTwoPoints.new(params[:latitude], params[:longitude], @flight.arrival_airport.latitude, @flight.arrival_airport.longitude)
-    @distance_arrival = get_distance_arrival.call.to_i
+    @flights = []
+    max_radius = 6
 
-    @game.flight = @flight
+    all_airports = Airport.all
+    all_airlines = Airline.all
+
+    params[:flights].each do |flight_id|
+      flight = Flight.find(flight_id)
+      # Get new positions
+      get_new_plane_position = NewElementPosition.new(params[:latitude], params[:longitude], flight.latitude, flight.longitude, max_radius)
+      new_plane_position = get_new_plane_position.call
+      get_new_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], flight.departure_airport.latitude, flight.departure_airport.longitude, 7)
+      new_departure_position = get_new_departure_position.call
+      get_new_arrival_position = NewElementPosition.new(params[:latitude], params[:longitude], flight.arrival_airport.latitude, flight.arrival_airport.longitude, 7)
+      new_arrival_position = get_new_arrival_position.call
+      get_arrow_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], flight.departure_airport.latitude, flight.departure_airport.longitude, 0.13)
+      arrow_departure_position = get_arrow_departure_position.call
+      get_arrow_arrival_position = NewElementPosition.new(params[:latitude], params[:longitude], flight.arrival_airport.latitude, flight.arrival_airport.longitude, 0.13)
+      arrow_arrival_position = get_arrow_arrival_position.call
+      get_text_departure_position = NewElementPosition.new(params[:latitude], params[:longitude], flight.departure_airport.latitude, flight.departure_airport.longitude, 0.08)
+      text_departure_position = get_text_departure_position.call
+      get_text_arrival_position = NewElementPosition.new(params[:latitude], params[:longitude], flight.arrival_airport.latitude, flight.arrival_airport.longitude, 0.08)
+      text_arrival_position = get_text_arrival_position.call
+      get_distance_departure = DistanceTwoPoints.new(params[:latitude], params[:longitude], flight.departure_airport.latitude, flight.departure_airport.longitude)
+      get_distance_arrival = DistanceTwoPoints.new(params[:latitude], params[:longitude], flight.arrival_airport.latitude, flight.arrival_airport.longitude)
+
+      # Alternatives
+      # Wrong random options
+      departure_airports = all_airports.where.not(id: flight.departure_airport.id).sample(3)
+      arrival_airports = all_airports.where.not(id: flight.arrival_airport.id).sample(3)
+      airlines = all_airlines.where.not(id: flight.airline.id).sample(3)
+
+      # Correct answer
+      departure_airports << flight.departure_airport
+      arrival_airports << flight.arrival_airport
+      airlines << flight.airline
+
+      departure_airports.shuffle!.map! { |x| x.attributes  }
+      arrival_airports.shuffle!.map! { |x| x.attributes  }
+      airlines.shuffle!.map! { |x| x.attributes  }
+
+      first_answer = flight.departure_airport.id
+      second_answer = flight.arrival_airport.id
+      third_answer = flight.airline.id
+
+      new_flight = {
+        flight: flight.attributes,
+        new_plane_latitude: new_plane_position[:lat],
+        new_plane_longitude: new_plane_position[:lon],
+        # Get new position for airports
+        new_departure_latitude: new_departure_position[:lat],
+        new_departure_longitude: new_departure_position[:lon],
+        departure_bearing: new_departure_position[:bearing],
+        new_arrival_latitude: new_arrival_position[:lat],
+        new_arrival_longitude: new_arrival_position[:lon],
+        arrival_bearing: new_arrival_position[:bearing],
+        # Get new positions for arrows
+        arrow_departure_latitude: arrow_departure_position[:lat],
+        arrow_departure_longitude: arrow_departure_position[:lon],
+        arrow_arrival_latitude: arrow_arrival_position[:lat],
+        arrow_arrival_longitude: arrow_arrival_position[:lon],
+        # Get new positions for texts
+        text_departure_latitude: text_departure_position[:lat],
+        text_departure_longitude: text_departure_position[:lon],
+        text_arrival_latitude: text_arrival_position[:lat],
+        text_arrival_longitude: text_arrival_position[:lon],
+        # Get distances
+        distance_departure: get_distance_departure.call.to_i,
+        distance_arrival: get_distance_arrival.call.to_i,
+        # Choices
+        departure_airports: departure_airports,
+        arrival_airports: arrival_airports,
+        airlines: airlines,
+        first_answer: first_answer,
+        second_answer: second_answer,
+        third_answer: third_answer
+      }
+      @flights << new_flight
+    end
+
     @game.user = current_user
-
     authorize @game
 
-    #Wrong random options
-    @departure_airports = Airport.where.not(id: @flight.departure_airport).sample(3)
-    @arrival_airports = Airport.where.not(id: @flight.arrival_airport).sample(3)
-    @airlines = Airline.where.not(id: @flight.airline).sample(3)
-
-    #Correct answer
-    @departure_airports << @flight.departure_airport
-    @arrival_airports << @flight.arrival_airport
-    @airlines << @flight.airline
-
-    #Shuffle the options
-    @departure_airports.shuffle!
-    @arrival_airports.shuffle!
-    @airlines.shuffle!
-
-    @firstAnswer = @flight.departure_airport.id
-    @secondAnswer = @flight.arrival_airport.id
-    @thirdAnswer = @flight.airline.id
+    @flight_count = params[:flight_count]
   end
 
   def create

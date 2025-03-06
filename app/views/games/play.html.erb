@@ -1,7 +1,9 @@
-<div data-controller="gamebutton" data-gamebutton-first-answer-value="<%= @firstAnswer %> " data-gamebutton-second-answer-value="<%= @secondAnswer %>" data-gamebutton-third-answer-value="<%= @thirdAnswer %>">
+<div data-controller="gamebutton" data-gamebutton-flights-value="<%= @flights.to_json %>" data-gamebutton-flight-id-value="<%= @flights[@flight_count.to_i-1][:flight]["id"] %>" >
   <div id="ar">
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true;' >
-      <a-camera gps-camera rotation-reader></a-camera>
+      <a-camera gps-camera rotation-reader>
+      </a-camera>
+      <a-entity class="clickable" id="box" position="0 0 -3" cursor-listener geometry="primitive: box" material="color: blue" scale="1 1 1"></a-entity>
       <a-assets>
         <img id="skyTexture" src="<%= image_path 'night_sky.jpeg' %>">
         <img id="groundTexture" src="<%= image_path 'compass.svg' %>">
@@ -9,41 +11,39 @@
         <img id="departureTexture" src="<%= image_path 'departure_airport_pin.svg' %>">
       </a-assets>
       <a-entity light="type: ambient; color: #DDD"></a-entity>
-      <%# model %>
-      <a-entity gltf-model="<%= "/models/airplanes/airplane_#{["red","blue"].sample}.gltf" %>" rotation="0 <%= (@flight.heading + 180) % 360 %> 0" position="<%= "0 #{@flight.altitude} 0"%>" scale="15 15 15" gps-entity-place="<%= "latitude: #{@new_plane_latitude}; longitude:#{@new_plane_longitude}" %>"/></a-entity>
-      <%# airports %>
-      <a-entity position="0 150 0" gps-entity-place="<%= "latitude: #{@new_departure_latitude}; longitude:#{@new_departure_longitude}" %>">
-        <a-plane src="#departureTexture" width="800" height="800" material="transparent: true; side: double;" rotation="0 <%= "#{@departure_bearing}" %> 0"></a-plane>
-      </a-entity>
-      <a-entity position="0 150 0" gps-entity-place="<%= "latitude: #{@new_arrival_latitude}; longitude:#{@new_arrival_longitude}" %>">
-        <a-plane src="#arrivalTexture" width="800" height="800" material="transparent: true; side: double;" rotation="0 <%= "#{@arrival_bearing}" %> 0"></a-plane>
-      </a-entity>
-      <%# airports distances %>
-      <a-entity position="0 5 0" gps-entity-place="<%= "latitude: #{@arrow_arrival_latitude}; longitude:#{@arrow_arrival_longitude}" %>" geometry="primitive: triangle" rotation="-90 <%= "#{-@arrival_bearing}" %> 0" scale="20 60 20" material="color: #E67E22; side: double"></a-entity>
-      <a-entity gps-entity-place="<%= "latitude: #{@text_arrival_latitude}; longitude:#{@text_arrival_longitude}" %>">
-        <a-text position="0 -38 0" id="distance-text" value="<%= "#{@distance_arrival}km" %>" baseline="bottom" align="center" color="white" scale="25 25 25" rotation="0 <%= "#{-@arrival_bearing}" %> 0"></a-text>
-      </a-entity>
-      <a-entity position="0 5 0" gps-entity-place="<%= "latitude: #{@arrow_departure_latitude}; longitude:#{@arrow_departure_longitude}" %>" geometry="primitive: triangle" rotation="-90 <%= "#{-@departure_bearing}" %> 0" scale="20 60 20" material="color: #E67E22; side: double"></a-entity>
-      <a-entity gps-entity-place="<%= "latitude: #{@text_departure_latitude}; longitude:#{@text_departure_longitude}" %>" >
-        <a-text position="0 -38 0" id="distance-text" value="<%= "#{@distance_departure}km" %>" baseline="bottom" align="center" color="white" scale="25 25 25" rotation="0 <%= "#{-@departure_bearing}" %> 0"></a-text>
-      </a-entity>
+      <% @flights.each do |flight| %>
+        <%# model %>
+        <a-entity class="clickable airplane" cursor-listener data-object="airplane" data-id="<%= flight[:flight]["id"] %>" gltf-model="<%= "/models/airplanes/airplane_#{["red","blue"].sample}.gltf" %>" rotation="0 <%= (flight[:flight]["heading"] + 180) % 360 %> 0" position="<%= "0 #{flight[:flight]["altitude"]} 0"%>" scale="15 15 15" gps-entity-place="<%= "latitude: #{flight[:new_plane_latitude]}; longitude:#{flight[:new_plane_longitude]}" %>"/></a-entity>
+        <%# airports %>
+        <a-entity position="0 150 0" gps-entity-place="<%= "latitude: #{flight[:new_departure_latitude]}; longitude:#{flight[:new_departure_longitude]}" %>">
+          <a-plane src="#departureTexture" scale="0 0 0" class="airport" data-id="<%= flight[:flight]["id"] %>" visible="true" width="800" height="800" material="transparent: true; side: double;" rotation="0 <%= "#{flight[:departure_bearing]}" %> 0"></a-plane>
+        </a-entity>
+        <a-entity position="0 150 0" gps-entity-place="<%= "latitude: #{flight[:new_arrival_latitude]}; longitude:#{flight[:new_arrival_longitude]}" %>">
+          <a-plane src="#arrivalTexture" scale="0 0 0" class="airport" data-id="<%= flight[:flight]["id"] %>" visible="true" width="800" height="800" material="transparent: true; side: double;" rotation="0 <%= "#{flight[:arrival_bearing]}" %> 0"></a-plane>
+        </a-entity>
+        <%# airports distances %>
+        <a-entity position="0 5 0" class="arrow" scale="0 0 0" data-id="<%= flight[:flight]["id"] %>" visible="true" gps-entity-place="<%= "latitude: #{flight[:arrow_arrival_latitude]}; longitude:#{flight[:arrow_arrival_longitude]}" %>" geometry="primitive: triangle" rotation="-90 <%= "#{-flight[:arrival_bearing]}" %> 0"  material="color: #E67E22; side: double;"></a-entity>
+        <a-entity gps-entity-place="<%= "latitude: #{flight[:text_arrival_latitude]}; longitude:#{flight[:text_arrival_longitude]}" %>">
+          <a-text position="0 -38 0" class="distance" data-id="<%= flight[:flight]["id"] %>" visible="true" id="distance-text" value="<%= "#{flight[:distance_arrival]}km" %>"  baseline="bottom" align="center" color="white" scale="0 0 0" rotation="0 <%= "#{-flight[:arrival_bearing]}" %> 0"></a-text>
+        </a-entity>
+        <a-entity position="0 5 0" class="arrow" scale="0 0 0" data-id="<%= flight[:flight]["id"] %>" visible="true" gps-entity-place="<%= "latitude: #{flight[:arrow_departure_latitude]}; longitude:#{flight[:arrow_departure_longitude]}" %>" geometry="primitive: triangle" rotation="-90 <%= "#{-flight[:departure_bearing]}" %> 0" material="color: #E67E22; side: double;"></a-entity>
+        <a-entity gps-entity-place="<%= "latitude: #{flight[:text_departure_latitude]}; longitude:#{flight[:text_departure_longitude]}" %>">
+          <a-text position="0 -38 0" class="distance" data-id="<%= flight[:flight]["id"] %>" visible="true" id="distance-text" value="<%= "#{flight[:distance_departure]}km" %>" baseline="bottom" align="center" color="white" scale="0 0 0" rotation="0 <%= "#{-flight[:departure_bearing]}" %> 0"></a-text>
+        </a-entity>
+      <% end %>
       <%# compass %>
       <a-plane src="#groundTexture" width="4" height="4" position="0 1 0" rotation="-90 0 0" material="shader: flat; transparent: true;" ></a-plane>
       <%# sky %>
       <a-sky src="#skyTexture" radius="10000"></a-sky>
     </a-scene>
-    <div class="centered-top" data-gamebutton-target="dashedSquare">
-      <div class="round-dashed-circle"></div>
-    </div>
     <div class="centered" data-gamebutton-target="button">
-      <button data-action="click->gamebutton#showQuiz"
+      <button data-action="click->gamebutton#startGame"
         class="btn rounded-circle start-btn">
         <i class="fa-solid fa-plane-up"></i>
       </button>
     </div>
   </div>
-  <%= render "hints" %>
-  <div class="form-container d-none" data-gamebutton-target="quiz">
+  <div id="quiz" class="form-container d-none" data-gamebutton-target="quiz">
     <%= render "shared/form_quiz" %>
     <div class="container">
     </div>

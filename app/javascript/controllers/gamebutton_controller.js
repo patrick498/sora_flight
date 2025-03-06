@@ -6,24 +6,71 @@ export default class extends Controller {
     firstAnswer: Number,
     secondAnswer: Number,
     thirdAnswer: Number,
+    flightId: Number,
+    flights: Array
   }
 
-  static targets = ["button", "quiz", "dashedSquare", "firstQuestion", "secondQuestion","thirdQuestion", "hints", "hintsButton", "answer"]
+  static targets = ["button", "quiz", "dashedSquare", "firstQuestion", "secondQuestion", "thirdQuestion", "answer"]
 
   connect() {
-    console.log("connected")
+    console.log("connected");
     this.questionNumber = 1
-    console.log(this.element.children);
+    console.log(this.flightsValue);
+  }
 
+  startGame(event) {
+    this.showQuiz();
+    // show information for the plane (do this work? Add elements after it is already loaded? Should I reload?)
+    this.hideAirplanes();
+    this.showAirports();
+    this.showArrows();
+    this.showDistances();
+  }
+
+  hideAirplanes() {
+    const airplanes = this.element.querySelectorAll('.airplane');
+    airplanes.forEach(airplane => {
+      const id = airplane.getAttribute('data-id');
+      if (this.flightIdValue != id) {
+        airplane.setAttribute("visible", "false");
+      }
+    });
+  }
+
+  showAirports() {
+    const airports = this.element.querySelectorAll('.airport');
+    airports.forEach(airport => {
+      const id = airport.getAttribute('data-id');
+      if (this.flightIdValue == id) {
+        airport.setAttribute("scale", "1 1 1");
+      }
+    });
+  }
+
+  showArrows() {
+    const arrows = this.element.querySelectorAll('.arrow');
+    console.log(arrows);
+    arrows.forEach(arrow => {
+      const id = arrow.getAttribute('data-id');
+      if (this.flightIdValue == id) {
+        arrow.setAttribute("scale", "20 60 20");
+      }
+    });
+  }
+
+  showDistances() {
+    const distances = this.element.querySelectorAll('.distance');
+    distances.forEach(distance => {
+      const id = distance.getAttribute('data-id');
+      if (this.flightIdValue == id) {
+        distance.setAttribute("scale", "25 25 25");
+      }
+    });
   }
 
   showQuiz() {
-    this.captureScreenshot()
-    document.querySelector("a-scene").pause()
     this.buttonTarget.classList.add("d-none"); // Hide the button
     this.quizTarget.classList.remove("d-none");// Show the content
-    this.hintsButtonTarget.classList.remove("d-none"); // Show the content
-    this.dashedSquareTarget.classList.add("d-none");
   }
 
   next() {
@@ -89,51 +136,5 @@ export default class extends Controller {
       })
       this.next();
     }, 2000);
-  }
-  
-  showHints(event) {
-    event.currentTarget.classList.add("d-none");
-    this.hintsTarget.classList.remove("d-none");
-  }
-
-  captureScreenshot() {
-    const scene = document.querySelector('a-scene')
-    const video = document.querySelector("video") // Get camera feed
-    const canvas = scene.canvas
-
-    if (!scene || !canvas) {
-      console.error("AR.js scene, canvas not found!")
-      return
-    }
-
-    // Create an offscreen canvas
-    const screenshotCanvas = document.createElement("canvas")
-    const ctx = screenshotCanvas.getContext("2d")
-
-    // Match the size of the video feed
-    screenshotCanvas.width = video.videoWidth || window.innerWidth
-    screenshotCanvas.height = video.videoHeight || window.innerHeight
-
-    // Draw the camera feed first (background)
-    ctx.drawImage(video, 0, 0, screenshotCanvas.width, screenshotCanvas.height)
-
-    // Convert the combined image to a data URL
-    const imageUrl = screenshotCanvas.toDataURL("image/png")
-
-    // Create an image element to show the screenshot
-    const img = document.createElement("img")
-    img.src = imageUrl
-    img.id = "frozen-ar"
-    img.style.width = "100vw"
-    img.style.height = "100vh"
-    img.style.position = "absolute"
-    img.style.top = "0"
-    img.style.left = "0"
-    img.style.zIndex = "1"
-    img.style.objectFit = "cover"
-
-    // Append the frozen image
-    document.body.appendChild(img)
-    video.classList.add("d-none")
   }
 }
