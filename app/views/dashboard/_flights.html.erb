@@ -1,22 +1,26 @@
 <div class="flights container mt-3">
   <h1>Recent flights</h1>
   <div class="flight-list flex-nowrap overflow-auto mx-2 gap-2 py-2">
-    <% @flight_ids.each do |id| %>
-      <% flight = Flight.find(id) %>
-      <div class="flight d-flex justify-content-between mb-2 bg-light">
-        <div>
-          <p><%= flight.departure_airport.iata %></p>
-          <p><i class="fa-solid fa-plane-departure"></i></p>
+    <% if @flight_ids.count > 0 %>
+      <% @flight_ids.each do |id| %>
+        <% flight = Flight.find(id) %>
+        <div class="flight d-flex justify-content-between mb-2 bg-light">
+          <div>
+            <p><%= flight.departure_airport.iata %></p>
+            <p><i class="fa-solid fa-plane-departure"></i></p>
+          </div>
+          <div>
+            <p><i class="fa-solid fa-plane"></i></p>
+            <p><%= flight.departure_datetime.strftime("%a, %b %d %I:%M %p") %></p>
+          </div>
+          <div>
+            <p><%= flight.arrival_airport.iata %></p>
+            <p><i class="fa-solid fa-plane-arrival"></i></p>
+          </div>
         </div>
-        <div>
-          <p><i class="fa-solid fa-plane"></i></p>
-          <p><%= flight.departure_datetime.strftime("%a, %b %d %I:%M %p") %></p>
-        </div>
-        <div>
-          <p><%= flight.arrival_airport.iata %></p>
-          <p><i class="fa-solid fa-plane-arrival"></i></p>
-        </div>
-      </div>
+      <% end %>
+    <% else %>
+      <p>no flights yet <i class="fa-solid fa-face-frown-open"></i></p>
     <% end %>
   </div>
 </div>
