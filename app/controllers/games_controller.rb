@@ -1,3 +1,4 @@
+require 'geocoder'
 class GamesController < ApplicationController
   skip_before_action :authenticate_user!, only:[:play, :setup, :show] #remove once we have users
 
@@ -7,6 +8,7 @@ class GamesController < ApplicationController
 
   def show
     # Retrieve stored badges before the game (from session)
+    @flight_count = params[:flight_count]
     badges_before = session[:badges_before]
     badges_all = current_user.badges.map(&:id) || []
     @new_badge_ids = badges_all - badges_before
@@ -25,7 +27,7 @@ class GamesController < ApplicationController
     if params[:flight_count].nil?
       @flight_count = 1
     else
-      @flight_count = params[:flight_count]
+      @flight_count = params[:flight_count].to_i + 1
     end
     @game = Game.new
     authorize @game
@@ -61,6 +63,13 @@ class GamesController < ApplicationController
     @game = Game.new
     @flights = []
     max_radius = 6
+
+    state_country = get_location(params[:latitude], params[:longitude])
+    if state_country.nil?
+      @location = "Unkown location."
+    else
+      @location = "#{state_country[:state]}, #{state_country[:country]}"
+    end
 
     all_airports = Airport.all
     all_airlines = Airline.all
@@ -161,7 +170,7 @@ class GamesController < ApplicationController
     @game.score = 0
     authorize @game
     if @game.save
-      redirect_to game_path(@game)
+      redirect_to game_path(@game, flight_count: params[:game][:flight_count])
     end
   end
 
@@ -191,6 +200,17 @@ class GamesController < ApplicationController
   end
 
   private
+
+  def get_location(latitude, longitude)
+    result = Geocoder.search([latitude, longitude]).first
+    if result
+      state = result.state
+      country = result.country
+      {state:state, country: country}
+    else
+      nil
+    end
+  end
 
   def game_params
     params.require(:game).permit(:departure_airport_guess_id, :arrival_airport_guess_id, :airline_guess_id,  :flight_id)

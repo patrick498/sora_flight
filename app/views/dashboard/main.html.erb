@@ -1,5 +1,5 @@
 <div class="main container pb-5" style="background-image: linear-gradient(rgba(205, 205, 205, 0.7), rgba(205, 205, 205,0.7)), url(<%=  image_path('sky.GIF') %>); background-repeat: no-repeat; background-size: cover;">
-  <%= render "shared/bottom_navbar" %>
+  <%= render "shared/bottom_navbar", flight_count: @flight_count %>
   <div class="w-100 p-2">
     <%= render "shared/user_card" %>
     <%= render "flights" %>

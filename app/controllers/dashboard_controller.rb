@@ -4,6 +4,7 @@ class DashboardController < ApplicationController
   end
 
   def main
+    @flight_count = params[:flight_count]
     user = current_user
     @games = user.games
     authorize @games

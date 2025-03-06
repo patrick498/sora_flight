@@ -1,9 +1,16 @@
 <div data-controller="gamebutton" data-gamebutton-flights-value="<%= @flights.to_json %>" data-gamebutton-flight-id-value="<%= @flights[@flight_count.to_i-1][:flight]["id"] %>" data-gamebutton-flight-count-value="<%= @flight_count %>" >
+  <div class="location">
+    <span><%= @location %></span>
+  </div>
+  <div class="centered" data-gamebutton-target="button">
+    <button data-action="click->gamebutton#startGame"
+      class="btn rounded-circle start-btn transparent">
+    </button>
+  </div>
   <div id="ar">
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true;' >
       <a-camera gps-camera rotation-reader>
       </a-camera>
-      <a-entity class="clickable" id="box" position="0 0 -3" cursor-listener geometry="primitive: box" material="color: blue" scale="1 1 1"></a-entity>
       <a-assets>
         <img id="skyTexture" src="<%= image_path 'night_sky.jpeg' %>">
         <img id="groundTexture" src="<%= image_path 'compass.svg' %>">
@@ -36,12 +43,6 @@
       <%# sky %>
       <a-sky src="#skyTexture" radius="10000"></a-sky>
     </a-scene>
-    <div class="centered" data-gamebutton-target="button">
-      <button data-action="click->gamebutton#startGame"
-        class="btn rounded-circle start-btn">
-        <i class="fa-solid fa-plane-up"></i>
-      </button>
-    </div>
   </div>
   <div id="quiz" class="form-container d-none" data-gamebutton-target="quiz">
     <%= render "shared/form_quiz" %>
