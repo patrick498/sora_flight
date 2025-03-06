@@ -1,0 +1,84 @@
+<div class='ticket-container'>
+  <div class="ticket border py-2">
+    <div class='d-flex flex-column py-2'>
+      <p class='ticket-text'>FLIGHT </p>
+      <div class="d-flex justify-content-between">
+        <span class='ticket-text-bold'><%= flight.flight_number %></span>
+        <span class='ticket-text-bold'><%= Date.today.strftime('%d %b %Y').upcase %></span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class='d-flex flex-column py-2'>
+      <div class="d-flex justify-content-between">
+        <span class='ticket-text'>FROM</span>
+        <span class='ticket-text'>TO</span>
+      </div>
+      <div class='d-flex justify-content-between'>
+        <% departure_guess = results[:questions_results].find { |q| q[:question] == 'departure' } %>
+        <% arrival_guess = results[:questions_results].find { |q| q[:question] == 'arrival' } %>
+        <span class='airport'><%= departure_guess[:guess] %></span>
+        <span class='airport'><%= arrival_guess[:guess] %></span>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span class='ticket-text'><%= flight.arrival_datetime.strftime('%H:%M') %></span>
+        <span class='ticket-text'><%= flight.departure_datetime.strftime('%H:%M') %></span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="d-flex flex-column justify-content-between py-2">
+      <p class='ticket-text'>PASSENGER</p>
+      <p class='ticket-text-bold'><%= current_user.username %></p>
+    </div>
+    <div class='divider'></div>
+    <div class='d-flex flex-column py-2'>
+      <div class="d-flex justify-content-between">
+        <span class='ticket-text'>GATE</span>
+        <span class='ticket-text'>AIRLINE</span>
+        <span class='ticket-text'>SEAT</span>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span class='ticket-text-bold'>A9</span>
+        <% airline_guess = results[:questions_results].find { |q| q[:question] == 'airline' } %>
+        <span class='airline'><%= airline_guess[:guess] %></span>
+        <span class='ticket-text-bold'>4A</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="d-flex flex-column py-2">
+      <div class="d-flex justify-content-between">
+        <span class='ticket-text'>MILES EARNED</span>
+        <span class='ticket-text'>CLASS</span>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span class='ticket-text-bold'><%= score %></span>
+        <span class='ticket-text-bold'><%= results[:cabin_class].upcase %></span>
+      </div>
+    </div>
+    <% if new_badges && !new_badges.empty? %>
+      <div class="divider"></div>
+      <div class="d-flex flex-column justify-content-between py-2">
+        <p class='ticket-text'>BADGES EARNED</p>
+        <div class='d-flex new-badges gap-4'>
+          <% new_badges.each do |badge| %>
+            <%= image_tag badge.custom_fields[:icon], alt: "text" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="check-container" data-controller="check">
+      <% results[:questions_results].each do |q| %>
+        <% if q[:correct] %>
+          <!-- ✅ Correct Answer: Show checkmark -->
+          <i class="<%= q[:question] %>-checkmark text-success fa-solid fa-check fa-4x checkmark hidden"
+         data-check-target="icon" data-attribute-question="<%= q[:question] %>"></i>
+        <% else %>
+          <!-- ❌ Incorrect Answer: Show correct answer in red -->
+          <span class="correct-answer <%= q[:question] %>-correct-answer hidden"
+            data-check-target="wrongAnswer" data-attribute-question="<%= q[:question] %>">
+            <%= q[:answer] %>
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

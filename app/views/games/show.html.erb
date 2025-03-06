@@ -1,6 +1,6 @@
 <div class="main container pb-5" style="background-image: linear-gradient(rgba(205, 205, 205, 0.7), rgba(205, 205, 205,0.7)), url(<%=  image_path('sky.GIF') %>); background-repeat: no-repeat; background-size: cover;">
   <!-- Display flight ticket -->
-  <%= render 'ticket', flight: @game.flight, score: @game.score, cabin_class: @results[:cabin_class], new_badges: @new_badges %>
+  <%= render 'ticket', flight: @game.flight, score: @game.score, results: @results, new_badges: @new_badges %>
   <!-- Buttons always at the bottom -->
   <div class="d-flex justify-content-between mt-auto pt-3 py-3 position-sticky bottom-0 transparent-box">
     <%= link_to 'Dashboard', main_path, class:"bottom-btn", data: {action: "click->page#removeFullscreen"} %>

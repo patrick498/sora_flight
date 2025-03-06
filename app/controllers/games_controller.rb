@@ -12,6 +12,9 @@ class GamesController < ApplicationController
     @new_badge_ids = badges_all - badges_before
     @new_badges = @new_badge_ids.map { |id| Merit::Badge.find(id) }
 
+    # FOR TESTING DISPLAYING BADGES ONLY
+    # @new_badges = [ Merit::Badge.find(1) ]
+
     @game = Game.find(params[:id])
     authorize @game
     @results = results(@game)
@@ -196,22 +199,22 @@ class GamesController < ApplicationController
     results = {}
     questions_results = []
     if game.departure_airport_guess_id.present?
-      guess = Airport.find(game.departure_airport_guess_id).name
-      answer = Airport.find(game.flight.departure_airport_id).name
+      guess = Airport.find(game.departure_airport_guess_id).iata
+      answer = Airport.find(game.flight.departure_airport_id).iata
       correct = game.departure_airport_guess_id == game.flight.departure_airport_id
-      questions_results << { question: 'Departure', guess: guess, answer: answer, correct: correct }
+      questions_results << { question: 'departure', guess: guess, answer: answer, correct: correct }
     end
     if game.arrival_airport_guess_id.present?
-      guess = Airport.find(game.arrival_airport_guess_id).name
-      answer = Airport.find(game.flight.arrival_airport_id).name
+      guess = Airport.find(game.arrival_airport_guess_id).iata
+      answer = Airport.find(game.flight.arrival_airport_id).iata
       correct = game.arrival_airport_guess_id == game.flight.arrival_airport_id
-      questions_results << { question: 'Arrival', guess: guess, answer: answer, correct: correct }
+      questions_results << { question: 'arrival', guess: guess, answer: answer, correct: correct }
     end
     if game.airline_guess_id.present?
       guess = Airline.find(game.airline_guess_id).name
       answer = Airline.find(game.flight.airline_id).name
       correct = game.airline_guess_id == game.flight.airline_id
-      questions_results << { question: 'Airline', guess: guess, answer: answer, correct: correct }
+      questions_results << { question: 'airline', guess: guess, answer: answer, correct: correct }
     end
     correct_answers = 0
     questions_results.each do |question_result|
