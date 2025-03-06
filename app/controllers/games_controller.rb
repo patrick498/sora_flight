@@ -12,6 +12,9 @@ class GamesController < ApplicationController
     @new_badge_ids = badges_all - badges_before
     @new_badges = @new_badge_ids.map { |id| Merit::Badge.find(id) }
 
+    # FOR TESTING DISPLAYING BADGES ONLY
+    # @new_badges = [ Merit::Badge.find(1) ]
+
     @game = Game.find(params[:id])
     authorize @game
     @results = results(@game)
@@ -221,22 +224,22 @@ class GamesController < ApplicationController
     results = {}
     questions_results = []
     if game.departure_airport_guess_id.present?
-      guess = Airport.find(game.departure_airport_guess_id).name
-      answer = Airport.find(game.flight.departure_airport_id).name
+      guess = Airport.find(game.departure_airport_guess_id).iata
+      answer = Airport.find(game.flight.departure_airport_id).iata
       correct = game.departure_airport_guess_id == game.flight.departure_airport_id
-      questions_results << { question: 'Departure', guess: guess, answer: answer, correct: correct }
+      questions_results << { question: 'departure', guess: guess, answer: answer, correct: correct }
     end
     if game.arrival_airport_guess_id.present?
-      guess = Airport.find(game.arrival_airport_guess_id).name
-      answer = Airport.find(game.flight.arrival_airport_id).name
+      guess = Airport.find(game.arrival_airport_guess_id).iata
+      answer = Airport.find(game.flight.arrival_airport_id).iata
       correct = game.arrival_airport_guess_id == game.flight.arrival_airport_id
-      questions_results << { question: 'Arrival', guess: guess, answer: answer, correct: correct }
+      questions_results << { question: 'arrival', guess: guess, answer: answer, correct: correct }
     end
     if game.airline_guess_id.present?
       guess = Airline.find(game.airline_guess_id).name
       answer = Airline.find(game.flight.airline_id).name
       correct = game.airline_guess_id == game.flight.airline_id
-      questions_results << { question: 'Airline', guess: guess, answer: answer, correct: correct }
+      questions_results << { question: 'airline', guess: guess, answer: answer, correct: correct }
     end
     correct_answers = 0
     questions_results.each do |question_result|
@@ -245,9 +248,23 @@ class GamesController < ApplicationController
       end
     end
     game.score += correct_answers * 10
-    results = { correct_answers: correct_answers, total_questions: questions_results.size, questions_results: questions_results }
+    cabin_class = cabin_class(game.score)
+    results = { correct_answers: correct_answers, total_questions: questions_results.size, questions_results: questions_results, cabin_class: cabin_class }
     return results
   end
+
+  def cabin_class(score)
+    if score < 10
+    cabin_class = 'CARGO'
+    elsif score >= 10 && score < 20
+      cabin_class = 'ECONOMY'
+    elsif score >= 20 && score < 30
+      cabin_class = 'BUSINESS'
+    elsif score >= 30
+      cabin_class = 'FIRST'
+    end
+  end
+
 
   # returns markers for departure, arrival, and current position
   def markers(flight, location)
