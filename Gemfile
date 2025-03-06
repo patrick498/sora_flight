@@ -85,3 +85,5 @@ gem 'ostruct'
 gem 'observer'
 
 gem "merit", "~> 4.0"
+
+gem "geocoder"

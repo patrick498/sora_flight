@@ -6,7 +6,7 @@
       <% end %>
       <div class="play">
         <% if current_page?("/main") %>
-          <%= link_to game_load_path, class: "play-btn btn text-light fw-bold" do %>
+          <%= link_to game_load_path(flight_count: flight_count), class: "play-btn btn text-light fw-bold" do %>
             Start!
           <% end %>
         <% end %>

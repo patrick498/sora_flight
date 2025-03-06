@@ -29,7 +29,7 @@
                   input_html: {class: 'arrival-airport-selector', data: {action: "change->gamebutton#checkAnswer", gamebutton_target: "answer"}},
                   collection: @flights[@flight_count.to_i-1][:airlines].map { |airline| [airline["name"], airline["id"]]} %>
     <%= f.hidden_field :flight_id, value: @flights[@flight_count.to_i-1][:flight]["id"] %>
-    <%= f.hidden_field :flight_number, value: @flight_number %>
+    <%= f.hidden_field :flight_count, value: @flight_count %>
   </div>
   <%= f.submit 'Check in!', class: 'btn-catch d-none', data: {gamebutton_target: "submitButton"} %>
 <% end %>
