@@ -29,17 +29,19 @@
   margin-bottom: 15px;
   box-sizing: border-box;
   color: white;
-  box-shadow: 0 0 0 1px #0E508C inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #444, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
-  background-color: #444;;
-  background: #0E508C;
-  border: 0px solid #222;
+  /* box-shadow: 0 0 0 1px #0E508C inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #444, 0 8px 8px 1px rgba(0, 0, 0, 0.5); */
+  /* background-color: #444;;
+  background: #0E508C; */
+  background: rgba(255, 255, 255, 0.2);
+  /* border: 0px solid #222; */
+  border: solid 3px white;
   border-radius: 2.75em;
   transform-style: preserve-3d;
 }
 
 .arrival-airport-item:active,
 .arrival-airport-item.active {
-  box-shadow: 0 0 0 1px #444 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 0 0 1px #444 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3); */
   background-color: #94bcef;
 }
 
@@ -54,10 +56,11 @@
 	cursor: pointer;
 	width: 100%;
 	font-weight: bold;
-	height: 85px;
+	/* height: 85px; */
+  height: 100px;
   border: 0px solid #222;
   color: white;
-	font-size: 25px;
+	font-size: 32px;
 	justify-content: center;
 	align-items: center;
   transform-style: preserve-3d;

@@ -50,10 +50,12 @@ export default class extends Controller {
     let correctAnswer;
 
     isCorrect = false;
-    if (Number(selectedValue) === this.rightAnswers[this.questionNumber + 1]) {
+    if (Number(selectedValue) === this.rightAnswers[this.questionNumber - 1]) {
       isCorrect = true;
       correctAnswer = this.rightAnswers[this.questionNumber + 1];
     }
+    console.log(this.questionNumber, Number(selectedValue));
+
 
     if (isCorrect) {
       selectedAnswer.classList.add('correct');
@@ -81,8 +83,8 @@ export default class extends Controller {
 
       this.answerTargets.forEach((answerTarget) => {
         const answerValue = answerTarget.value;
-        console.log([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue], Number(answerValue));
-        console.log([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue].includes(Number(answerValue)));
+        /* console.log([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue], Number(answerValue));
+        console.log([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue].includes(Number(answerValue))); */
 
         if (Number(answerValue) === this.rightAnswers[this.questionNumber + 1]) {
           answerTarget.parentElement.classList.add("correct");
