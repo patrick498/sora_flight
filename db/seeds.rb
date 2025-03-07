@@ -101,8 +101,6 @@ airlines = [
   {"iata": "AZ", "icao": "AZA", "name": "Alitalia"},
   {"iata": "IB", "icao": "IBE", "name": "Iberia"},
   {"iata": "VA", "icao": "VOZ", "name": "Virgin Australia"},
-  {"iata": "IT", "icao": "TTW", "name": "Tigerair Taiwan"},
-  {"iata": "FM", "icao": "CSH", "name": "Shanghai Airlines"},
   {"iata": "AM", "icao": "AMX", "name": "Aeromexico"},
   {"iata": "RF", "icao": "AUK", "name": "Aero K"},
   {"iata": "M0", "icao": "MML", "name": "Aero Mongolia"},
@@ -192,7 +190,6 @@ airports =
   {"iata": "SHI", "icao": "RORS", "name": "Shimojishima Airport", "city": "Miyakojima", "country": "Japan", "latitude": 24.8267, "longitude": 125.1440},
   {"iata": "TRA", "icao": "RORT", "name": "Taramajima Airport", "city": "Tarama", "country": "Japan", "latitude": 24.6539, "longitude": 124.6750},
   {"iata": "OIM", "icao": "RJTO", "name": "Oshima Airport", "city": "Izu Oshima", "country": "Japan", "latitude": 34.7820, "longitude": 139.3600},
-  {"iata": "HND", "icao": "RJTT", "name": "Haneda Airport", "city": "Tokyo", "country": "Japan", "latitude": 35.5494, "longitude": 139.7798},
   {"iata": "LAX", "icao": "KLAX", "name": "Los Angeles International Airport", "city": "Los Angeles", "country": "USA", "latitude": 33.9416, "longitude": -118.4085},
   {"iata": "JFK", "icao": "KJFK", "name": "John F. Kennedy International Airport", "city": "New York", "country": "USA", "latitude": 40.6413, "longitude": -73.7781},
   {"iata": "SFO", "icao": "KSFO", "name": "San Francisco International Airport", "city": "San Francisco", "country": "USA", "latitude": 37.7749, "longitude": -122.4194},
@@ -443,5 +440,139 @@ Flight.create!(
   heading: 60,
   horizontal_speed: 489
 )
+
+#departure
+#arrival
+#date
+
+departure_airport = Airport.where(iata: "KKJ").first
+arrival_airport = Airport.where(iata: "NGO").first
+airline = Airline.where(icao: "ANA").first
+aircraft = Aircraft.where(model_short: "B763").first
+
+Flight.create!(
+  flight_number: "ANA964",
+  arrival_airport: arrival_airport,
+  departure_airport: departure_airport,
+  airline: airline,
+  aircraft: aircraft,
+  departure_datetime: "2025-03-03T08:25:00+00:00",
+  arrival_datetime: "2025-02-25T12:40:00+00:00",
+  latitude: 35.58885,
+  longitude: 139.673594,
+  altitude: 3500,
+  heading: 60,
+  horizontal_speed: 489
+)
+
+departure_airport = Airport.where(iata: "HND").first
+arrival_airport = Airport.where(iata: "ZRH").first
+airline = Airline.where(icao: "ANA").first
+aircraft = Aircraft.where(model_short: "B763").first
+
+Flight.create!(
+  flight_number: "ANA964",
+  arrival_airport: arrival_airport,
+  departure_airport: departure_airport,
+  airline: airline,
+  aircraft: aircraft,
+  departure_datetime: "2025-03-04T09:30:00+00:00",
+  arrival_datetime: "2025-02-25T12:40:00+00:00",
+  latitude: 35.58885,
+  longitude: 139.673594,
+  altitude: 3500,
+  heading: 60,
+  horizontal_speed: 489
+)
+
+departure_airport = Airport.where(iata: "FUK").first
+arrival_airport = Airport.where(iata: "YYZ").first
+airline = Airline.where(icao: "ANA").first
+aircraft = Aircraft.where(model_short: "B763").first
+
+Flight.create!(
+  flight_number: "ANA964",
+  arrival_airport: arrival_airport,
+  departure_airport: departure_airport,
+  airline: airline,
+  aircraft: aircraft,
+  departure_datetime: "2025-03-05T08:55:00+00:00",
+  arrival_datetime: "2025-02-25T12:40:00+00:00",
+  latitude: 35.58885,
+  longitude: 139.673594,
+  altitude: 3500,
+  heading: 60,
+  horizontal_speed: 489
+)
+
+departure_airport = Airport.where(iata: "LHR").first
+arrival_airport = Airport.where(iata: "HND").first
+airline = Airline.where(icao: "ANA").first
+aircraft = Aircraft.where(model_short: "B763").first
+
+Flight.create!(
+  flight_number: "ANA964",
+  arrival_airport: arrival_airport,
+  departure_airport: departure_airport,
+  airline: airline,
+  aircraft: aircraft,
+  departure_datetime: "2025-03-06T17:25:00+00:00",
+  arrival_datetime: "2025-02-25T12:40:00+00:00",
+  latitude: 35.58885,
+  longitude: 139.673594,
+  altitude: 3500,
+  heading: 60,
+  horizontal_speed: 489
+)
+
+departure_airport = Airport.where(iata: "NRT").first
+arrival_airport = Airport.where(iata: "OKA").first
+airline = Airline.where(icao: "ANA").first
+aircraft = Aircraft.where(model_short: "B763").first
+
+Flight.create!(
+  flight_number: "ANA964",
+  arrival_airport: arrival_airport,
+  departure_airport: departure_airport,
+  airline: airline,
+  aircraft: aircraft,
+  departure_datetime: "2025-03-07T06:25:00+00:00",
+  arrival_datetime: "2025-02-25T12:40:00+00:00",
+  latitude: 35.58885,
+  longitude: 139.673594,
+  altitude: 3500,
+  heading: 60,
+  horizontal_speed: 489
+)
+user = User.first
+
+flights = Flight.last(3)
+flights.each do |flight|
+  Game.create!(
+    user: user,
+    flight: flight,
+    score: [0, 10, 20 ,30].sample,
+    departure_airport_guess_id: Airport.last.id,
+    arrival_airport_guess_id:Airport.last.id,
+    airline_guess_id: Airline.last.id,
+    aircraft_guess_id: Aircraft.last.id
+  )
+end
+
+flights = Flight.last(5)
+flights.each do |flight|
+  Game.create!(
+    user: user,
+    flight: flight,
+    score: [0, 10, 20 ,30].sample,
+    departure_airport_guess_id: Airport.last.id,
+    arrival_airport_guess_id:Airport.last.id,
+    airline_guess_id: Airline.last.id,
+    aircraft_guess_id: Aircraft.last.id
+  )
+end
+
+user.add_badge(1)
+
 
 # Add Games
