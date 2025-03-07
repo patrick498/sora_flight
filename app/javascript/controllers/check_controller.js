@@ -65,26 +65,33 @@ export default class extends Controller {
             item.element.style.animation = `handwriting 1s ease-in-out forwards`;
           }
         }
-
       }, index * animationDelay);
     });
 
-    // Miles animation
-    const milesAnimationTime = 4000;
+    // 1️⃣ Start Miles Animation (Reduced to 2s for Faster Transition)
+    const milesAnimationTime = 2000;
     setTimeout(() => {
       this.animateMiles();
     }, totalCheckAnswerTime);
 
-    // Stamps animation
+    // 2️⃣ Instantly Show Cabin Class *Immediately After* Miles Ends
+    setTimeout(() => {
+      const cabinClassElement = document.querySelector(".cabin-class");
+      if (cabinClassElement) {
+        cabinClassElement.classList.remove("hidden");
+      }
+    }, totalCheckAnswerTime + milesAnimationTime); // Show immediately after miles
+
+    // 3️⃣ Start Badge Animation (Much Sooner After Miles)
     const badgeImages = document.querySelectorAll(".new-badges img");
 
     setTimeout(() => {
       badgeImages.forEach((badge, index) => {
         setTimeout(() => {
           badge.classList.add("stamp");
-        }, index * 300);
+        }, index * 200); // Reduced stagger from 300ms to 200ms
       });
-    }, totalCheckAnswerTime + milesAnimationTime - 2000);
+    }, totalCheckAnswerTime + milesAnimationTime + 100); // Shorter delay after cabin class
   }
 
   animateMiles() {
@@ -94,8 +101,8 @@ export default class extends Controller {
     const finalMiles = parseInt(milesElement.getAttribute("data-miles-earned"), 10);
     let currentMiles = 0;
 
-    const stepTime = 50;
-    const totalDuration = 4000;
+    const stepTime = 30; // Faster updates
+    const totalDuration = 2000; // Faster completion (2s)
     const step = Math.ceil(finalMiles / (totalDuration / stepTime));
 
     const interval = setInterval(() => {
@@ -107,4 +114,5 @@ export default class extends Controller {
       milesElement.textContent = currentMiles;
     }, stepTime);
   }
+
 }
