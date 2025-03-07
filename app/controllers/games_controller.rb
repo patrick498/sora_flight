@@ -11,13 +11,16 @@ class GamesController < ApplicationController
     @flight_count = params[:flight_count]
     badges_before = session[:badges_before]
     badges_all = current_user.badges.map(&:id) || []
-    # FOR DEMO DAY
+    @new_badge_ids = (badges_all - badges_before)
+
+
+    # QUICK FIX FOR DEMO DAY
     # If there are no new badges (which is likely to happen if we play a second game)
     # Assign badge 'Frequent FLyer'
-    @new_badge_ids = (badges_all - badges_before)
-    if !@new_badge_ids || @new_badge_ids.empty?
-      @new_badge_ids = [ 4 ]
-    end
+    # if !@new_badge_ids || @new_badge_ids.empty?
+    #   @new_badge_ids = [ 4 ]
+    # end
+
     @new_badges = @new_badge_ids.map { |id| Merit::Badge.find(id) }
 
     # FOR TESTING DISPLAYING BADGES ONLY
