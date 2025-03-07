@@ -134,7 +134,7 @@ export default class extends Controller {
         /* console.log([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue], Number(answerValue));
         console.log([this.firstAnswerValue, this.secondAnswerValue, this.thirdAnswerValue].includes(Number(answerValue))); */
 
-        if (Number(answerValue) === this.rightAnswers[this.questionNumber + 1]) {
+        if (Number(answerValue) === this.rightAnswers[this.questionNumber - 1]) {
           answerTarget.parentElement.classList.add("correct");
         }
       })
@@ -152,7 +152,7 @@ export default class extends Controller {
           const answerValue = answerTarget.value;
           console.log(answerValue);
 
-          if (Number(answerValue) === this.rightAnswers[this.questionNumber + 1]) {
+          if (Number(answerValue) === this.rightAnswers[this.questionNumber - 1]) {
             answerTarget.parentElement.classList.remove("correct");
           }
         })
