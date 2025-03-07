@@ -1,3 +1,145 @@
+.ticket-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* Full height of the viewport */
+  max-height: 100%;
+  /* Prevents overflow on mobile */
+  font-family: Arial, sans-serif;
+  position: relative;
+  margin-right: 8px;
+  margin-left: 8px;
+  overflow: hidden;
+  /* Prevents scrolling issues */
+}
+
+.ticket {
+  width: 100%;
+  max-height: 90vh;
+  /* Ensures ticket fits within the container */
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: left;
+  position: relative;
+  margin-bottom: 20px;
+  overflow-y: auto;
+  /* Allows scrolling inside ticket if needed */
+}
+
+.new-badges {
+  img {
+    height: 100px;
+    width: 100px;
+  }
+}
+
+.new-badges img {
+  opacity: 0;
+  /* Start hidden */
+  transform: scale(2);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  /* Smooth transition */
+}
+
+.stamp {
+  animation: stamp-animation 0.6s ease-out forwards !important;
+  /* Ensure the animation applies */
+  opacity: 1 !important;
+  /* Force visibility */
+  transform: scale(1) !important;
+  /* Ensure final scale */
+}
+
+.divider {
+  border-top: 1px solid #ddd;
+  margin: 10px 0;
+}
+
+.airport {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.airline {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.ticket-text {
+  font-size: 16px;
+  margin-bottom: 0px;
+}
+
+.ticket-text-bold {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.departure-checkmark {
+  position: absolute;
+  top: 95px;
+  left: 60px;
+}
+
+.arrival-checkmark {
+  position: absolute;
+  top: 95px;
+  right: 0px;
+}
+
+.airline-checkmark {
+  position: absolute;
+  top: 360px;
+  right: 100px;
+}
+
+.correct-answer {
+  font-family: "Comic Neue", cursive;
+  font-size: 64px;
+  font-weight: 900;
+  color: red;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transform: translateY(10px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.departure-correct-answer {
+  position: absolute;
+  top: 85px;
+  left: 30px;
+}
+
+.arrival-correct-answer {
+  position: absolute;
+  top: 85px;
+  right: 10px;
+}
+
+.airline-correct-answer {
+  position: absolute;
+  top: 440px;
+  line-height: 1;
+  left: 80px;
+  font-size: 24px;
+}
+
+.hidden {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.fade-in {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 1s ease-in, transform 0.5s ease-in;
+}
+
 @keyframes handwriting {
   0% {
     clip-path: inset(0 100% 0 0);
@@ -22,133 +164,37 @@
   0% {
     clip-path: inset(0 100% 0 0);
     opacity: 0;
-    transform: translateY(10px) rotate(-3deg);
+    transform: translateY(10px);
+    /* Remove rotate */
   }
 
   50% {
     opacity: 1;
-    transform: translateY(0) rotate(-5deg);
-    /* Less rotation for Airline */
+    transform: translateY(0);
+    /* Remove rotate */
   }
 
   100% {
     clip-path: inset(0 0 0 0);
-    transform: rotate(-5deg);
+    transform: translateY(0);
+    /* No rotation */
   }
 }
 
 
-.ticket-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-family: Arial, sans-serif;
-  position: relative;
-  margin-right: 8px;
-  margin-left: 8px;
+@keyframes stamp-animation {
+  0% {
+    transform: scale(3) rotate(-15deg);
+    opacity: 0;
+  }
 
-  .ticket {
-    width: 100%;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    text-align: left;
-    position: relative;
-    margin-bottom: 50px;
+  50% {
+    transform: scale(1.2) rotate(2deg);
+    opacity: 1;
+  }
 
-    .new-badges {
-      img {
-        height: 100px;
-        width: 100px;
-      }
-    }
-
-    .divider {
-      border-top: 1px solid #ddd;
-      margin: 10px 0;
-    }
-
-    .airport {
-      font-size: 48px;
-      font-weight: bold;
-      margin-bottom: 0px;
-    }
-
-    .airline {
-      font-size: 32px;
-      font-weight: bold;
-    }
-
-    .ticket-text {
-      font-size: 16px;
-      margin-bottom: 0px;
-    }
-
-    .ticket-text-bold {
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .departure-checkmark {
-      position: absolute;
-      top: 95px;
-      left: 60px;
-    }
-
-    .arrival-checkmark {
-      position: absolute;
-      top: 95px;
-      right: 0px;
-    }
-
-    .airline-checkmark {
-      position: absolute;
-      top: 360px;
-      right: 100px;
-    }
-
-    .correct-answer {
-      font-family: "Comic Neue", cursive;
-      font-size: 72px;
-      font-weight: 900;
-      color: red;
-      opacity: 0;
-      clip-path: inset(0 100% 0 0);
-      transform: translateY(10px);
-      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-    }
-
-    .departure-correct-answer {
-      position: absolute;
-      top: 85px;
-      left: 60px;
-    }
-
-    .arrival-correct-answer {
-      position: absolute;
-      top: 85px;
-      right: 10px;
-    }
-
-    .airline-correct-answer {
-      position: absolute;
-      top: 362px;
-      line-height: 1;
-      left: 100px;
-      font-size: 48px;
-    }
-
-    .hidden {
-      opacity: 0;
-      transform: scale(0.5);
-    }
-
-    .fade-in {
-      opacity: 1;
-      transform: scale(1);
-      transition: opacity 1s ease-in, transform 0.5s ease-in;
-    }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
   }
 }

@@ -36,7 +36,7 @@
         <span class='ticket-text'>AIRLINE</span>
         <span class='ticket-text'>SEAT</span>
       </div>
-      <div class="d-flex justify-content-between">
+      <div class="d-flex justify-content-between align-items-baseline">
         <span class='ticket-text-bold'>A9</span>
         <% airline_guess = results[:questions_results].find { |q| q[:question] == 'airline' } %>
         <span class='airline'><%= airline_guess[:guess] %></span>
@@ -50,7 +50,7 @@
         <span class='ticket-text'>CLASS</span>
       </div>
       <div class="d-flex justify-content-between">
-        <span class='ticket-text-bold'><%= score %></span>
+        <span class='ticket-text-bold miles-earned' data-miles-earned="<%= score %>"></span>
         <span class='ticket-text-bold'><%= results[:cabin_class].upcase %></span>
       </div>
     </div>
