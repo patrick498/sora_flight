@@ -193,7 +193,6 @@ airports =
   {"iata": "TRA", "icao": "RORT", "name": "Taramajima Airport", "city": "Tarama", "country": "Japan", "latitude": 24.6539, "longitude": 124.6750},
   {"iata": "OIM", "icao": "RJTO", "name": "Oshima Airport", "city": "Izu Oshima", "country": "Japan", "latitude": 34.7820, "longitude": 139.3600},
   {"iata": "HND", "icao": "RJTT", "name": "Haneda Airport", "city": "Tokyo", "country": "Japan", "latitude": 35.5494, "longitude": 139.7798},
-  {"iata": "NRT", "icao": "RJAA", "name": "Narita International Airport", "city": "Narita", "country": "Japan", "latitude": 35.7647, "longitude": 140.3860},
   {"iata": "LAX", "icao": "KLAX", "name": "Los Angeles International Airport", "city": "Los Angeles", "country": "USA", "latitude": 33.9416, "longitude": -118.4085},
   {"iata": "JFK", "icao": "KJFK", "name": "John F. Kennedy International Airport", "city": "New York", "country": "USA", "latitude": 40.6413, "longitude": -73.7781},
   {"iata": "SFO", "icao": "KSFO", "name": "San Francisco International Airport", "city": "San Francisco", "country": "USA", "latitude": 37.7749, "longitude": -122.4194},
