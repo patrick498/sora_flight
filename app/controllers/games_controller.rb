@@ -57,7 +57,7 @@ class GamesController < ApplicationController
       flights = selected_flight
     else
       # get flights from db
-      flights = Flight.first(3)
+      flights = Flight.first(6)
     end
 
     game = Game.new

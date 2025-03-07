@@ -28,23 +28,23 @@ puts "Aircrafts: #{Aircraft.count}"
 puts "creating users..."
 
 User.create!(
-  email: "axel.bailleres@sora.com",
-  password: "axel12345",
-  username: "axel_sora",
+  email: "axel@sora.com",
+  password: "123123",
+  username: "Axel",
 )
 User.create!(
-  email: "yuki.ide@sora.com",
-  password: "yuki12345",
+  email: "yuki@sora.com",
+  password: "123123",
   username: "yuki_sora",
 )
 User.create!(
-  email: "yu.sekiguchi@sora.com",
-  password: "sekiguchi12345",
+  email: "yu@sora.com",
+  password: "123123",
   username: "yu_sora",
 )
 User.create!(
-  email: "patrick.pailhes@sora.com",
-  password: "patrick12345",
+  email: "patrick@sora.com",
+  password: "123123",
   username: "patrick_sora",
 )
 User.create!(
@@ -336,8 +336,8 @@ Flight.create!(
   departure_airport: departure_airport,
   airline: airline,
   aircraft: aircraft,
-  departure_datetime: "2025-02-25T11:35:00+00:00",
-  arrival_datetime: "2025-02-25T14:30:00+00:00",
+  departure_datetime: "2025-03-07T20:10:00+00:00",
+  arrival_datetime: "2025-03-07T23:10:00+00:00",
   latitude: 35.610990997073685,
   longitude: 139.76089848550072,
   altitude: 1965,
@@ -345,8 +345,48 @@ Flight.create!(
   horizontal_speed: 516
 )
 
+departure_airport = Airport.where(iata: "LAX").first
+arrival_airport = Airport.where(iata: "PVG").first
+airline = Airline.where(icao: "CES").first
+aircraft = Aircraft.where(model_short: "B77W").first
+
+Flight.create!(
+  flight_number: "MU586",
+  arrival_airport: arrival_airport,
+  departure_airport: departure_airport,
+  airline: airline,
+  aircraft: aircraft,
+  departure_datetime: "2025-03-07T10:25:00+00:00",
+  arrival_datetime: "2025-03-08T00:40:00+00:00",
+  latitude: 35.6504,
+  longitude: 139.70898,
+  altitude: 7000,
+  heading: 90,
+  horizontal_speed: 800
+)
+
 departure_airport = Airport.where(iata: "PEK").first
 arrival_airport = Airport.where(iata: "HND").first
+airline = Airline.where(icao: "CES").first
+aircraft = Aircraft.where(model_short: "B763").first
+
+Flight.create!(
+  flight_number: "ANA964",
+  arrival_airport: arrival_airport,
+  departure_airport: departure_airport,
+  airline: airline,
+  aircraft: aircraft,
+  departure_datetime: "2025-02-25T08:25:00+00:00",
+  arrival_datetime: "2025-02-25T12:40:00+00:00",
+  latitude: 35.72151,
+  longitude: 139.71635,
+  altitude: 3500,
+  heading: 120,
+  horizontal_speed: 489
+)
+
+departure_airport = Airport.where(iata: "HND").first
+arrival_airport = Airport.where(iata: "CTS").first
 airline = Airline.where(icao: "ANA").first
 aircraft = Aircraft.where(model_short: "B763").first
 
@@ -358,12 +398,51 @@ Flight.create!(
   aircraft: aircraft,
   departure_datetime: "2025-02-25T08:25:00+00:00",
   arrival_datetime: "2025-02-25T12:40:00+00:00",
-  latitude: 35.1318,
-  longitude: 139.958,
-  altitude: 2964,
-  heading: 41,
+  latitude: 35.64226,
+  longitude: 139.77925,
+  altitude: 500,
+  heading: 90,
   horizontal_speed: 489
 )
 
+departure_airport = Airport.where(iata: "PEK").first
+arrival_airport = Airport.where(iata: "HND").first
+airline = Airline.where(icao: "CES").first
+aircraft = Aircraft.where(model_short: "B763").first
+
+Flight.create!(
+  flight_number: "ANA964",
+  arrival_airport: arrival_airport,
+  departure_airport: departure_airport,
+  airline: airline,
+  aircraft: aircraft,
+  departure_datetime: "2025-02-25T08:25:00+00:00",
+  arrival_datetime: "2025-02-25T12:40:00+00:00",
+  latitude: 35.682014,
+  longitude: 139.560237,
+  altitude: 3500,
+  heading: 120,
+  horizontal_speed: 489
+)
+
+departure_airport = Airport.where(iata: "PEK").first
+arrival_airport = Airport.where(iata: "HND").first
+airline = Airline.where(icao: "CES").first
+aircraft = Aircraft.where(model_short: "B763").first
+
+Flight.create!(
+  flight_number: "ANA964",
+  arrival_airport: arrival_airport,
+  departure_airport: departure_airport,
+  airline: airline,
+  aircraft: aircraft,
+  departure_datetime: "2025-02-25T08:25:00+00:00",
+  arrival_datetime: "2025-02-25T12:40:00+00:00",
+  latitude: 35.58885,
+  longitude: 139.673594,
+  altitude: 3500,
+  heading: 60,
+  horizontal_speed: 489
+)
 
 # Add Games
