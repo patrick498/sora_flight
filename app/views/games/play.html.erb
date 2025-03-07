@@ -9,7 +9,7 @@
   </div>
   <div id="ar">
     <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true;' >
-      <a-camera gps-camera rotation-reader>
+      <a-camera gps-camera="gpsTimeInterval: 99999999999999999999999999999999999999" rotation-reader>
       </a-camera>
       <a-assets>
         <img id="skyTexture" src="<%= image_path 'night_sky.jpeg' %>">
