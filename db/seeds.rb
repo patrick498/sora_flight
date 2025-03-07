@@ -546,7 +546,7 @@ Flight.create!(
 )
 user = User.first
 
-flights = Flight.last(3)
+flights = Flight.last(4)
 flights.each do |flight|
   Game.create!(
     user: user,
