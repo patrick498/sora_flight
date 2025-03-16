@@ -1,8 +1,8 @@
 # 📚 Sora Flight
 
-A web app where users rent luxury vehicles—cars, private jets, yachts—while owners can list and manage their rentals seamlessly.
+A web app that tracks nearby flights in real time and challenges users with interactive quizzes based on flight details.
 
-![Sora Vehicles Screenshot](https://github.com/user-attachments/assets/025f3522-23e0-4c7b-a2bd-84db556c0f04)
+*SCREENSHOT*
 
 <br>
 App home: https://sora-flight.games
@@ -15,18 +15,6 @@ Install gems
 ```
 bundle install
 ```
-
-### ENV Variables
-Create `.env` file
-```
-touch .env
-```
-Inside `.env`, set these variables. For any APIs, see group Slack channel.
-```
-CLOUDINARY_URL=your_own_cloudinary_url_key
-MAPBOX_API_KEY=your_own_mapbox_api_key
-```
-
 ### DB Setup
 ```
 rails db:create
