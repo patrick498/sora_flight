@@ -2,7 +2,9 @@
 
 A web app that tracks nearby flights in real time and challenges users with interactive quizzes based on flight details.
 
-![sora-flight](https://github.com/user-attachments/assets/ebd91c8c-6df4-4e98-a145-6877c0dbeb44)
+![Screenshot_20250316-184252](https://github.com/user-attachments/assets/e1b6428e-87da-4d75-b384-da86bbfad65f) ![Screenshot_20250316-184327](https://github.com/user-attachments/assets/4f3a07f5-a66f-49ad-a7e6-c4c81297fd92)
+
+
 
 <br>
 App home: https://sora-flight.games
