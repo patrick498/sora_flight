@@ -2,7 +2,7 @@
   <!-- Display flight ticket -->
   <%= render 'ticket', flight: @game.flight, score: @game.score, results: @results, new_badges: @new_badges %>
   <!-- Buttons always at the bottom -->
-  <div class='d-flex justify-content-between mt-auto pt-3 py-3 position-sticky bottom-0 transparent-box'>
+  <div class='d-flex justify-content-between mt-auto pt-2 py-2 position-sticky bottom-0 transparent-box'>
     <%= link_to 'Dashboard', main_path(flight_count: @flight_count), class:"bottom-btn", data: {action: "click->page#removeFullscreen"} %>
     <%= link_to 'Play again', game_load_path(flight_count: @flight_count), class:"bottom-btn" %>
   </div>

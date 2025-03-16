@@ -16,7 +16,7 @@ class GamesController < ApplicationController
 
     # QUICK FIX FOR DEMO DAY
     # If there are no new badges (which is likely to happen if we play a second game)
-    # Assign badge 'Frequent FLyer'
+    # Assign badge 'Frequent Flyer'
     # if !@new_badge_ids || @new_badge_ids.empty?
     #   @new_badge_ids = [ 4 ]
     # end
