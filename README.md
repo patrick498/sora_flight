@@ -4,7 +4,9 @@ A web app that tracks nearby flights in real time and challenges users with inte
 
 <img src="https://github.com/user-attachments/assets/04588456-6b13-4925-827c-bd056e1c8285" width="30%" height="auto">
 <img src='https://github.com/user-attachments/assets/84a8348f-7d9c-4b13-9219-80d6dc560cc3' width='30%' height='auto'>
+<img src='https://github.com/user-attachments/assets/022bc410-1471-45f1-b297-4e9c2a6f3c09' width='30%' height='auto'>
 
+<br>
 <br>
 App home: https://sora-flight.games
 
