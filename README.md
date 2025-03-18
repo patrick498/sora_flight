@@ -2,8 +2,7 @@
 
 A web app that tracks nearby flights in real time and challenges users with interactive quizzes based on flight details.
 
-![Screenshot_20250316-184252](https://github.com/user-attachments/assets/e1b6428e-87da-4d75-b384-da86bbfad65f) ![Screenshot_20250316-184327](https://github.com/user-attachments/assets/4f3a07f5-a66f-49ad-a7e6-c4c81297fd92)
-
+![output](https://github.com/user-attachments/assets/e69bbbc6-e183-4ee7-bfd3-dc8327d56ec3)
 
 
 <br>
